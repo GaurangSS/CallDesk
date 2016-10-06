@@ -7,6 +7,7 @@ module.exports = {
 
 	getContectNumber: function (req, res) {
 
+
 		country.find().exec(function (err, countries){
 		  if (err) {
 		    return res.serverError(err);
@@ -26,9 +27,20 @@ module.exports = {
 		    return res.serverError(err);
 		  }
 		  return res.json(areaCodes);;
+
+		sails.log.info('Calling Get method');
+		var cou ;
+
+		cou = country.find().exec(function (err, users){
+		  if (err) {
+		    return res.serverError(err);
+		  }
+		  return res.render('details',{users});
+
 		});
 
-  },
+  }
+},
   postContectNumber: function (req, res) {
 
 	 	var ctx = req.body;
@@ -38,11 +50,12 @@ module.exports = {
 	 	countryArea.create(ctx).exec(function (err, data){
 		  if (err) { return res.serverError(err); }
 
+
 		  return data;
 		});
 		return res.render('contactNumbers', {contectDetails: contectDetails})
 
   },
-  
+ 
 
 };
