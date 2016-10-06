@@ -1,0 +1,44 @@
+<!-- content -->
+   <div id="content" class="app-content" role="main">
+  		<div class="app-content-body "> 
+			<div class="wrapper-md">
+				<div class="panel panel-default">
+			    	<div class="panel-heading font-bold">                  
+			      		User
+			    	</div>
+			    	<div class="panel-body">
+			    		<div>
+			      			<a href="/user/form" class="btn btn-info">Add User</a>
+			      		</div>
+			      		<div>
+			      			<table  class="table table-bordered" >
+							<thead>
+							<tr>
+							<th>Sr.No.</th>
+							<th>First name</th>
+							<th>Last name</th>
+							<th>Email</th>
+							</tr>
+							</thead>
+							<tbody>
+							<% for (var i = 0; i < data.length; i++) { %>
+							<tr>
+							<td><%= data[i].firstname %></td>
+							<td><%= data[i].lastname %></td>
+							<td><%= data[i].email %></td>
+							</tr>    
+							<% } %>
+							</tbody>
+							</table>
+			      		</div>
+			    	</div>
+
+			  	</div>
+			</div>
+		</div>
+  	</div> 
+  <!-- /content -->
+  
+  <!-- footer -->
+
+  <!-- / footer -->

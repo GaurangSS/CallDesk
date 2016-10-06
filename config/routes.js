@@ -49,6 +49,8 @@ module.exports.routes = {
   'get /twilio': 'TwilioclientController.createToken',
 
   'get /home': 'AuthController.createToken',
+  
+  'get /users': 'UserController.List',
 
   'get /browsercall/:client_name': 'BrowserCallController.createToken',
 
@@ -57,6 +59,8 @@ module.exports.routes = {
   'get /login': 'LoginController.ShowLogin',
 
   'post /login': 'LoginController.Authentication',
+  
+  'post /create_user': 'UserController.createUser',
 
 };
 
