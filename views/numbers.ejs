@@ -26,7 +26,6 @@
               <label for="exampleInputPassword2">Area Code</label>
               <select id='areaCode' name=areaCode class="form-control">
                 <option>select area</option>
-                <option value="510">510</option>
               </select>
             </div>
             
@@ -45,24 +44,29 @@
 
 <script>
 $(document).ready(function () {
-  var counName = $('#counName').value
 
   $('#counName').on('change', function() {
+    var counName = $('#counName').val();
+
     $.ajax({
       type: 'POST',
       url: '/postAreaCode',
-      data:  {'counName': counName},
       contentType: 'application/json',
-
+      data: JSON.stringify({
+        "counName":counName,
+      }),
+      error: function(e) {
+        console.log(e);
+      },
+      dataType: "json",
       success: function(data) {
         
         var optionsAsString = "";
         for(var i = 0; i < data.length; i++) {
             optionsAsString += "<option value='" + data[i].areaCode + "'>" + data[i].areaCode + "</option>";
         }
-        
         $('#areaCode').append( optionsAsString );
-      }      
+      }
     });
   });
 });

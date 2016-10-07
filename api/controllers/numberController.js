@@ -16,12 +16,13 @@ module.exports = {
 
   },
   postAreaCode: function (req, res) {
-  	sails.log.info('inside'+req.body);
+  	sails.log.info(req.body);
   	var areacode = [];
 
   	areaCode.find({select: ['areaCode']})
-			.where({'counName': 'uk'})
+			.where({'counName': req.body.counName})
 			.exec(function (err, areaCodes){
+				sails.log.info(areaCodes);
 		  if (err) {
 		    return res.serverError(err);
 		  }
@@ -43,6 +44,4 @@ module.exports = {
 		return res.render('contactNumbers', {contectDetails: contectDetails})
 
   },
-  
-
 };
