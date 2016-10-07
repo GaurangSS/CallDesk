@@ -11,8 +11,7 @@ module.exports = {
 				res.locals.layout = 'layout1.ejs';
 		        return res.view('User/list.ejs',data);
 			}
-		})
-		
+		})		
 	},
 
 	Form: function(req,res) {
