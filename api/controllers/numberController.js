@@ -19,7 +19,9 @@ module.exports = {
 
   },
 
+
  postAreaCode: function (req, res) {
+
   	sails.log.info(req.body);
   	var areacode = [];
 
@@ -49,6 +51,5 @@ module.exports = {
 		return res.render('contactNumbers', {contectDetails: contectDetails})
 
   },
-
 
 };
