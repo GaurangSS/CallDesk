@@ -1,4 +1,4 @@
-<!-- content -->
+content -->
    <div id="content" class="app-content" role="main">
   		<div class="app-content-body "> 
 			<div class="wrapper-md">
@@ -20,17 +20,16 @@
 							<th>Email</th>
 							</tr>
 							</thead>
-							<tbody>
-							<% for (var i = 0; i < data.length; i++) { %>
-							<tr>
-							<td><%= data[i].firstname %></td>
-							<td><%= data[i].lastname %></td>
-							<td><%= data[i].email %></td>
-							</tr>    
-							<% } %>
-							</tbody>
-							</table>
-			      		</div>
+							<%  var i=1; list. forEach(function(dataob) { %>
+  <tr>
+      <td><%= i++ %></td>
+      <td><%= dataob.firstname %></td>
+      <td><%= dataob.lastname %></td>
+      <td><%= dataob.email %></td>  
+   </tr>
+ <% }); %> 
+							</table
+>			      		</div>
 			    	</div>
 
 			  	</div>
@@ -41,4 +40,4 @@
   
   <!-- footer -->
 
-  <!-- / footer -->
+  <!-- / footer

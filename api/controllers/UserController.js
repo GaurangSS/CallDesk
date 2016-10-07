@@ -4,15 +4,13 @@ module.exports = {
 		Associate_user.find().exec(function(err,result){
 			if(err){ 
 				console.log(err);
-			}else{   
-				var data;
-				data = result;
-				console.log(data);
-				res.locals.layout = 'layout1.ejs';
+			}else{  
+				var data={};
+				data.list = result;
+				//res.locals.layout = 'layout1.ejs';
 		        return res.view('User/list.ejs',data);
 			}
-		})
-		
+		})		
 	},
 
 	Form: function(req,res) {
