@@ -7,28 +7,29 @@
 			      		User
 			    	</div>
 			    	<div class="panel-body">
-			    		<div>
+			    		<div style="margin-bottom:10px">
 			      			<a href="/user/form" class="btn btn-info">Add User</a>
 			      		</div>
 			      		<div>
 			      			<table  class="table table-bordered" >
-							<thead>
-							<tr>
-							<th>Sr.No.</th>
-							<th>First name</th>
-							<th>Last name</th>
-							<th>Email</th>
-							</tr>
-							</thead>
-							<tbody>
-							<% for (var i = 0; i < data.length; i++) { %>
-							<tr>
-							<td><%= data[i].firstname %></td>
-							<td><%= data[i].lastname %></td>
-							<td><%= data[i].email %></td>
-							</tr>    
-							<% } %>
-							</tbody>
+								<thead>
+									<tr>
+										<th>Sr.No.</th>
+										<th>First name</th>
+										<th>Last name</th>
+										<th>Email</th>
+									</tr>
+								</thead>
+								<tbody>
+									<%  var i=1; list. forEach(function(dataob) { %>
+									<tr>
+										<td><%= i++ %></td>
+									    <td><%= dataob.firstname %></td>
+									    <td><%= dataob.lastname %></td>
+										<td><%= dataob.email %></td>  
+									   </tr>
+									 <% }); %>
+								</tbody>
 							</table>
 			      		</div>
 			    	</div>
