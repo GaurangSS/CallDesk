@@ -45,6 +45,7 @@ module.exports.routes = {
   * for configuration options and examples.                                  *
   *                                                                          *
   ***************************************************************************/
+  // get methods
 
   'get /twilio': 'TwilioclientController.createToken',
 
@@ -58,9 +59,19 @@ module.exports.routes = {
 
   'get /login': 'LoginController.ShowLogin',
 
+  'get /contectNumbers': 'numberController.getContectNumber',
+
+  // Post methods
+
   'post /login': 'LoginController.Authentication',
   
   'post /create_user': 'UserController.createUser',
+
+  'post /contectNumbers': 'numberController.postContectNumber',
+
+  // Ajax methos
+
+  'post /postAreaCode': 'numberController.postAreaCode',
 
 };
 
