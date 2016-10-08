@@ -7,9 +7,6 @@ module.exports = {
 
 	getContectNumber: function (req, res) {
 
-		sails.log.info('Calling Get method');
-		var cou ;
-
 		country.find().exec(function (err, countries){
 		  if (err) {
 		    return res.serverError(err);
@@ -53,5 +50,4 @@ module.exports = {
 
 		});
   },
-
 };
