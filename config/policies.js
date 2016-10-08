@@ -52,7 +52,9 @@ module.exports.policies = {
   UserController: {
     list : 'isLoggedin',
     form : 'isLoggedin',
-    isCreatedUser : 'isLoggedin'
+    isCreatedUser : 'isLoggedin',
+    destroy : 'isLoggedin'
+    edit : 'isLoggedin'
   }
 
 };

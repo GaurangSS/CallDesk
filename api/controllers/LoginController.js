@@ -13,7 +13,7 @@ module.exports = {
 
     User.findOne({email:email,password:password}).exec(function findCallback(err, record){
         
-        console.log(err);
+        console.log(record);
         if(!record){
           return res.view('login.ejs',err);   
 

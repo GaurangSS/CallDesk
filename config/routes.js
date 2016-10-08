@@ -51,6 +51,10 @@ module.exports.routes = {
   'get /home': 'AuthController.createToken',
   
   'get /users': 'UserController.List',
+  
+  'get /users/delete/:id': 'UserController.destroy',
+
+  'get /users/edit/:id': 'UserController.edit',
 
   'get /browsercall/:client_name': 'BrowserCallController.createToken',
 
@@ -61,6 +65,8 @@ module.exports.routes = {
   'post /login': 'LoginController.Authentication',
   
   'post /create_user': 'UserController.createUser',
+  
+  'post /update_user/:id': 'UserController.edit',
 
 };
 
