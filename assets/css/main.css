@@ -7,6 +7,16 @@
     float: left;
     width: 33.33%;
 }
+.dialPad p {
+    color: #777776;
+    font-size: 1.25em;
+}
+.dialPad .number {
+    color: #000;
+    background-color: #fff;
+    width: 100%;
+    font-size: 1.25em;
+}
 .compact .dials .pad-action {
     background: #093;
 }
