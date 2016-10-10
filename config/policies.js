@@ -53,7 +53,7 @@ module.exports.policies = {
     list : 'isLoggedin',
     form : 'isLoggedin',
     isCreatedUser : 'isLoggedin',
-    destroy : 'isLoggedin'
+    destroy : 'isLoggedin',
     edit : 'isLoggedin'
   }
 

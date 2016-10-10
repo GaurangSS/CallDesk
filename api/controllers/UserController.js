@@ -30,6 +30,7 @@ module.exports = {
 			model.firstname=usr.firstname;
 			model.lastname=usr.lastname;
 			model.email=usr.email;
+			model.user_type_id=usr.user_type_id;
 
 			model.save(function(err){
 				if (err) {
