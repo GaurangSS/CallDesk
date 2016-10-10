@@ -59,11 +59,15 @@ module.exports.routes = {
 
   'get /contectNumbers': 'numberController.getContectNumber',
 
+  'get /buyNumber/:number': 'numberController.getbuyNumber',
+
+
   // Post methods
 
   'post /login': 'LoginController.Authentication',
 
   'post /contectNumbers': 'numberController.postContectNumber',
+  'post /postbuyNumber': 'numberController.postbuyNumber',
 
   // Ajax methos
 

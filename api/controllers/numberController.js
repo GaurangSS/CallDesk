@@ -28,8 +28,7 @@ module.exports = {
 		  }
 		  return res.json(areaCodes);
 		});
-
-},
+	},
 
   postContectNumber: function (req, res) {
 
@@ -49,5 +48,24 @@ module.exports = {
 			return res.json(contectDetails);
 
 		});
+  },
+
+  //TODO: redirect remaining
+  postbuyNumber: function (req, res) {
+
+  	var number = req.body.number;
+
+  	client.incomingPhoneNumbers.create({
+	    phoneNumber: number
+	  }, function(err, purchasedNumber) {
+	    return res.json(purchasedNumber);
+	  });
+  },
+
+  getbuyNumber: function (req, res) {
+
+  	var number = req.param('number', null);
+
+  	res.view('buyNumber.ejs', {number});
   },
 };

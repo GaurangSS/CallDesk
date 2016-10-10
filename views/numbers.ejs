@@ -15,10 +15,11 @@
               <label for="exampleInputEmail2">Country Name</label>
               <select id='counName' name="counName" class="form-control">
                 <option>select country</option>
+                <% if (countries.length > 0) {
                 
-                <% for (var i = 0; i < countries.length; i++) { %>
-                  <option value=<%= countries[i].counName%> > <%= countries[i].counName%> </option>
-                <% } %>
+                  for (var i = 0; i < countries.length; i++) { %>
+                    <option value=<%= countries[i].counName%> > <%= countries[i].counName%> </option>
+                  <% } }%>
 
               </select>
             </div>
@@ -99,7 +100,7 @@
             var optionsAsString = "<table class='table table-striped b-t b-light m-b-none' border='1'><tr><th>phone_number</th> <th> Action </th></tr><tbody>";
 
             for(var i = 0; i < data.length; i++) {
-                optionsAsString += "<tr><td> "+data[i].phone_number +"</td><td> <button class='btn btn-primary'>buy number </button></td></tr>";
+                optionsAsString += "<tr><td> "+data[i].phone_number +"</td><td> <a href='/buyNumber/"+data[i].phone_number+"' class='btn btn-sm btn-primary' >Buy Number</a></td></tr>";
             }
 
             optionsAsString+= "</tbody></table>";
@@ -109,7 +110,6 @@
         }
       });
     });
-
   });
 
 </script>

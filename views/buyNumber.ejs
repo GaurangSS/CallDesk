@@ -1,0 +1,42 @@
+<!-- content -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<div id="content" class="app-content" role="main">
+  <div class="app-content-body ">
+
+    <div class="wrapper-md" ng-controller="FormDemoCtrl">
+
+      <div class="panel panel-default">
+        <div class="panel-heading font-bold">
+          Contect Numbers
+        </div>
+        <div class="panel-body">
+          <form class="form-inline" action="/postbuyNumber" role="form"  method="post">
+            <div class="form-group">
+              <label for="exampleInputEmail2">Contact Name</label>
+              <input type="text" placeholder="Enter Contact Name" name="conName">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword2">Contact Number</label>
+              <input type="text" name="number" value="<%= number%>" readonly="true">
+            </div>
+            
+            <span ng-controller="ModalDemoCtrl">
+              <script type="text/ng-template" id="myModalContent.html">
+                <div ng-include="'tpl/modal.form.html'"></div>
+              </script>
+              <input type="submit" class="btn btn-success" value="buy Numbers">
+            </span>
+            <div id='numbers'>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+	</div>
+</div> 
+
+  <!-- /content -->
+  
+  <!-- footer -->
+
+  <!-- / footer -->
