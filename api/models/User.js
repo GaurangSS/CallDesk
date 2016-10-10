@@ -18,14 +18,37 @@ module.exports = {
   	  autoIncrement: true
   	},
 
-  	username: {
+    firstname: {
+      type: 'string',
+      index: true,
+      required: true
+    },
+
+    lastname: {
+      type: 'string',
+      index: true,
+      required: true
+    },
+
+  	email: {
   	  type: 'email',
       index: true
   	},
 
     password: {
       type: 'string',
-      psssword:true
+      password:true
+    },
+
+    user_type_id: {
+      type: 'integer',
+      index: true,
+      defaultsTo: 2
+    },
+
+    parent_id: {
+      type: 'integer',
+      index: true
     },
 
   	created_at: {

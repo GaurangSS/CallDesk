@@ -3,23 +3,22 @@ module.exports = {
 
   ShowLogin: function (req, res) {  
     return res.view('login.ejs');
- 
   },
 
   Authentication: function (req, res) {
 
     //console.log(req.body);
-    var username = req.body.username;
+    var email = req.body.email;
     var password = req.body.password;
 
-    User.findOne({username:username,password:password}).exec(function findCallback(err, record){
+    User.findOne({email:email,password:password}).exec(function findCallback(err, record){
         
-        console.log(err);
+        console.log(record);
         if(!record){
           return res.view('login.ejs',err);   
 
         }else{   
-
+          console.log(record.id);
             var data = {};
 
             var identity = 'kevin';
@@ -34,7 +33,8 @@ module.exports = {
 
              data.identity = identity;
              data.token = token;
-
+             req.session.authenticated = true;
+             req.session.userid = record.id;
           res.locals.layout = 'layout1.ejs';     
           return res.redirect('/home');
           
