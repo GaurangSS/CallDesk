@@ -141,8 +141,6 @@
     },
     smsApplicationSid:{
       type: 'varchar',
-    }, {
-      type: 'varchar',
     },
     trunkSid: {
       type: 'varchar',
