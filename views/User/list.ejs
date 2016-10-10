@@ -18,7 +18,8 @@
 										<th>First name</th>
 										<th>Last name</th>
 										<th>Email</th>
-										<th colspan=2>Action</th>
+										<th>Action</th>
+										<th>Time Allocation</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -27,8 +28,8 @@
 									    <td><%= list1.firstname %></td>
 									    <td><%= list1.lastname %></td>
 										<td><%= list1.email %></td>
-										<td></td> 
-										<td></td> 
+										<td></td>
+										<td></td>
 									</tr>
 									<%  var i=2; list. forEach(function(dataob) { %>
 									<tr>
@@ -36,8 +37,9 @@
 									    <td><%= dataob.firstname %></td>
 									    <td><%= dataob.lastname %></td>
 										<td><%= dataob.email %></td>
-										<td><a href="/users/edit/<%= dataob.id %>" class="btn btn-sm btn-warning">Edit</a></td>  
-										<td><a href="/users/delete/<%= dataob.id %>" class="btn btn-sm btn-danger">Delete</a></td>  
+										<td><a href="/users/edit/<%= dataob.id %>" class="btn btn-sm btn-warning">Edit</a>
+										<a href="/users/delete/<%= dataob.id %>" class="btn btn-sm btn-danger">Delete</a></td>
+										<td><a href="/allocateTime/<%= dataob.id %>" class="btn btn-sm btn-info">Time Allocation</a></td>
 									</tr>
 									<% }); %>
 								</tbody>
@@ -53,4 +55,4 @@
   
   <!-- footer -->
 
-  <!-- / footer
+  <!-- / footer -->
