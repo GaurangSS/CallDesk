@@ -4,25 +4,60 @@
 			<div class="wrapper-md">
 				<div class="panel panel-default">
 			    	<div class="panel-heading font-bold">                  
-			      		User
+			      		Working Hours
 			    	</div>
 			    	<div class="panel-body">
-			    		<div style="margin-bottom:10px">
-			      			<a href="/user/form" class="btn btn-info">Working Hours</a>
-			      		</div>
-			      		<div>
+			    		<form method="post" name="work_hour" action="/UserTimeAllocate/AllocateTime/<%= result.user_id %>">
 			      			<div class="col-md-4">
-			      				<input type="radio" value="1" name="duration"> All Time
+			      				<% if(result.availibility_status == 1) { %>
+			      					<input type="radio" value="1" name="duration" checked> All Time
+			      				<% } else { %>
+			      					<input type="radio" value="1" name="duration"> All Time
+			      				<% } %>
 			      			</div>
 			      			<div class="col-md-4">
-			      				<input type="radio" value="2" name="duration"> Custom
+			      				<% if(result.availibility_status == 2) { %>
+			      					<input type="radio" value="2" name="duration" checked> Custom
+			      				<% } else { %>
+			      					<input type="radio" value="2" name="duration"> Custom
+			      				<% } %>
 			      			</div>
 			      			<div class="col-md-4">
-			      				<input type="radio" value="3" name="duration"> Unavailable
+			      				<% if(result.availibility_status == 3) { %>
+			      					<input type="radio" value="3" name="duration" checked> Unavailable
+			      				<% } else { %>
+			      					<input type="radio" value="3" name="duration"> Unavailable
+			      				<% } %>
 			      			</div>
-			      		</div>
+			      			<div class="col-md-12" style="margin-top:20px">
+					      		<div id="custom" style="display:none;" class="col-md-12">
+					      			<input type="checkbox" name="w_day[]" value="Monday"> Monday
+					      			<input type="checkbox" name="w_day[]" value="Tuesday" style="margin-left:20px"> Tuesday
+					      			<input type="checkbox" name="w_day[]" value="Wednesday" style="margin-left:20px"> Wednesday
+					      			<input type="checkbox" name="w_day[]" value="Thursday" style="margin-left:20px"> Thursday
+					      			<input type="checkbox" name="w_day[]" value="Friday" style="margin-left:20px"> Friday
+					      			<input type="checkbox" name="w_day[]" value="Saturday" style="margin-left:20px"> Saturday
+					      			<input type="checkbox" name="w_day[]" value="Sunday" style="margin-left:20px"> Sunday
+				      				<div class="form-group" style="margin-top:20px">
+										<label class="col-lg-2 control-label">From</label>
+										<div class="col-lg-3">
+											<input type="text" name="from_time" class="form-control" value="" placeholder="00:00:00">
+										</div>
+									
+										<label class="col-lg-2 control-label">To</label>
+										<div class="col-lg-3">
+											<input type="text" name="to_time" class="form-control" value="" placeholder="23:59:59">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group" style="margin-top:10px">
+								<div class="col-lg-10" style="margin-top:20px">
+									<button type="submit" class="btn btn-info">Update Time</button>
+								</div>
+							</div>
+						</form>
 			    	</div>
-
 			  	</div>
 			</div>
 		</div>
@@ -32,3 +67,16 @@
   <!-- footer -->
 
   <!-- / footer -->
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script type="text/javascript">
+  	$(document).ready(function(){
+  		$('input[type=radio][name=duration]').change(function() {
+  			var rad_val = this.value;
+  			if(rad_val == 2){
+  				$("#custom").show();
+  			} else {
+  				$("#custom").hide();
+  			}
+  		});
+  	})
+  </script>

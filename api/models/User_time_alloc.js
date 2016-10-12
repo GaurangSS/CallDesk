@@ -22,20 +22,16 @@ module.exports = {
   			index: true
 	  	},
 
-	  	time_alloc: {
-	  		type: 'integer'
+	  	day: {
+	  		type: 'string'
 	  	},
 
 	  	from_time: {
-	  		type: 'time'
+	  		type: 'string'
 	  	},
 
 	  	to_time: {
-	  		type: 'time'
-	  	},
-
-	  	allocation_status: {
-	  		type: 'integer'
+	  		type: 'string'
 	  	},
 
 	  	created_at: {

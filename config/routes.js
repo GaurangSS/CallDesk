@@ -69,6 +69,8 @@ module.exports.routes = {
   'post /update_user/:id': 'UserController.edit',
 
   'get /allocateTime/:id': 'UserTimeAllocController.AllocateTime',
+  
+  'post /UserTimeAllocate/AllocateTime/:id': 'UserTimeAllocController.AllocateTime',
 
 };
 

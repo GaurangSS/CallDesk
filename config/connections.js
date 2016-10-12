@@ -41,7 +41,8 @@ module.exports.connections = {
   *                                                                          *
   ***************************************************************************/
 
-    MainSql: {
+//Local Server
+  MainSql: {
     adapter: 'sails-mysql',
       host: 'localhost',
       user: 'root',
@@ -52,6 +53,19 @@ module.exports.connections = {
       transactionConnectionLimit: 20,
       rollbackTransactionOnError: false,
   },
+
+//Live server
+/*  MainSql: {
+    adapter: 'sails-mysql',
+      host: '104.43.16.40',
+      user: 'calluser',
+      password: 'nh3JFEYhNVeNzySV',
+      database: 'calldesk',
+
+      queryCaseSensitive: true,
+      transactionConnectionLimit: 20,
+      rollbackTransactionOnError: false,
+  },*/
 
   // someMysqlServer: {
   //   adapter: 'sails-mysql',

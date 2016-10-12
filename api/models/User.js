@@ -51,6 +51,10 @@ module.exports = {
       index: true
     },
 
+    delete_status: {
+      type: 'integer'
+    },
+
   	created_at: {
   	  type: 'datetime',
   	  columnName: 'createdAt'

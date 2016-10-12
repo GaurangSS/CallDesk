@@ -36,7 +36,7 @@ module.exports = {
              req.session.authenticated = true;
              req.session.userid = record.id;
           res.locals.layout = 'layout1.ejs';     
-          return res.redirect('/home');
+          return res.redirect('/users');
           
         }
 

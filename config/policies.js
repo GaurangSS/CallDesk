@@ -54,7 +54,8 @@ module.exports.policies = {
     form : 'isLoggedin',
     isCreatedUser : 'isLoggedin',
     destroy : 'isLoggedin',
-    edit : 'isLoggedin'
+    edit : 'isLoggedin',
+    allocateTime : 'isLoggedin'
   }
 
 };
