@@ -68,7 +68,7 @@ module.exports.routes = {
 
   'post /contectNumbers': 'numberController.postContectNumber',
   'post /postbuyNumber': 'numberController.postbuyNumber',
-
+  'post /allocateNumberToUSer': 'numberController.postallocateNumberToUSer',
   // Ajax methos
 
   'post /postAreaCode': 'numberController.postAreaCode',

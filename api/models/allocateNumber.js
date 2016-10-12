@@ -17,6 +17,11 @@ module.exports = {
       via: 'id'
   	},
 
+    numberId: {
+      collection: 'numberInfo',
+      via: 'id'
+    },
+
     allocatedDate: {
       type: 'datetime',
     },

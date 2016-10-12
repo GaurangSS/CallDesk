@@ -19,6 +19,9 @@
     phone_number: {
       type: 'varchar',
     },
+    contact_name: {
+      type: 'varchar'
+    },
     voice_url: {
       type: 'varchar',
     },
@@ -33,6 +36,12 @@
     },
     voice_caller_id_lookup: {
       type: 'varchar',
+    },
+    date_created: {
+      type: 'datetime',
+    },
+    date_updated: {
+      type: 'datetime',
     },
     sms_url: {
       type: 'varchar',
@@ -65,7 +74,7 @@
       type: 'varchar',
     },
     voice_application_sid: {
-      type: 'varchar',
+      type: 'date',
     },
     sms_application_sid: {
       type: 'varchar',
@@ -107,10 +116,10 @@
       type: 'varchar',
     },
     dateCreated: {
-      type: 'varchar',
+      type: 'datetime',
     },
     dateUpdated: {
-      type: 'varchar',
+      type: 'datetime',
     },
     smsUrl: {
       type: 'varchar',
@@ -134,12 +143,12 @@
       type: 'varchar',
     },
     apiVersion: {
-      type: 'varchar',
+      type: 'date',
     },
     voiceApplicationSid: {
       type: 'varchar',
     },
-    smsApplicationSid:{
+    smsApplicationSid: {
       type: 'varchar',
     },
     trunkSid: {

@@ -3,39 +3,41 @@
 <div id="content" class="app-content" role="main">
   <div class="app-content-body ">
 
-    <div class="wrapper-md" ng-controller="FormDemoCtrl">
+    <div class="wrapper-md">
 
       <div class="panel panel-default">
         <div class="panel-heading font-bold">                  
           Contect Numbers
         </div>
         <div class="panel-body">
-          <form class="form-inline" role="form"  method="post">
+          <form class="bs-example form-horizontal" role="form"  method="post">
             <div class="form-group">
-              <label for="exampleInputEmail2">Country Name</label>
-              <select id='counName' name="counName" class="form-control">
-                <option>select country</option>
-                <% if (countries.length > 0) {
-                
-                  for (var i = 0; i < countries.length; i++) { %>
-                    <option value=<%= countries[i].counName%> > <%= countries[i].counName%> </option>
-                  <% } }%>
+              <label class="col-lg-2 control-label">Country Name</label>
+              <div class="col-lg-8">
+                <select id='counName' name="counName" class="form-control">
+                  <option>select country</option>
+                  <% if (countries.length > 0) {
+                  
+                    for (var i = 0; i < countries.length; i++) { %>
+                      <option value=<%= countries[i].counName%> > <%= countries[i].counName%> </option>
+                    <% } }%>
 
-              </select>
+                </select>
+              </div>
             </div>
             <div class="form-group">
-              <label for="exampleInputPassword2">Area Code</label>
-              <select id='areaCode' name=areaCode class="form-control">
-                <option>select area</option>
-              </select>
+              <label class="col-lg-2 control-label">Area Code</label>
+              <div class="col-lg-8">
+                <select id='areaCode' name=areaCode class="form-control">
+                  <option>select area</option>
+                </select>
+              </div>
             </div>
-            
-            <span ng-controller="ModalDemoCtrl">
-              <script type="text/ng-template" id="myModalContent.html">
-                <div ng-include="'tpl/modal.form.html'"></div>
-              </script>
-              <input class="btn btn-success" id="getNumbers" value="Find Numbers">
-            </span>
+            <div class="form-group">
+              <div class="col-lg-offset-2 col-lg-10">
+                <input class="btn btn-info" id="getNumbers" value="Find Numbers">
+              </div>
+            </div>
             <div id='numbers'>
             </div>
           </form>

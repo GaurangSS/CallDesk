@@ -1,0 +1,50 @@
+<!-- content -->
+<div id="content" class="app-content" role="main">
+	<div class="app-content-body "> 
+		<div class="wrapper-md">
+			<div class="col-md-8">
+				<div class="panel panel-default">
+		    	<div class="panel-heading font-bold">                  
+		      	Allocate User
+		    	</div>
+		    	<div class="panel-body">
+	      		<form class="bs-example form-horizontal" action="/allocateNumberToUSer" method="post">
+							<div class="form-group">
+								<label class="col-lg-2 control-label">Number</label>
+								<div class="col-lg-10">
+									<input type="text" name="number" class="form-control" placeholder="John" value="<%= number %>" reonly='trur'>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-lg-2 control-label">User</label>
+								<div class="col-lg-10">
+									<select class="users form-control" name='users' multiple>
+									  <option value="1">user1</option>
+									  <option value="2">user2</option>
+									  <option value="3">user3</option>
+									  <option value="4">user4</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-lg-offset-2 col-lg-10">
+									<button type="submit" class="btn btn-info">Allocate Number To User</button>
+								</div>
+							</div>
+						</form>
+		    	</div>
+		  	</div>
+		  </div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function() {
+	  $(".users").select2();
+	});
+</script>
+  <!-- /content -->
+  
+  <!-- footer -->
+
+  <!-- / footer -->
