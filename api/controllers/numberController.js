@@ -113,7 +113,13 @@ module.exports = {
   //     	console.log('successfully inserted'); 
   //     }
   //   });
-    return res.view('allocatenumbertouser.ejs',{number: '+15102530193'});
+  	User.find().exec(function (err, users){
+		  if (err) {
+		    return res.serverError(err);
+		  }
+		  return res.view('allocatenumbertouser.ejs',{number: '+15102530193', users: users});
+		});
+    
 
   	// client.incomingPhoneNumbers.create({
 	  //   phoneNumber: number

@@ -19,10 +19,11 @@
 								<label class="col-lg-2 control-label">User</label>
 								<div class="col-lg-10">
 									<select class="users form-control" name='users' multiple>
-									  <option value="1">user1</option>
-									  <option value="2">user2</option>
-									  <option value="3">user3</option>
-									  <option value="4">user4</option>
+										<% if (users.length > 0) {
+                  
+                    for (var i = 0; i < users.length; i++) { %>
+                      <option value=<%= users[i].id%> > <%= users[i].username%> </option>
+                    <% } }%>
 									</select>
 								</div>
 							</div>
