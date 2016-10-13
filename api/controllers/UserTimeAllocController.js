@@ -30,12 +30,15 @@ module.exports = {
 						console.log(data);
 						if(data){ console.log('data yes');  
 
-							User_time_alloc.destroy({'user_id':id}).exec(function(err) {   console.log('delete successfully');  });
+							User_time_alloc.destroy({'user_id':id}).exec(function(err) {  
+								if(err) {
+									console.log(err);
+								} else { console.log('delete successfully'); 
 
-							var new_data = {};
 						//	list =  req.body.w_day.size();
 
 							_.forEach(req.body.w_day, function(value) {
+								console.log(value);
 								var user_status = {};
 								user_status.from_time = req.body.from_time;
 								user_status.to_time = req.body.to_time;
@@ -49,6 +52,7 @@ module.exports = {
 							  		}
 							  	})
 							});
+							}  });
 
 					    } else {   console.log('data not present'); }
 					//	var len = data.length();
