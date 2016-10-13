@@ -86,7 +86,7 @@ module.exports = {
           	console.log(err); 
           } else {
           	console.log(auth);
-          	for(var i=1;i<=7;i++) {
+          	/*for(var i=1;i<=7;i++) {
 	          	var time_allocation = {};
 	          	time_allocation.user_id = auth.id;
 	          	time_allocation.from_time = '00:00:00';
@@ -115,7 +115,7 @@ module.exports = {
 	          		console.log('successfully inserted1');
 	          	}
           		});
-	         }
+	         }*/
           	var user_status = {};
           	user_status.user_id = auth.id;
           	user_status.availibility_status = 1;
