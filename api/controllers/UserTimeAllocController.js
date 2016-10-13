@@ -1,3 +1,5 @@
+var lodash = require('lodash');
+
 module.exports = {
 
 	AllocateTime: function(req,res) {
@@ -20,25 +22,40 @@ module.exports = {
 						console.log("Successfully updated");
 					}
 				});
-				var user_status = {};
-				user_status.from_time = req.body.from_time;
-				user_status.to_time = req.body.to_time;
+				
 			//	var day = count(req.body.w_day);
-				User_time_alloc.find().where({'user_id':id}).exec(function(error, data){
-					console.log('check db data alreay exist');
-					console.log(data);
-					if(data){ console.log('data yes');  
+				if(req.body.duration == 2){
+					User_time_alloc.find().where({'user_id':id}).exec(function(error, data){
+						console.log('check db data alreay exist');
+						console.log(data);
+						if(data){ console.log('data yes');  
 
-						User_time_alloc.destroy({'user_id':id}).exec(function(err) {   console.log('delete successfully');  });
+							User_time_alloc.destroy({'user_id':id}).exec(function(err) {   console.log('delete successfully');  });
 
-						var new_data = {};
-						new_data.list =  req.body.w_day;
+							var new_data = {};
+						//	list =  req.body.w_day.size();
 
-				    } else {   console.log('data not present'); }
-				//	var len = data.length();
-				//	console.log(len);
+							_.forEach(req.body.w_day, function(value) {
+								var user_status = {};
+								user_status.from_time = req.body.from_time;
+								user_status.to_time = req.body.to_time;
+								user_status.day = value;
+								user_status.user_id = id;
+							  	User_time_alloc.create(user_status,function (error1,resp){
+							  		if(error1){
+							  			console.log("not created");
+							  		} else {
+							  			console.log("created successfully");
+							  		}
+							  	})
+							});
 
-				});
+					    } else {   console.log('data not present'); }
+					//	var len = data.length();
+					//	console.log(len);
+
+					});
+				}
 		//		user_status.from_time = 
 			}
 			else
