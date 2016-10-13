@@ -1,25 +1,88 @@
-  <div id="controls">
-    <div id="info">
-      <p class="instructions">Twilio Client</p>
-      <div id="client-name"></div>
-    </div>
-    <div id="call-controls">
-      <p class="instructions">Make a Call:</p>
-      <input id="phone-number" type="text" placeholder="Enter a phone # or client name" />
-      <button id="button-call">Call</button>
-      <button id="button-hangup">Hangup</button>
-    </div>
-    <div id="log"></div>
+<div id="controls">
+  <div id="info">
+    <p class="instructions">Twilio Client</p>
+    <div id="client-name"></div>
   </div>
-  <script type="text/javascript" src="//media.twiliocdn.com/sdk/js/client/v1.3/twilio.min.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-  <script type="text/javascript">
-      var identity = <%- JSON.stringify(identity) %>;
-      var token = <%- JSON.stringify(token) %>;
-      
-function autoCall(identity,token) {    
-      
-      if(token!=''){
+  <div id="call-controls" clearfix>
+    <div id="main-wrapper">
+      <section role="main">
+        <div class="dialPad compact">
+          <p> Enter a phone # or client name </p>
+          <div class="number">
+          </div>
+          <div class="dials">
+            <ol>
+              <li class="digits">
+                <p><strong>1</strong></p>
+              </li>
+              <li class="digits">
+                <p><strong>2</strong><sup>abc</sup></p>
+              </li>
+              <li class="digits">
+                <p><strong>3</strong><sup>def</sup></p>
+              </li>
+              <li class="digits">
+                <p><strong>4</strong><sup>ghi</sup></p>
+              </li>
+              <li class="digits">
+                <p><strong>5</strong><sup>jkl</sup></p>
+              </li>
+              <li class="digits">
+                <p><strong>6</strong><sup>mno</sup></p>
+              </li>
+              <li class="digits">
+                <p><strong>7</strong><sup>pqrs</sup></p>
+              </li>
+              <li class="digits">
+                <p><strong>8</strong><sup>tuv</sup></p>
+              </li>
+              <li class="digits">
+                <p><strong>9</strong><sup>wxyz</sup></p>
+              </li>
+              <li class="digits">
+                <p><strong>*</strong></p>
+              </li>
+              <li class="digits">
+                <p><strong>0</strong><sup>+</sup></p>
+              </li>
+              <li class="digits">
+                <p><strong>#</strong></p>
+              </li>
+
+              <li class="digits">
+                <p><strong><i class="icon-refresh icon-large"></i></strong> <sup>Clear</sup></p>
+              </li>
+              <li class="digits">
+                <p><strong><i class="fa fa-remove icon-large"></i></strong> <sup>Delete</sup></p>
+              </li>
+              <li class="digits pad-action">
+                <p><strong><i class="fa fa-phone icon-large"></i></strong> <sup>Call</sup></p>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </section>
+    </div>
+    <!--
+    <p class="instructions">Make a Call:</p>
+    <input id="phone-number" type="text" placeholder="Enter a phone # or client name" />
+    -->
+    <button id="button-call">Call</button>
+    <button id="button-hangup">Hangup</button>
+  </div>
+  <div id="log"></div>
+</div>
+<script type="text/javascript" src="//media.twiliocdn.com/sdk/js/client/v1.3/twilio.min.js"></script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript">
+
+  var identity = <%- JSON.stringify(identity) %>;
+  var token = <%- JSON.stringify(token) %>;
+
+  function autoCall(identity,token) {    
+        
+    if(token!=''){
       log('Got a token.');
       console.log('Token: ' +token);
       setClientNameUI(identity);
@@ -65,17 +128,161 @@ function autoCall(identity,token) {
     }else{
       log('Could not get a token from server!');
     }
-}
-function log(message) {
-  var logDiv = document.getElementById('log');
-  logDiv.innerHTML += '<p>&gt;&nbsp;' + message + '</p>';
-  logDiv.scrollTop = logDiv.scrollHeight;
-}
-function setClientNameUI(clientName) {
-  var div = document.getElementById('client-name');
-  div.innerHTML = 'Your client name: <strong>' + clientName +
-    '</strong>';
-}
-autoCall(identity,token);
+    // Bind button to make call
+    document.getElementById('button-call').onclick = function () {
+      console.log($('.number').html());
+      // get the phone number to connect the call to
+      var params = {
+        To: $('.number').html()
+      };
+
+      console.log('Calling ' + params.To + '...');
+      Twilio.Device.connect(params);
+    };
+
+    // Bind button to hangup call
+    document.getElementById('button-hangup').onclick = function () {
+      log('Hanging up...');
+      Twilio.Device.disconnectAll();
+    };
+  }
+  function log(message) {
+    var logDiv = document.getElementById('log');
+    logDiv.innerHTML += '<p>&gt;&nbsp;' + message + '</p>';
+    logDiv.scrollTop = logDiv.scrollHeight;
+  }
+  function setClientNameUI(clientName) {
+    var div = document.getElementById('client-name');
+    div.innerHTML = 'Your client name: <strong>' + clientName +
+      '</strong>';
+  }
+  autoCall(identity,token);
+
+//
+
+  var dials = $(".dials ol li");
+  var index;
+  var number = $(".number");
+  var total;
+
+  dials.click(function(){
+
+      index = dials.index(this);
+
+      if(index == 9){
+
+          number.append("*");
+
+      }else if(index == 10){
+
+          number.append("0");
+
+      }else if(index == 11){
+
+          number.append("#");
+
+      }else if(index == 12){
+
+          number.empty();
+
+      }else if(index == 13){
+
+          total = number.text();
+          total = total.slice(0,-1);
+          number.empty().append(total);
+
+      }else if(index == 14){
+
+          //add any call action here
+
+      }else{ number.append(index+1); }
+  });
+
+  $(document).keydown(function(e){
+
+    switch(e.which){
+
+      case 96:
+
+        number.append("0");
+        break;
+
+      case 97:
+
+        number.append("1");
+        break;
+
+      case 98:
+
+        number.append("2");
+        break;
+
+      case 99:
+
+        number.append("3");
+        break;
+
+      case 100:
+
+        number.append("4");
+        break;
+
+      case 101:
+
+        number.append("5");
+        break;
+
+      case 102:
+
+        number.append("6");
+        break;
+
+      case 103:
+
+          number.append("7");
+          break;
+
+      case 104:
+
+        number.append("8");
+        break;
+
+      case 105:
+
+        number.append("9");
+        break;
+
+      case 8:
+
+        total = number.text();
+        total = total.slice(0,-1);
+        number.empty().append(total);
+        break;
+
+      case 27:
+
+        number.empty();
+        break;
+
+      case 106:
+
+        number.append("*");
+        break;
+
+      case 35:
+
+        number.append("#");
+        break;
+
+      case 13:
+
+        $('.pad-action').click();
+        break;
+
+        default: return;
+    }
+
+    e.preventDefault();
+  });
 </script>
 

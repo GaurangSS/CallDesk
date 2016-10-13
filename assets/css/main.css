@@ -1,0 +1,36 @@
+.dialPad .dials {
+    margin: -1px 0 0 -1px;
+    background: #686e6f;
+    cursor: pointer;
+}
+.dialPad .dials .digits {
+    float: left;
+    width: 33.33%;
+}
+.dialPad p {
+    color: #777776;
+    font-size: 1.25em;
+}
+.dialPad .number {
+    color: #000;
+    background-color: #fff;
+    width: 100%;
+    font-size: 1.25em;
+}
+.compact .dials .pad-action {
+    background: #093;
+}
+ol{
+    list-style: none;
+}
+.compact .dials .digits p strong {
+    font-size: 30px;
+}
+.dialPad .dials .digits p strong {
+    margin-right: 8px;
+    color: #fff;
+}
+.compact .dials .digits p sup {
+    text-transform: uppercase;
+    color: #e2e1e1;
+}
