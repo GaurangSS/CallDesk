@@ -1,6 +1,11 @@
 var sails = require('sails');
-var accountSid = 'ACe732ab6c48c553e824547bce75dfc861';
-var authToken = "1ee4bc07c48d297d817016756d8008f4";
+
+
+// var accountSid = 'ACe732ab6c48c553e824547bce75dfc861';
+// var authToken = "1ee4bc07c48d297d817016756d8008f4";
+var accountSid = 'AC4ee991af7487abd80e955dd06b3c37d9';
+var authToken = "d6d4145190d4d74fa622c62ea83eaac4";
+
 var client = require('twilio')(accountSid, authToken);
 
 var lodash = require('lodash');
@@ -13,6 +18,7 @@ module.exports = {
 		  if (err) {
 		    return res.serverError(err);
 		  }
+		  res.locals.layout = 'layout1.ejs';
 		  return res.view('numbers.ejs',{countries});
 		});
   },
@@ -43,11 +49,17 @@ module.exports = {
     client.availablePhoneNumbers(countryName).local.list({
 		  areaCode: areaCode
 		}, function(err, data) {
-			
+			if(err) {
+				console.log(err);
+			} else {
+				console.log(data);
+
 	  	var number = data.availablePhoneNumbers[0];
 	  	contectDetails = data.availablePhoneNumbers;
 
 			return res.json(contectDetails);
+			}
+		
 
 		});
   },
@@ -56,51 +68,58 @@ module.exports = {
 
   	var number = req.body.number;
 
-  	console.log(number)
 
+  	client.incomingPhoneNumbers.create({
+	    phoneNumber: number
+	  }, function(err, purchasedNumber) {
+	  	if (err) {
+	  	console.log(err)
 
-  	// client.incomingPhoneNumbers.create({
-	  //   phoneNumber: number
-	  // }, function(err, purchasedNumber) {
-	  // 	if (err) {
-	  // 	console.log(purchasedNumber)
+	  	}
+	  	numberDetail = {};
+	  	numberDetail.sid = purchasedNumber.sid;
+	  	numberDetail.account_sid = purchasedNumber.account_sid,
+		  numberDetail.friendly_name = purchasedNumber.friendly_name,
+		  numberDetail.phone_number = purchasedNumber.phone_number,
+		  numberDetail.contact_name = req.body.conName,
+		  numberDetail.date_created = purchasedNumber.date_created,
+		  numberDetail.date_updated = purchasedNumber.date_updated,
 
-	  // 	}
-	  // 	purchasedNumber.contact_name= 'testNumber';
-	  // 	numberInfo.create(purchasedNumber, function(err, auth) {
-	  //     if(err) {
-	  //     	console.log(err);
-	  //     } else {
-	  //     	console.log('successfully inserted');
-	  //     }
-	  //   });
+	  	numberInfo.create(numberDetail, function(err, auth) {
+	      if(err) {
+	      	console.log(err);
+	      } else {
+	      	console.log('successfully inserted');
+	      }
+	    });
 
+	    var call_status = {};
+	  	call_status.number_id = 1;
+	  	call_status.availibility_status = 1;
+	  	call_status.assign_device_status = 0;
 
-	  //   var call_status = {};
-	  // 	call_status.number_id = 1;
-	  // 	call_status.availibility_status = 1;
-	  // 	call_status.assign_device_status = 0;
+	  	call_status_info.create(call_status, function(err2,auth2) {
+		  	if(err2) {
+		  		console.log(err2);
+		  	} else {
+		  		console.log('successfully inserted2');
+		  	}
+	  	});
 
-	  // 	call_status_info.create(call_status, function(err2,auth2) {
-		 //  	if(err2) {
-		 //  		console.log(err2);
-		 //  	} else {
-		 //  		console.log('successfully inserted2');
-		 //  	}
-	  // 	});
-
-	  	
-
-	  //   // return res.json(purchasedNumber);
-	  // });
-
-	  User.find().exec(function (err, users){
+	  	User.find().exec(function (err, users){
 			  if (err) {
 			    return res.serverError(err);
 			  }
 			  var result = {}
-			  return res.view('allocatenumbertouser.ejs',{number: '+15102530193', users: users, result: result});
+			  res.locals.layout = 'layout1.ejs';
+			  return res.view('allocatenumbertouser.ejs',{number: purchasedNumber.phone_number, users: users, result: result});
 			});
+	  	
+
+	    // return res.json(purchasedNumber);
+	  });
+
+	 
 
 
 		// numberInfo.create(form_data, function(err, auth) {
@@ -110,66 +129,13 @@ module.exports = {
   //     	console.log('successfully inserted');
   //     }
   //   });
-	  
-
-  	// var form_data = { sid: 'PNf6f07c39158731dbc8f01f44ba04cbe7',
-	  // account_sid: 'ACe732ab6c48c553e824547bce75dfc861',
-	  // friendly_name: '(510) 253-0193',
-	  // phone_number: '+15102530193',
-	  // contact_name: 'testNumber',
-	  // voice_url: null,
-	  // voice_method: 'POST',
-	  // voice_fallback_url: null,
-	  // voice_fallback_method: 'POST',
-	  // voice_caller_id_lookup: false,
-	  // date_created: 'Sat, 08 Oct 2016 13:18:15 +0000',
-	  // date_updated: 'Sat, 08 Oct 2016 13:18:15 +0000',
-	  // sms_url: '',
-	  // sms_method: 'POST',
-	  // sms_fallback_url: '',
-	  // sms_fallback_method: 'POST',
-	  // address_requirements: 'none',
-	  // beta: false,
-	  // capabilities: { voice: true, sms: true, mms: true },
-	  // status_callback: '',
-	  // status_callback_method: 'POST',
-	  // api_version: '2010-04-01',
-	  // voice_application_sid: null,
-	  // sms_application_sid: '',
-	  // trunk_sid: null,
-	  // emergency_status: 'Inactive',
-	  // emergency_address_sid: null,
-	  // uri: '/2010-04-01/Accounts/ACe732ab6c48c553e824547bce75dfc861/IncomingPhoneNumbers/PNf6f07c39158731dbc8f01f44ba04cbe7.json',
-	  // accountSid: 'ACe732ab6c48c553e824547bce75dfc861',
-	  // friendlyName: '(510) 253-0193',
-	  // phoneNumber: '+15102530193',
-	  // voiceUrl: null,
-	  // voiceMethod: 'POST',
-	  // voiceFallbackUrl: null,
-	  // voiceFallbackMethod: 'POST',
-	  // voiceCallerIdLookup: false,
-	  // smsUrl: '',
-	  // smsMethod: 'POST',
-	  // smsFallbackUrl: '',
-	  // smsFallbackMethod: 'POST',
-	  // addressRequirements: 'none',
-	  // statusCallback: '',
-	  // statusCallbackMethod: 'POST',
-	  // apiVersion: '2010-04-01',
-	  // voiceApplicationSid: null,
-	  // smsApplicationSid: '',
-	  // trunkSid: null,
-	  // emergencyStatus: 'Inactive',
-	  // emergencyAddressSid: null };
-	  
-		// console.log(form_data);
-
  
   },
 
   getbuyNumber: function (req, res) {
 
   	var number = req.param('number', null);
+  	res.locals.layout = 'layout1.ejs';
 
   	res.view('buyNumber.ejs', {number});
   },
@@ -199,69 +165,127 @@ module.exports = {
 			    }
 			  });
 			});
-
-			call_status_info.findOne().where({'number_id':numberId}).exec(function(err,result){
-					result.save(function(err){
-						if(err) {
-							console.log(err);
-						}
-						else {
-							console.log("Successfully updated");
-						}
-					});
-
-					if (req.body.duration == 2) {
-						call_time_alloc.findOne().where({'number_id': numberId}).exec(function(error, data){
-
-							if (data) {
-								call_time_alloc.destroy({'number_id': numberId}).exec(function(err) {
-									if (err) {
-										console.log(err);
-									} else {
-										console.log('delete successfully');
-										_.forEach(req.body.w_day, function(value) {
-
-											var call_status = {};
-											call_status.from_time = req.body.from_time;
-											call_status.to_time = req.body.to_time;
-											call_status.day = value;
-											call_status.number_id = numberId;
-										  	call_time_alloc.create(call_status,function (error1,resp){
-										  		if(error1){
-										  			console.log("not created");
-										  		} else {
-										  			console.log("created successfully");
-										  		}
-										  	})
-										});
-									}
-
-								});
-							} else {
-
-								_.forEach(req.body.w_day, function(value) {
-
-									var call_status = {};
-									call_status.from_time = req.body.from_time;
-									call_status.to_time = req.body.to_time;
-									call_status.day = value;
-									call_status.number_id = numberId;
-								  	call_time_alloc.create(call_status,function (error1,resp){
-								  		if(error1){
-								  			console.log("not created");
-								  		} else {
-								  			console.log("created successfully");
-								  		}
-								  	})
-								});
-							}
-						});
-
-					}
-			});
   	});
 	  	
   	return res.redirect('/ContectNumbers');
   },
+  numberslist: function (req, res) {
 
+  	numberInfo.find().exec(function(err, numbers) {
+
+  		if (err) {
+  			return res.serverError(err);
+  		}
+
+  		res.locals.layout = 'layout1.ejs';
+
+  		res.view('numberslist.ejs', {numbers});
+
+  	});
+  },
+
+  AllocateTime: function(req,res) {
+		var id=req.param('id',null);
+		
+		call_status_info.findOne().where({'number_id':id}).exec(function(err,result){
+			if(req.method=='POST')
+			{
+				result.availibility_status = req.body.duration;
+				result.save(function(err){
+					if(err) {
+						console.log(err);
+					}
+					else {
+						console.log("Successfully updated");
+					}
+				});
+				
+				if(req.body.duration == 2){
+					call_time_alloc.find().where({'number_id':id}).exec(function(error, data){
+						if(data){ 
+							call_time_alloc.destroy({'number_id':id}).exec(function(err) {  
+								if(err) {
+									console.log(err);
+								} else { 
+
+							_.forEach(req.body.w_day, function(value) {
+								console.log(value);
+								var call_status = {};
+								call_status.from_time = req.body.from_time;
+								call_status.to_time = req.body.to_time;
+								call_status.day = value;
+								call_status.number_id = id;
+							  	call_time_alloc.create(call_status,function (error1,resp){
+							  		if(error1){
+							  			console.log("not created");
+							  		} else {
+							  			console.log("created successfully");
+										
+							  		}
+							  	})
+							});
+							res.redirect('/numberslist');
+							}  });
+
+					    } else {  }
+
+					});
+				}
+				else {
+					res.redirect('/numberslist');
+				}
+			}
+			else
+			{
+				if(result.availibility_status == 2)
+				{
+					call_time_alloc.find().where({'number_id':id}).exec(function(err1,model){
+						if(err1) {
+						} else {
+							console.log(model);
+							var response = {};
+							
+							var mon=tue=wed=thu=fri=sat=sund=0;
+							_.forEach(model, function(value) {
+								var from_time = value.from_time;
+								var to_time = value.to_time;
+								response.from_time = from_time;
+								response.to_time = to_time;
+								
+								if(value.day=='Monday'){  mon=1; }
+								if(value.day=='Tuesday'){  tue=1; }
+								if(value.day=='Wednesday'){  wed=1; }
+								if(value.day=='Thursday'){  thu=1; }
+								if(value.day=='Friday'){  fri=1; }
+								if(value.day=='Saturday'){  sat=1; }
+								if(value.day=='Sunday'){  sund=1; }
+							})
+							response.result = result;
+							response.model = model;
+							response.mon = mon;
+							response.tue = tue;
+							response.wed = wed;
+							response.thu = thu;
+							response.fri = fri;
+							response.sat = sat;
+							response.sund = sund;
+
+							console.log(response);
+							res.locals.layout = 'layout1.ejs';
+							return res.view( 'allocateTimeToNumber.ejs',{'response':response});
+						}
+					})
+				}
+				else {
+					var model = {};
+					var response = {};
+					response.result = result;
+					response.model = model;
+					console.log(response);
+					res.locals.layout = 'layout1.ejs';
+					return res.view( 'allocateTimeToNumber.ejs',{'response':response});
+				}
+			}
+		})
+	},
 };

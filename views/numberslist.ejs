@@ -1,0 +1,44 @@
+<!-- content -->
+   <div id="content" class="app-content" role="main">
+  		<div class="app-content-body "> 
+			<div class="wrapper-md">
+				<div class="panel panel-default">
+			    	<div class="panel-heading font-bold">                  
+			      		Numbers
+			    	</div>
+			    	<div class="panel-body">
+			    		<div>
+			      		<table  class="table" >
+								<thead>
+									<tr>
+										<th>sid</th>
+										<th>account_sid</th>
+										<th>phone_number</th>
+										<th>contact_name</th>
+										<th>Time Allocation</th>
+									</tr>
+								</thead>
+								<tbody>
+									<%  var i=1; numbers. forEach(function(number) { %>
+									<tr>
+										<td><%= number.sid %></td>
+								    <td><%= number.account_sid %></td>
+								    <td><%= number.phone_number %></td>
+										<td><%= number.contact_name %></td>
+										<td><a href="/allocateTime/number/<%= number.id %>" class="btn btn-sm btn-info">Time Allocation</a></td>
+									</tr>
+									<% }); %>
+								</tbody>
+							</table>
+			      		</div>
+			    	</div>
+
+			  	</div>
+			</div>
+		</div>
+  	</div> 
+  <!-- /content -->
+  
+  <!-- footer -->
+
+  <!-- / footer -->

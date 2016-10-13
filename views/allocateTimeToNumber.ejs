@@ -1,0 +1,88 @@
+<!-- content -->
+   <div id="content" class="app-content" role="main">
+  		<div class="app-content-body "> 
+			<div class="wrapper-md">
+				<div class="panel panel-default">
+			    	<div class="panel-heading font-bold">                  
+			      		Working Hours
+			    	</div>
+			    	<div class="panel-body">
+			    		<form method="post" name="work_hour" action="/allocateTime/number/<%= response.result.number_id %>">
+			      			<div class="col-md-4">
+			      				<% if(response.result.availibility_status == 1) { %>
+			      					<input type="radio" value="1" name="duration" checked> All Time
+			      				<% } else { %>
+			      					<input type="radio" value="1" name="duration"> All Time
+			      				<% } %>
+			      			</div>
+			      			<div class="col-md-4">
+			      				<% if(response.result.availibility_status == 2) { %>
+			      					<input type="radio" value="2" name="duration" checked> Custom
+			      				<% } else { %>
+			      					<input type="radio" value="2" name="duration"> Custom
+			      				<% } %>
+			      			</div>
+			      			<div class="col-md-4">
+			      				<% if(response.result.availibility_status == 3) { %>
+			      					<input type="radio" value="3" name="duration" checked> Unavailable
+			      				<% } else { %>
+			      					<input type="radio" value="3" name="duration"> Unavailable
+			      				<% } %>
+			      			</div>
+			      			<div class="col-md-12" style="margin-top:20px">
+					      		<div id="custom" style="display:none;" class="col-md-12">
+					      			
+					      			<input type="checkbox" name="w_day[]" <% if(response.mon=='1'){ %> checked  <% } %> value="Monday"> Monday
+					      			<input type="checkbox" name="w_day[]" <% if(response.tue=='1'){ %> checked  <% } %> value="Tuesday" style="margin-left:20px"> Tuesday
+					      			<input type="checkbox" name="w_day[]" <% if(response.wed=='1'){ %> checked  <% } %> value="Wednesday" style="margin-left:20px"> Wednesday
+					      			<input type="checkbox" name="w_day[]" <% if(response.thu=='1'){ %> checked  <% } %> value="Thursday" style="margin-left:20px"> Thursday
+					      			<input type="checkbox" name="w_day[]" <% if(response.fri=='1'){ %> checked  <% } %> value="Friday" style="margin-left:20px"> Friday
+					      			<input type="checkbox" name="w_day[]" <% if(response.sat=='1'){ %> checked  <% } %> value="Saturday" style="margin-left:20px"> Saturday
+					      			<input type="checkbox" name="w_day[]" <% if(response.sund=='1'){ %> checked  <% } %> value="Sunday" style="margin-left:20px"> Sunday
+				      				<div class="form-group" style="margin-top:20px">
+										<label class="col-lg-2 control-label">From</label>
+										<div class="col-lg-3">
+											<% if(response.from_time == undefined) { response.from_time = ''} %>
+											<input type="text" name="from_time" class="form-control" value="<%= response.from_time %>" placeholder="00:00:00">
+										</div>
+									
+										<label class="col-lg-2 control-label">To</label>
+										<div class="col-lg-3">
+											<% if(response.to_time == undefined) { response.to_time = ''} %>
+											<input type="text" name="to_time" class="form-control" value="<%= response.to_time %>" placeholder="23:59:59">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group" style="margin-top:10px">
+								<div class="col-lg-10" style="margin-top:20px">
+									<button type="submit" class="btn btn-info">Update Time</button>
+								</div>
+							</div>
+						</form>
+			    	</div>
+			  	</div>
+			</div>
+		</div>
+  	</div> 
+  <!-- /content -->
+  
+  <!-- footer -->
+
+  <!-- / footer -->
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script type="text/javascript">
+  	<% if(response.result.availibility_status == 2) { %>
+  		$("#custom").show();
+  	<% } %>
+  	$(document).ready(function(){
+  		$('input[type=radio][name=duration]').change(function() {
+  			var rad_val = this.value;
+  			if(rad_val == 2){
+  				$("#custom").show();
+  			} else {
+  				$("#custom").hide();
+  			}
+  		});
+  	})
+  </script>

@@ -69,7 +69,9 @@ module.exports.routes = {
 
   'get /allocateTime/:id': 'UserTimeAllocController.AllocateTime',
 
-  // 'get /callAllocateTime/:id': 'UserTimeAllocController.getCallAllocateTime',
+  'get /numberslist': 'numberController.numberslist',
+
+  'get /allocateTime/number/:id': 'numberController.AllocateTime',
 
   // Post methods
 
@@ -87,8 +89,7 @@ module.exports.routes = {
 
   'post /allocateNumberToUSer': 'numberController.postallocateNumberToUSer',
 
-  // 'post /callTimeAllocate/AllocateTime/:id': 'UserTimeAllocController.postCallAllocateTime',
-
+  'post /allocateTime/number/:id': 'numberController.AllocateTime',
 
 
   // Ajax methos

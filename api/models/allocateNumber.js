@@ -13,18 +13,16 @@ module.exports = {
   	},
 
   	userId: {
-  	  collection: 'User',
-      via: 'id'
+  	  type: 'integer',
   	},
 
     numberId: {
-      collection: 'numberInfo',
-      via: 'id'
+      type: 'integer',
     },
 
-    // allocatedDate: {
-    //   type: 'datetime',
-    // },
+    allocatedDate: {
+      type: 'datetime',
+    },
 
     removeAllocatedDate: {
       type: 'datetime',
