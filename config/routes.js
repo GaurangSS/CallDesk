@@ -67,6 +67,9 @@ module.exports.routes = {
 
   'get /buyNumber/:number': 'numberController.getbuyNumber',
 
+  'get /allocateTime/:id': 'UserTimeAllocController.AllocateTime',
+
+  // 'get /callAllocateTime/:id': 'UserTimeAllocController.getCallAllocateTime',
 
   // Post methods
 
@@ -75,14 +78,19 @@ module.exports.routes = {
   'post /create_user': 'UserController.createUser',
   
   'post /update_user/:id': 'UserController.edit',
-
-  'get /allocateTime/:id': 'UserTimeAllocController.AllocateTime',
   
   'post /UserTimeAllocate/AllocateTime/:id': 'UserTimeAllocController.AllocateTime',
 
   'post /contectNumbers': 'numberController.postContectNumber',
+
   'post /postbuyNumber': 'numberController.postbuyNumber',
+
   'post /allocateNumberToUSer': 'numberController.postallocateNumberToUSer',
+
+  // 'post /callTimeAllocate/AllocateTime/:id': 'UserTimeAllocController.postCallAllocateTime',
+
+
+
   // Ajax methos
 
   'post /postAreaCode': 'numberController.postAreaCode',

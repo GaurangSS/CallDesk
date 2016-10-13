@@ -22,9 +22,39 @@
 										<% if (users.length > 0) {
                   
                     for (var i = 0; i < users.length; i++) { %>
-                      <option value=<%= users[i].id%> > <%= users[i].username%> </option>
+                      <option value=<%= users[i].id%> > <%= users[i].firstname%> </option>
                     <% } }%>
 									</select>
+								</div>
+							</div>
+							<div class="col-md-4">
+	      					<input type="radio" value="1" name="duration"> All Time
+	      			</div>
+	      			<div class="col-md-4">
+	      					<input type="radio" value="2" name="duration"> Custom
+	      			</div>
+	      			<div class="col-md-4">
+	      					<input type="radio" value="3" name="duration"> Unavailable
+	      			</div>
+	      			<div class="col-md-12" style="margin-top:20px">
+			      		<div id="custom" style="display:none;" class="col-md-12">
+			      			<input type="checkbox" name="w_day[]" value="Monday"> Monday
+			      			<input type="checkbox" name="w_day[]" value="Tuesday" style="margin-left:20px"> Tuesday
+			      			<input type="checkbox" name="w_day[]" value="Wednesday" style="margin-left:20px"> Wednesday
+			      			<input type="checkbox" name="w_day[]" value="Thursday" style="margin-left:20px"> Thursday
+			      			<input type="checkbox" name="w_day[]" value="Friday" style="margin-left:20px"> Friday
+			      			<input type="checkbox" name="w_day[]" value="Saturday" style="margin-left:20px"> Saturday
+			      			<input type="checkbox" name="w_day[]" value="Sunday" style="margin-left:20px"> Sunday
+		      				<div class="form-group" style="margin-top:20px">
+										<label class="col-lg-2 control-label">From</label>
+										<div class="col-lg-3">
+											<input type="text" name="from_time" class="form-control" value="" placeholder="00:00:00">
+										</div>
+										<label class="col-lg-2 control-label">To</label>
+										<div class="col-lg-3">
+											<input type="text" name="to_time" class="form-control" value="" placeholder="23:59:59">
+										</div>
+									</div>
 								</div>
 							</div>
 							<div class="form-group">
@@ -39,10 +69,18 @@
 		</div>
 	</div>
 </div>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script type="text/javascript">
-	$(document).ready(function() {
-	  $(".users").select2();
-	});
+	$(document).ready(function(){
+		$('input[type=radio][name=duration]').change(function() {
+			var rad_val = this.value;
+			if(rad_val == 2){
+				$("#custom").show();
+			} else {
+				$("#custom").hide();
+			}
+		});
+	})
 </script>
   <!-- /content -->
   

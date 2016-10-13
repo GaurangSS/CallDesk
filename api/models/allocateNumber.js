@@ -22,9 +22,9 @@ module.exports = {
       via: 'id'
     },
 
-    allocatedDate: {
-      type: 'datetime',
-    },
+    // allocatedDate: {
+    //   type: 'datetime',
+    // },
 
     removeAllocatedDate: {
       type: 'datetime',
