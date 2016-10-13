@@ -32,11 +32,18 @@ module.exports = {
 
             var token = capability.generate();
 
-             data.identity = identity;
-             data.token = token;
+            data.identity = identity;
+            data.token = token;
+            var user_data = {};
 
-          res.locals.layout = 'layout1.ejs';     
-          return res.redirect('/home');
+            user_data.id  = record.id;
+              if(user_data.id){
+                req.session.authenticated = true;
+                res.locals.layout = 'layout1.ejs';     
+                return res.redirect('/home');          
+              }else{
+                return res.redirect('/login'); 
+              }
           
         }
 

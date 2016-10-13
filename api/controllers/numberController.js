@@ -5,8 +5,7 @@ var client = require('twilio')(accountSid, authToken);
 
 module.exports = {
 
-	getContectNumber: function (req, res) {
-
+	getCountrylist: function (req, res) {
 
 		country.find().exec(function (err, countries){
 		  if (err) {
@@ -14,35 +13,61 @@ module.exports = {
 		  }
 		  return res.view('numbers.ejs',{countries});
 		});
+    },
 
-  },
-  postAreaCode: function (req, res) {
-  	sails.log.info(req.body);
-  	var areacode = [];
+    postAreaCode: function (req, res) {
 
-  	areaCode.find({select: ['areaCode']})
+  	    sails.log.info(req.body);
+  	    var areacode = [];
+
+  	    areaCode.find({select: ['areaCode']})
 			.where({'counName': req.body.counName})
 			.exec(function (err, areaCodes){
 				sails.log.info(areaCodes);
-		  if (err) {
-		    return res.serverError(err);
-		  }
-		  return res.json(areaCodes);;
-
-		sails.log.info('Calling Get method');
-		var cou ;
-
-		cou = country.find().exec(function (err, users){
-		  if (err) {
-		    return res.serverError(err);
-		  }
-		  return res.render('details',{users});
-
+		    if (err) {
+		       return res.serverError(err);
+		    }
+		    return res.json(areaCodes);
 		});
+    },
 
-  }
-},
-  postContectNumber: function (req, res) {
+    findNumber: function (req, res) {
+
+  	    sails.log.info(req.body);
+  	    var counName = req.body.counName;
+  	    console.log(counName);
+  	    var areaCode = req.body.areaCode;
+  	    console.log(areaCode);
+
+  	    client.availablePhoneNumbers("US").local.list({ areaCode: "510" }, function(err, data) {
+     
+
+        //var number = data.availablePhoneNumbers[0];
+	  	//contectDetails = data.availablePhoneNumbers;
+
+	  	//console.log(contectDetails);
+
+        // return res.json(contectDetails);
+        return res.view('availableNum.ejs',data);
+      
+        });
+   },
+
+  	    /*var areacode = [];
+
+  	    areaCode.find({select: ['areaCode']})
+			.where({'counName': req.body.counName})
+			.exec(function (err, areaCodes){
+				sails.log.info(areaCodes);
+		    if (err) {
+		       return res.serverError(err);
+		    }
+		    return res.json(areaCodes);
+		});*/
+ 
+
+
+/*    postContectNumber: function (req, res) {
 
 	 	var ctx = req.body;
 	 	var contectDetails = [];
@@ -50,12 +75,8 @@ module.exports = {
 
 	 	countryArea.create(ctx).exec(function (err, data){
 		  if (err) { return res.serverError(err); }
-
-
 		  return data;
 		});
 		return res.render('contactNumbers', {contectDetails: contectDetails})
-
-  },
-
+  },*/
 };

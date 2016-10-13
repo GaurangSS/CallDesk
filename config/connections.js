@@ -40,12 +40,25 @@ module.exports.connections = {
   * Run: npm install sails-mysql                                             *
   *                                                                          *
   ***************************************************************************/
-
-    MainSql: {
+// Local Connection
+  /*  MainSql: {
     adapter: 'sails-mysql',
       host: 'localhost',
       user: 'root',
       password: '',
+      database: 'calldesk',
+
+      queryCaseSensitive: true,
+      transactionConnectionLimit: 20,
+      rollbackTransactionOnError: false,
+  },*/
+
+// Live Connection
+    MainSql: {
+      adapter: 'sails-mysql',
+      host: '104.43.16.40',
+      user: 'calluser',
+      password: 'nh3JFEYhNVeNzySV',
       database: 'calldesk',
 
       queryCaseSensitive: true,
