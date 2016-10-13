@@ -61,6 +61,9 @@ module.exports.routes = {
 
   'get /buynumber': 'numberController.getCountrylist',
 
+  'get /contectNumbers': 'numberController.getContectNumber',
+
+
   // Post methods
 
   'post /login': 'LoginController.Authentication',
@@ -71,7 +74,7 @@ module.exports.routes = {
 
   //'post /contectNumbers': 'numberController.postContectNumber',
 
-  // Ajax methos
+  'post /contectNumbers': 'numberController.postContectNumber',
 
   'post /postAreaCode': 'numberController.postAreaCode',
 

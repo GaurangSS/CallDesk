@@ -5,7 +5,13 @@ var client = require('twilio')(accountSid, authToken);
 
 module.exports = {
 
+
 	getCountrylist: function (req, res) {
+
+
+		sails.log.info('Calling Get method');
+		var cou ;
+
 
 		country.find().exec(function (err, countries){
 		  if (err) {
@@ -13,6 +19,7 @@ module.exports = {
 		  }
 		  return res.view('numbers.ejs',{countries});
 		});
+
     },
 
     postAreaCode: function (req, res) {
@@ -53,21 +60,26 @@ module.exports = {
         });
    },
 
-  	    /*var areacode = [];
+  	  
+ postAreaCode: function (req, res) {
 
-  	    areaCode.find({select: ['areaCode']})
+  	sails.log.info(req.body);
+  	var areacode = [];
+
+  	areaCode.find({select: ['areaCode']})
 			.where({'counName': req.body.counName})
 			.exec(function (err, areaCodes){
 				sails.log.info(areaCodes);
-		    if (err) {
-		       return res.serverError(err);
-		    }
-		    return res.json(areaCodes);
-		});*/
- 
+		  if (err) {
+		    return res.serverError(err);
+		  }
+		  return res.json(areaCodes);;
+		});
 
+},
 
-/*    postContectNumber: function (req, res) {
+  postContectNumber: function (req, res) {
+
 
 	 	var ctx = req.body;
 	 	var contectDetails = [];
@@ -75,8 +87,11 @@ module.exports = {
 
 	 	countryArea.create(ctx).exec(function (err, data){
 		  if (err) { return res.serverError(err); }
+
 		  return data;
 		});
 		return res.render('contactNumbers', {contectDetails: contectDetails})
-  },*/
+
+  },
+
 };
