@@ -1,0 +1,65 @@
+<!-- content -->
+<div id="content" class="app-content" role="main">
+	<div class="app-content-body ">
+    <div class="hbox hbox-auto-xs hbox-auto-sm" ng-init="
+        app.settings.asideFolded = false; 
+        app.settings.asideDock = false;">
+      <div class="col">
+        <div class="wrapper-md" >
+          <div class="row">
+            <div class="col-md-5">
+              <div class="row row-sm text-center">
+                <div class="col-xs-6">
+                  <div class="panel padder-v item">
+                    <div class="h1 text-info font-thin h1"><%= numbers %></div>
+                    <span class="text-muted text-xs">Numbers</span>
+                  </div>
+                </div>
+                <div class="col-xs-6">
+                  <a href class="block panel padder-v bg-primary item">
+                    <span class="text-white font-thin h1 block"><%= users %></span>
+                    <span class="text-muted text-xs">Users</span>
+                    </span>
+                  </a>
+                </div>
+                <div class="col-xs-6">
+                  <a href class="block panel padder-v bg-info item">
+                    <span class="text-white font-thin h1 block">6</span>
+                    <span class="text-muted text-xs">In Bounds</span>
+                  </a>
+                </div>
+                <div class="col-xs-6">
+                  <div class="panel padder-v item">
+                    <div class="font-thin h1">4</div>
+                    <span class="text-muted text-xs">Out Bounds</span>
+                  </div>
+                </div>
+                <div class="col-xs-12 m-b-md">
+                  <div class="r bg-light dker item hbox no-border">
+                    <div class="col w-xs v-middle hidden-md">
+                      <div  class="sparkline inline"></div>
+                    </div>
+                    <div class="col dk padder-v r-r">
+                      <div class="text-primary-dk font-thin h1"><span>4</span></div>
+                      <span class="text-muted text-xs">Miss Call</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-7">
+              <div class="panel wrapper">
+                <label class="i-switch bg-warning pull-right" >
+                  <input type="checkbox" >
+                  <i></i>
+                </label>
+                <h4 class="font-thin m-t-none m-b text-muted">Latest Campaign</h4>
+                <div style="height:246px" >
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+	</div>
+</div>

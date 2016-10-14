@@ -3,8 +3,10 @@ var sails = require('sails');
 
 // var accountSid = 'ACe732ab6c48c553e824547bce75dfc861';
 // var authToken = "1ee4bc07c48d297d817016756d8008f4";
-var accountSid = 'AC4ee991af7487abd80e955dd06b3c37d9';
-var authToken = "d6d4145190d4d74fa622c62ea83eaac4";
+
+
+var accountSid = 'ACa2b4650ccddd568c2362d837f224e96a';
+var authToken = "d28d0badd4ec9d419fdc47ff14cadaf0";
 
 var client = require('twilio')(accountSid, authToken);
 
@@ -167,7 +169,7 @@ module.exports = {
 			});
   	});
 	  	
-  	return res.redirect('/ContectNumbers');
+  	return res.redirect('/numberslist');
   },
   numberslist: function (req, res) {
 
