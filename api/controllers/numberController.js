@@ -1,6 +1,5 @@
 var sails = require('sails');
 
-
 // var accountSid = 'ACe732ab6c48c553e824547bce75dfc861';
 // var authToken = "1ee4bc07c48d297d817016756d8008f4";
 
@@ -23,8 +22,8 @@ module.exports = {
 		  res.locals.layout = 'layout1.ejs';
 		  return res.view('numbers.ejs',{countries});
 		});
-  },
-  postAreaCode: function (req, res) {
+  	},
+  	postAreaCode: function (req, res) {
 
   	var areacode = [];
 
@@ -93,6 +92,7 @@ module.exports = {
 	  	numberDetail.account_sid = purchasedNumber.account_sid,
 		  numberDetail.friendly_name = purchasedNumber.friendly_name,
 		  numberDetail.phone_number = purchasedNumber.phone_number,
+		  numberDetail.delete_status = 0,
 		  numberDetail.contact_name = req.body.conName,
 		  numberDetail.date_created = purchasedNumber.date_created,
 		  numberDetail.date_updated = purchasedNumber.date_updated,
@@ -118,7 +118,7 @@ module.exports = {
 		  	}
 	  	});
 
-	  	User.find().exec(function (err, users){
+	  	User.find({ or : [{'id':req.session.userid},{'parent_id':req.session.userid}]}).where({delete_status: { '!': '1' }}).exec(function (err, users){
 			  if (err) {
 			    return res.serverError(err);
 			  }
@@ -181,9 +181,10 @@ module.exports = {
 	  	
   	return res.redirect('/numberslist');
   },
+  
   numberslist: function (req, res) {
 
-    	numberInfo.find().exec(function(err, numbers) {
+    	numberInfo.find({'delete_status':'0'}).exec(function(err, numbers) {
 
   		if (err) {
   			return res.serverError(err);
@@ -196,6 +197,31 @@ module.exports = {
 
   	});
   },
+
+releaseNumber: function(req, res) {
+  	var number=req.param('number',null);
+	//	console.log(id);
+	numberInfo.findOne().where({'id':number}).exec(function(err, usar) {
+
+		usar.delete_status = 1;
+		pid = usar.sid;
+		usar.save(function(err){
+			if (err) {
+				res.send('Error');
+			}else {
+				client.incomingPhoneNumbers(pid).delete(function(err, number) {
+				    if(err) {
+				    	console.log(err)
+				    } else {
+				    	console.log(number);
+				    	res.redirect( '/numberslist');
+				    }
+				});
+				
+			}
+		});
+	});
+},
 
   AllocateTime: function(req,res) {
 		var id=req.param('id',null);

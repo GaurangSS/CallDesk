@@ -55,7 +55,14 @@ module.exports.policies = {
     isCreatedUser : 'isLoggedin',
     destroy : 'isLoggedin',
     edit : 'isLoggedin',
-    allocateTime : 'isLoggedin'
+    allocateTime : 'isLoggedin',
+  },
+
+  numberController: {
+    postbuyNumber: 'isLoggedin',
+    postContectNumber: 'isLoggedin',
+    getContectNumber: 'isLoggedin',
+    numberslist: 'isLoggedin',
   }
 
 };

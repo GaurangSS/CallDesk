@@ -66,6 +66,8 @@ module.exports.routes = {
   'get /contectNumbers': 'numberController.getContectNumber',
 
   'get /buyNumber/:number': 'numberController.getbuyNumber',
+  
+  'get /numbers/delete/:number': 'numberController.releaseNumber',
 
   'get /allocateTime/:id': 'UserTimeAllocController.AllocateTime',
 
