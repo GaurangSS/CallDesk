@@ -30,6 +30,15 @@ module.exports = {
     res.view('dash1.ejs');
    
   },
+
+
+  logout: function(req, res) {
+    console.log('22222');
+    req.session.destroy(function(err) {
+           return res.redirect('/login');
+      });
+  },
+
   dashboard: function (req, res) {
 
     numberInfo.count().exec(function(err, numbers) {
@@ -47,4 +56,5 @@ module.exports = {
       });
     });
   }
+
 };

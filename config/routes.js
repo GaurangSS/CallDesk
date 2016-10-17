@@ -66,6 +66,8 @@ module.exports.routes = {
   'get /contectNumbers': 'numberController.getContectNumber',
 
   'get /buyNumber/:number': 'numberController.getbuyNumber',
+  
+  'get /numbers/delete/:number': 'numberController.releaseNumber',
 
   'get /allocateTime/:id': 'UserTimeAllocController.AllocateTime',
 
@@ -93,10 +95,11 @@ module.exports.routes = {
 
   'post /allocateTime/number/:id': 'numberController.AllocateTime',
 
-
   // Ajax methos
 
   'post /postAreaCode': 'numberController.postAreaCode',
+
+  'get /logout': 'AuthController.logout',
 
 };
 

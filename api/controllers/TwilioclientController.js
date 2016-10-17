@@ -29,7 +29,5 @@ module.exports = {
       res.view('Twilioclient/createToken.ejs',data);
 
     });
-  
-    
   }
 }

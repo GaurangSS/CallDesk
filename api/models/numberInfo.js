@@ -22,6 +22,10 @@
     contact_name: {
       type: 'String'
     },
+    delete_status: {
+      type: 'integer',
+      defaultsTo: 0
+    },
     date_created: {
       type: 'datetime',
     },

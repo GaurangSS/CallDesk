@@ -2,7 +2,9 @@ var twilio = require('twilio');
 module.exports = {
 
   ShowLogin: function (req, res) {  
-    return res.view('login.ejs');
+    var data = {};
+    data.msg = 'success';
+    return res.view('login.ejs',data);
   },
 
   Authentication: function (req, res) {
@@ -15,6 +17,7 @@ module.exports = {
         
         console.log(record);
         if(!record){
+          var err = "Username and Password does not match";
           return res.view('login.ejs',err);   
 
         }else{   
