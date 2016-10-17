@@ -73,6 +73,8 @@ module.exports.routes = {
 
   'get /allocateTime/number/:id': 'numberController.AllocateTime',
 
+  'get /dashboard': 'AuthController.dashboard',
+
   // Post methods
 
   'post /login': 'LoginController.Authentication',

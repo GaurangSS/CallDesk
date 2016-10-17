@@ -7,7 +7,9 @@ var twilio = require('twilio');
 
 module.exports = {
   
-  createToken: function (req, res) {     
+  createToken: function (req, res) {
+
+    console.log('inside twilio')
     
     var data = {};
     
@@ -23,11 +25,12 @@ module.exports = {
 
     data.identity = identity;
     data.token = token;
-    res.locals.layout = 'layout1.ejs';     
+    res.locals.layout = 'layout1.ejs';
     //res.view('call.ejs',data);
     res.view('dash1.ejs');
    
   },
+
 
   logout: function(req, res) {
     console.log('22222');
@@ -35,4 +38,23 @@ module.exports = {
            return res.redirect('/login');
       });
   },
+
+  dashboard: function (req, res) {
+
+    numberInfo.count().exec(function(err, numbers) {
+      if (err) {
+        console.log(err);
+      }
+
+      User.count().exec(function (err, users){
+        if (err) {
+          console.log(err);
+        }
+        
+        res.locals.layout = 'layout1.ejs';
+        res.view('dash.ejs', {numbers, users});
+      });
+    });
+  }
+
 };
