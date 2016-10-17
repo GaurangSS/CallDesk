@@ -1,77 +1,103 @@
-<div id="controls">
-  <div id="info">
-    <p class="instructions">Twilio Client</p>
-    <div id="client-name"></div>
-  </div>
-  <div id="call-controls" clearfix>
-    <div id="main-wrapper">
-      <section role="main">
-        <div class="dialPad compact">
-          <p> Enter a phone # or client name </p>
-          <div class="number">
-          </div>
-          <div class="dials">
-            <ol>
-              <li class="digits">
-                <p><strong>1</strong></p>
-              </li>
-              <li class="digits">
-                <p><strong>2</strong><sup>abc</sup></p>
-              </li>
-              <li class="digits">
-                <p><strong>3</strong><sup>def</sup></p>
-              </li>
-              <li class="digits">
-                <p><strong>4</strong><sup>ghi</sup></p>
-              </li>
-              <li class="digits">
-                <p><strong>5</strong><sup>jkl</sup></p>
-              </li>
-              <li class="digits">
-                <p><strong>6</strong><sup>mno</sup></p>
-              </li>
-              <li class="digits">
-                <p><strong>7</strong><sup>pqrs</sup></p>
-              </li>
-              <li class="digits">
-                <p><strong>8</strong><sup>tuv</sup></p>
-              </li>
-              <li class="digits">
-                <p><strong>9</strong><sup>wxyz</sup></p>
-              </li>
-              <li class="digits">
-                <p><strong>*</strong></p>
-              </li>
-              <li class="digits">
-                <p><strong>0</strong><sup>+</sup></p>
-              </li>
-              <li class="digits">
-                <p><strong>#</strong></p>
-              </li>
+<div id="content" class="app-content" role="main">
+  <div class="app-content-body ">
+    <div class="hbox hbox-auto-xs hbox-auto-sm" ng-init="
+        app.settings.asideFolded = false; 
+        app.settings.asideDock = false;">
+      <div class="col-md-12">
+        <div class="wrapper-md" >
+          <div id="controls">
+            <row class="col-md-4">
+              <div id="info">
+                <p class="instructions">Twilio Client</p>
+                <div id="client-name"></div>
+              </div>
+            </row>
+            <div class="col-md-4">
+              <div id="call-controls" >
+                <p class="instructions">From:</p>
+                <select id='from' name="from" class="form-control">
+                  <option>Select Number</option>
+                  <% if (numbers.length > 0) {
+                  
+                    for (var i = 0; i < numbers.length; i++) { %>
+                      <option value=<%= numbers[i].phone_number%> > <%= numbers[i].phone_number%> </option>
+                    <% } }%>
 
-              <li class="digits">
-                <p><strong><i class="icon-refresh icon-large"></i></strong> <sup>Clear</sup></p>
-              </li>
-              <li class="digits">
-                <p><strong><i class="fa fa-remove icon-large"></i></strong> <sup>Delete</sup></p>
-              </li>
-              <li class="digits pad-action">
-                <p><strong><i class="fa fa-phone icon-large"></i></strong> <sup>Call</sup></p>
-              </li>
-            </ol>
+                </select>
+                <div id="main-wrapper">
+                  <section role="main">
+                    <div class="dialPad compact">
+                      <p class="instructions" style="margin-top:1em"> To: </p>
+                      <p> Enter a phone # or client name </p>
+                      <div class="number">
+                      </div>
+                      <div class="dials">
+                        <ol>
+                          <li class="digits">
+                            <p><strong>1</strong></p>
+                          </li>
+                          <li class="digits">
+                            <p><strong>2</strong><sup>abc</sup></p>
+                          </li>
+                          <li class="digits">
+                            <p><strong>3</strong><sup>def</sup></p>
+                          </li>
+                          <li class="digits">
+                            <p><strong>4</strong><sup>ghi</sup></p>
+                          </li>
+                          <li class="digits">
+                            <p><strong>5</strong><sup>jkl</sup></p>
+                          </li>
+                          <li class="digits">
+                            <p><strong>6</strong><sup>mno</sup></p>
+                          </li>
+                          <li class="digits">
+                            <p><strong>7</strong><sup>pqrs</sup></p>
+                          </li>
+                          <li class="digits">
+                            <p><strong>8</strong><sup>tuv</sup></p>
+                          </li>
+                          <li class="digits">
+                            <p><strong>9</strong><sup>wxyz</sup></p>
+                          </li>
+                          <li class="digits">
+                            <p><strong>*</strong></p>
+                          </li>
+                          <li class="digits">
+                            <p><strong>0</strong><sup>+</sup></p>
+                          </li>
+                          <li class="digits">
+                            <p><strong>#</strong></p>
+                          </li>
+
+                          <li class="digits">
+                            <p><strong><i class="icon-refresh icon-large"></i></strong> <sup>Clear</sup></p>
+                          </li>
+                          <li class="digits">
+                            <p><strong><i class="fa fa-remove icon-large"></i></strong> <sup>Delete</sup></p>
+                          </li>
+                          <li class="digits pad-action">
+                            
+                            <p><strong><i class="fa fa-phone icon-large"></i></strong> <button id="button-call">Call</button>
+                            <button id="button-hangup">Hangup</button></p>
+                          </li>
+                        </ol>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
+            <row class="col-md-4">
+              <div id="log"></div>
+            </row>
           </div>
         </div>
-      </section>
+      </div>
     </div>
-    <!--
-    <p class="instructions">Make a Call:</p>
-    <input id="phone-number" type="text" placeholder="Enter a phone # or client name" />
-    -->
-    <button id="button-call">Call</button>
-    <button id="button-hangup">Hangup</button>
   </div>
-  <div id="log"></div>
 </div>
+        
 <script type="text/javascript" src="//media.twiliocdn.com/sdk/js/client/v1.3/twilio.min.js"></script>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
@@ -133,7 +159,9 @@
       console.log($('.number').html());
       // get the phone number to connect the call to
       var params = {
-        To: $('.number').html()
+        To: $('.number').html(),
+        from: $('#from').val(),
+        record: true
       };
 
       console.log('Calling ' + params.To + '...');
