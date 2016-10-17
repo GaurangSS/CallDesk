@@ -91,10 +91,11 @@ module.exports.routes = {
 
   'post /allocateTime/number/:id': 'numberController.AllocateTime',
 
-
   // Ajax methos
 
   'post /postAreaCode': 'numberController.postAreaCode',
+
+  'get /logout': 'AuthController.logout',
 
 };
 

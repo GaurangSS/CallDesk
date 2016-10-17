@@ -7,24 +7,37 @@
 			      		Numbers
 			    	</div>
 			    	<div class="panel-body">
+			    	    <div style="margin-bottom:10px">
+			      			<a href="/contectNumbers" class="btn btn-info">Buy Number</a>
+			      		</div>
+			      		<% if(data.error!= '' && data.error!=undefined){ %>
+			      		<div class="wrapper text-center">
+                          <strong ><%= data.error %></strong>
+                         </div>
 			    		<div>
+			    		<% } %>
 			      		<table  class="table" >
 								<thead>
+								
 									<tr>
-										<th>sid</th>
-										<th>account_sid</th>
-										<th>phone_number</th>
-										<th>contact_name</th>
+										<th>Sr.No.</th>
+										<th>Contact Name</th>
+										<th>Phone Number</th>
+										<th>No.SID</th>
+										<th>SID</th>
+										
+										
 										<th>Time Allocation</th>
 									</tr>
 								</thead>
 								<tbody>
 									<%  var i=1; numbers. forEach(function(number) { %>
 									<tr>
+									    <td><%= i %></td>
+									    <td><%= number.contact_name %></td>
+									    <td><%= number.phone_number %></td>
 										<td><%= number.sid %></td>
-								    <td><%= number.account_sid %></td>
-								    <td><%= number.phone_number %></td>
-										<td><%= number.contact_name %></td>
+								        <td><%= number.account_sid %></td>								       										
 										<td><a href="/allocateTime/number/<%= number.id %>" class="btn btn-sm btn-info">Time Allocation</a></td>
 									</tr>
 									<% }); %>

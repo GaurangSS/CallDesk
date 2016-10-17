@@ -23,7 +23,6 @@ module.exports = {
 
     data.identity = identity;
     data.token = token;
-  
     res.view('Twilioclient/createToken.ejs',data);
   }
 }

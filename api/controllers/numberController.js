@@ -3,8 +3,8 @@ var sails = require('sails');
 
 // var accountSid = 'ACe732ab6c48c553e824547bce75dfc861';
 // var authToken = "1ee4bc07c48d297d817016756d8008f4";
-var accountSid = 'AC4ee991af7487abd80e955dd06b3c37d9';
-var authToken = "d6d4145190d4d74fa622c62ea83eaac4";
+var accountSid = 'ACa74fbb703841458ad00bb980209bde35';
+var authToken = "0859cc74a446c3b44d1212861eb9e2e0";
 
 var client = require('twilio')(accountSid, authToken);
 
@@ -50,8 +50,10 @@ module.exports = {
 		  areaCode: areaCode
 		}, function(err, data) {
 			if(err) {
+				
 				console.log(err);
 			} else {
+
 				console.log(data);
 
 	  	var number = data.availablePhoneNumbers[0];
@@ -73,9 +75,17 @@ module.exports = {
 	    phoneNumber: number
 	  }, function(err, purchasedNumber) {
 	  	if (err) {
-	  	console.log(err)
-
-	  	}
+	  	   console.log(err)
+	  		numberInfo.find().exec(function(err1, numbers) {
+		  		if (err1) {
+		  			//return res.serverError(err);
+		  		}
+		  		var data = {};
+		  		data.error = err.message;
+		  		res.locals.layout = 'layout1.ejs';
+		  		res.view('numberslist.ejs', {numbers,data});
+		  	});
+	  	}else{
 	  	numberDetail = {};
 	  	numberDetail.sid = purchasedNumber.sid;
 	  	numberDetail.account_sid = purchasedNumber.account_sid,
@@ -115,7 +125,7 @@ module.exports = {
 			  return res.view('allocatenumbertouser.ejs',{number: purchasedNumber.phone_number, users: users, result: result});
 			});
 	  	
-
+          }
 	    // return res.json(purchasedNumber);
 	  });
 
@@ -167,19 +177,20 @@ module.exports = {
 			});
   	});
 	  	
-  	return res.redirect('/ContectNumbers');
+  	return res.redirect('/numberslist');
   },
   numberslist: function (req, res) {
 
-  	numberInfo.find().exec(function(err, numbers) {
+    	numberInfo.find().exec(function(err, numbers) {
 
   		if (err) {
   			return res.serverError(err);
   		}
-
+  			console.log(numbers);
+  			var data = {};
   		res.locals.layout = 'layout1.ejs';
 
-  		res.view('numberslist.ejs', {numbers});
+  		res.view('numberslist.ejs', {numbers,data});
 
   	});
   },

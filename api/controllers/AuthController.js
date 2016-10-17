@@ -27,5 +27,12 @@ module.exports = {
     //res.view('call.ejs',data);
     res.view('dash1.ejs');
    
-  }
+  },
+
+  logout: function(req, res) {
+    console.log('22222');
+    req.session.destroy(function(err) {
+           return res.redirect('/login');
+      });
+  },
 };
