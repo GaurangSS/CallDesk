@@ -101,7 +101,7 @@ module.exports = {
 		return res.view('User/form.ejs');
 	},
 
-	createUser: function(req,res) {	
+	createUser: function(req,res) {
 		var form_data = req.body;
 		console.log(form_data);
 		form_data.parent_id = req.session.userid;
@@ -168,4 +168,39 @@ module.exports = {
         });
         res.redirect('/users');
 	},
+	getChangePassword: function (req, res) {
+		var data = {};
+    res.locals.layout = 'layout1.ejs';
+    res.view('User/changePassword.ejs',{userId: req.param('id', null), data: data});
+  },
+  postChangePassword: function (req, res) {
+		var id=req.param('id',null);
+		var form_data = req.body;
+
+    console.log(req.body);
+
+    if (form_data.new_password !== form_data.password_confirm) {
+    	var data = {};
+  		data.error = "doesn't match password with confirm password";
+  		res.locals.layout = 'layout1.ejs';
+    	res.view('User/changePassword.ejs',{userId: id, data: data});
+    }
+    
+    User.findOne().where({'id':id, 'password': form_data.old_password}).exec(function(err, user) {
+    	if (err) {
+    		var data = {};
+	  		data.error = err.message;
+	  		res.locals.layout = 'layout1.ejs';
+	    	return res.view('User/changePassword.ejs',{userId: id, data: data});
+    	} else {
+				user.password = form_data.new_password;
+				user.save(function(err){
+					if (err) {
+						res.send('Error');
+					}
+				});
+				return res.redirect( '/users');
+			}
+		});
+  },
 }

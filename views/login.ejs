@@ -1,5 +1,4 @@
  <div class="app app-header-fixed ">
-  
 
 <div class="container w-xxl w-auto-xs" ng-controller="SigninFormController" ng-init="app.settings.container = false;">
   <a href class="navbar-brand block m-t"><h1><b>CallDesk</b></h1></a>
@@ -20,10 +19,10 @@
         </div>
       </div>
       <button type="submit" class="btn btn-lg btn-primary btn-block" ng-click="login()" ng-disabled='form.$invalid'>Log in</button>
-      <div class="text-center m-t m-b"><a ui-sref="access.forgotpwd">Forgot password?</a></div>
+      <div class="text-center m-t m-b"><a href="/forgotPassword" ui-sref="access.forgotpwd">Forgot password?</a></div>
       <div class="line line-dashed"></div>
       <p class="text-center"><small>Do not have an account?</small></p>
-      <a ui-sref="access.signup" class="btn btn-lg btn-default btn-block">Create an account</a>
+      <a href="/Signup" ui-sref="access.signup" class="btn btn-lg btn-default btn-block">Create an account</a>
     </form>
   </div>
   <div class="text-center" ng-include="'tpl/blocks/page_footer.html'">

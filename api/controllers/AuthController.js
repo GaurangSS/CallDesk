@@ -30,31 +30,29 @@ module.exports = {
     res.view('dash1.ejs');
    
   },
-
-
   logout: function(req, res) {
     console.log('22222');
     req.session.destroy(function(err) {
-           return res.redirect('/login');
-      });
+      return res.redirect('/login');
+    });
   },
-
   dashboard: function (req, res) {
 
     numberInfo.count().exec(function(err, numbers) {
       if (err) {
         console.log(err);
       }
-
+      
       User.count().exec(function (err, users){
         if (err) {
           console.log(err);
         }
-        
         res.locals.layout = 'layout1.ejs';
         res.view('dash.ejs', {numbers, users});
       });
     });
-  }
-
+  },
+  forgotPassword: function (req, res) {
+    res.view('User/forgotpassword.ejs');
+  },
 };

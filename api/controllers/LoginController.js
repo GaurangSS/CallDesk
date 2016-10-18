@@ -40,11 +40,35 @@ module.exports = {
              req.session.userid = record.id;
           res.locals.layout = 'layout1.ejs';     
           return res.redirect('/users');
-          
         }
-
      })
-
   },
- 
+
+  getSignup: function (req, res) {
+    res.locals.layout = 'layout1.ejs';
+    return res.view('signUp.ejs', {data : {}, user : {}});
+  },
+
+  postSignup: function (req, res) {
+    var form_data = req.body;
+    console.log(form_data);
+    if (form_data.password !== form_data.password_confirm) {
+      var data = {};
+
+      data.error = "Password doesn't match with confirm password";
+      
+      res.view('signUp.ejs',{user: form_data, data: data});
+    }
+
+    User.create(form_data, function (err, user) {
+      if (err){
+        console.log(err);
+      } else {
+        console.log('User created successfully');
+        res.redirect('/login');
+      }
+    });
+    
+  },
+
 };
