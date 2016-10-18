@@ -68,6 +68,8 @@ module.exports.routes = {
   'get /buyNumber/:number': 'numberController.getbuyNumber',
   
   'get /numbers/delete/:number': 'numberController.releaseNumber',
+  
+  'get /numbers/music/:number': 'numberController.musicNumber',
 
   'get /allocateTime/:id': 'UserTimeAllocController.AllocateTime',
 

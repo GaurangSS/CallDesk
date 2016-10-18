@@ -90,17 +90,65 @@ module.exports = {
 	  	numberDetail = {};
 	  	numberDetail.sid = purchasedNumber.sid;
 	  	numberDetail.account_sid = purchasedNumber.account_sid,
-		  numberDetail.friendly_name = purchasedNumber.friendly_name,
-		  numberDetail.phone_number = purchasedNumber.phone_number,
-		  numberDetail.delete_status = 0,
-		  numberDetail.contact_name = req.body.conName,
-		  numberDetail.date_created = purchasedNumber.date_created,
-		  numberDetail.date_updated = purchasedNumber.date_updated,
+		numberDetail.friendly_name = purchasedNumber.friendly_name,
+		numberDetail.phone_number = purchasedNumber.phone_number,
+		numberDetail.delete_status = 0,
+		numberDetail.contact_name = req.body.conName,
+		numberDetail.date_created = purchasedNumber.date_created,
+		numberDetail.date_updated = purchasedNumber.date_updated,
 
 	  	numberInfo.create(numberDetail, function(err, auth) {
 	      if(err) {
 	      	console.log(err);
 	      } else {
+	      	var message = {};
+	      	message.number_id = auth.id;
+	      	message.msg_type = 1;
+	      	message.music_type = 1;
+	      	message.audio_text = "Welcome, we will take your call in a few minutes, please hold.";
+	      	NumberMessage.create(message, function(error,resp) {
+	      		if(error) {
+	      			console.log(error);
+	      		} else {
+	      			console.log("message added");
+	      		}
+	      	});
+	      	var message = {};
+	      	message.number_id = auth.id;
+	      	message.msg_type = 2;
+	      	message.music_type = 1;
+	      	message.audio_text = "We can unfortunately not attend your call at the moment. Please call back later.";
+	      	NumberMessage.create(message, function(error,resp) {
+	      		if(error) {
+	      			console.log(error);
+	      		} else {
+	      			console.log("message added");
+	      		}
+	      	});
+	      	var message = {};
+	      	message.number_id = auth.id;
+	      	message.msg_type = 3;
+	      	message.music_type = 1;
+	      	message.audio_text = "Unfortunately we cannot take your call right now. So please leave us a message after the beep.";
+	      	NumberMessage.create(message, function(error,resp) {
+	      		if(error) {
+	      			console.log(error);
+	      		} else {
+	      			console.log("message added");
+	      		}
+	      	});
+	      	var message = {};
+	      	message.number_id = auth.id;
+	      	message.msg_type = 4;
+	      	message.music_type = 1;
+	      	message.audio_text = "Welcome, we are currently closed. Please leave us a message, we will contact you as soon as possible.";
+	      	NumberMessage.create(message, function(error,resp) {
+	      		if(error) {
+	      			console.log(error);
+	      		} else {
+	      			console.log("message added");
+	      		}
+	      	});
 	      	console.log('successfully inserted');
 	      }
 	    });
@@ -131,10 +179,7 @@ module.exports = {
 	    // return res.json(purchasedNumber);
 	  });
 
-	 
-
-
-		// numberInfo.create(form_data, function(err, auth) {
+	// numberInfo.create(form_data, function(err, auth) {
   //     if(err) {
   //     	console.log(err);
   //     } else {
@@ -220,6 +265,19 @@ releaseNumber: function(req, res) {
 				
 			}
 		});
+	});
+},
+
+musicNumber: function(req,res) {
+	var number=req.param('number',null);
+
+	NumberMessage.find().where({'number_id':number}).exec(function(err, rec) {
+		if(err) {
+			console.log(err);
+		} else {
+			console.log(rec);
+			res.redirect( '/numberslist');
+		}
 	});
 },
 
