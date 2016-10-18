@@ -77,6 +77,12 @@ module.exports.routes = {
 
   'get /dashboard': 'AuthController.dashboard',
 
+  // 'get /forgotPassword': 'AuthController.forgotPassword',
+
+  'get /user/changePassword/:id':  'UserController.getChangePassword',
+
+  'get /Signup': 'LoginController.getSignup',
+
   // Post methods
 
   'post /login': 'LoginController.Authentication',
@@ -94,6 +100,10 @@ module.exports.routes = {
   'post /allocateNumberToUSer': 'numberController.postallocateNumberToUSer',
 
   'post /allocateTime/number/:id': 'numberController.AllocateTime',
+
+  'post /user/changePassword/:id':  'UserController.postChangePassword',
+
+  'post /Signup': 'LoginController.postSignup',
 
   // Ajax methos
 

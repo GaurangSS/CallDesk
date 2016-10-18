@@ -3,8 +3,8 @@ var sails = require('sails');
 // var accountSid = 'ACe732ab6c48c553e824547bce75dfc861';
 // var authToken = "1ee4bc07c48d297d817016756d8008f4";
 
-var accountSid = 'ACa74fbb703841458ad00bb980209bde35';
-var authToken = "0859cc74a446c3b44d1212861eb9e2e0";
+var accountSid = 'ACa2b4650ccddd568c2362d837f224e96a';
+var authToken = "d28d0badd4ec9d419fdc47ff14cadaf0";
 
 
 var client = require('twilio')(accountSid, authToken);
@@ -124,6 +124,8 @@ module.exports = {
 			  }
 			  var result = {}
 			  res.locals.layout = 'layout1.ejs';
+			  console.log('usersss')
+			  console.log(users)
 			  return res.view('allocatenumbertouser.ejs',{number: purchasedNumber.phone_number, users: users, result: result});
 			});
 	  	
@@ -160,10 +162,9 @@ module.exports = {
   		}
   		numberId = number.id;
 	  	// allocate number to user
-	  	_.forEach(req.body.users, function(value, key) {
-
+	  	_.forEach(req.body.users, function(value) {
 				var form_data = {};
-				form_data.userId = key;
+				form_data.userId = value;
 				form_data.numberId = numberId;
 				form_data.allocationStatus = true;
 

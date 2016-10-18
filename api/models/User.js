@@ -64,5 +64,11 @@ module.exports = {
   	  type: 'datetime',
   	  columnName: 'updatedAt'
   	},
+  },
+  types:{
+    password: function(value) {
+  // password must be of minimum six letters
+  return _.isString(value) && value.length >= 6 ;
+    }
   }
 };
