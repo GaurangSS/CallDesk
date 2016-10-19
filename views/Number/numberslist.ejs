@@ -25,7 +25,7 @@
 										<th>Phone Number</th>
 										<th>No.SID</th>
 										<th>SID</th>
-										<th>Action</th>										
+										<th>Action</th>									
 										<th>Time Allocation</th>
 									</tr>
 								</thead>
@@ -37,7 +37,7 @@
 									    <td><%= number.phone_number %></td>
 										<td><%= number.sid %></td>
 										<td><%= number.account_sid %></td>
-										<td><a href="/numbers/delete/<%= number.id %>" onclick="return confirm('Are you sure you want to delete this number?');" class="btn btn-sm btn-danger">Release Number</a></td>
+										<td><a href="/numbers/music/<%= number.id %>" class="btn btn-sm btn-primary">Music</a><a href="/numbers/delete/<%= number.id %>" onclick="return confirm('Are you sure you want to delete this number?');" class="btn btn-sm btn-danger">Release Number</a></td>
 										<td><a href="/allocateTime/number/<%= number.id %>" class="btn btn-sm btn-info">Time Allocation</a></td>
 									</tr>
 									<% i++ }); %>
