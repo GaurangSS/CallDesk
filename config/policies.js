@@ -63,6 +63,8 @@ module.exports.policies = {
     postContectNumber: 'isLoggedin',
     getContectNumber: 'isLoggedin',
     numberslist: 'isLoggedin',
+    musicNumber: 'isLoggedin',
+    Update_music: 'isLoggedin',
   }
 
 };

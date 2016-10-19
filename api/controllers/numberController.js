@@ -3,8 +3,8 @@ var sails = require('sails');
 // var accountSid = 'ACe732ab6c48c553e824547bce75dfc861';
 // var authToken = "1ee4bc07c48d297d817016756d8008f4";
 
-var accountSid = 'ACa2b4650ccddd568c2362d837f224e96a';
-var authToken = "d28d0badd4ec9d419fdc47ff14cadaf0";
+var accountSid = 'ACa0a28d19157afd80b7c2a21380b83471';
+var authToken = "82385642275d0b75d8d3b3ae307ca423";
 
 
 var client = require('twilio')(accountSid, authToken);
@@ -102,6 +102,7 @@ module.exports = {
 	      	console.log(err);
 	      } else {
 	      	var message = {};
+	      	message.user_id = req.session.userid;
 	      	message.number_id = auth.id;
 	      	message.msg_type = 1;
 	      	message.music_type = 1;
@@ -113,42 +114,7 @@ module.exports = {
 	      			console.log("message added");
 	      		}
 	      	});
-	      	var message = {};
-	      	message.number_id = auth.id;
-	      	message.msg_type = 2;
-	      	message.music_type = 1;
-	      	message.audio_text = "We can unfortunately not attend your call at the moment. Please call back later.";
-	      	NumberMessage.create(message, function(error,resp) {
-	      		if(error) {
-	      			console.log(error);
-	      		} else {
-	      			console.log("message added");
-	      		}
-	      	});
-	      	var message = {};
-	      	message.number_id = auth.id;
-	      	message.msg_type = 3;
-	      	message.music_type = 1;
-	      	message.audio_text = "Unfortunately we cannot take your call right now. So please leave us a message after the beep.";
-	      	NumberMessage.create(message, function(error,resp) {
-	      		if(error) {
-	      			console.log(error);
-	      		} else {
-	      			console.log("message added");
-	      		}
-	      	});
-	      	var message = {};
-	      	message.number_id = auth.id;
-	      	message.msg_type = 4;
-	      	message.music_type = 1;
-	      	message.audio_text = "Welcome, we are currently closed. Please leave us a message, we will contact you as soon as possible.";
-	      	NumberMessage.create(message, function(error,resp) {
-	      		if(error) {
-	      			console.log(error);
-	      		} else {
-	      			console.log("message added");
-	      		}
-	      	});
+	      	
 	      	console.log('successfully inserted');
 	      }
 	    });
@@ -269,15 +235,61 @@ releaseNumber: function(req, res) {
 	});
 },
 
+/*Update_music: function(req,res) {
+	var number=req.param('number',null);
+	var user=req.param('id',null);
+
+	
+//	res.redirect( '/numberslist');
+},*/
+
 musicNumber: function(req,res) {
 	var number=req.param('number',null);
 
-	NumberMessage.find().where({'number_id':number}).exec(function(err, rec) {
-		if(err) {
-			console.log(err);
+	NumberMessage.findOne().where({'number_id':number}).exec(function(err, rec) {
+		if(req.method=='POST')
+		{
+			console.log("test");
+			console.log(req.body);
+			console.log("/test");
+			rec.audio_text = req.body.audio_text;
+			rec.save(function(err){
+				if(err) {
+					console.log(err);
+				}
+				else {
+					res.redirect( '/numberslist');
+					console.log("Successfully updated");
+				}
+			});
 		} else {
 			console.log(rec);
-			res.redirect( '/numberslist');
+			/*var data1 = {};
+			var data2 = {};
+			var data3 = {};
+			var data4 = {};
+			_.forEach(rec, function(value) {
+				if(value.msg_type == 1) {
+					data1 = value;
+					console.log(data1);
+				}
+				if(value.msg_type == 2) {
+					data2 = value;
+					console.log(data2);
+				}
+				if(value.msg_type == 3) {
+					data3 = value;
+					console.log(data3);
+				}
+				if(value.msg_type == 4) {
+					data4 = value;
+					console.log(data4);
+				}
+			});*/
+			var data={};
+			data.list = rec;
+			res.locals.layout = 'layout1.ejs';
+			return res.view('Number/music.ejs',data);
 		}
 	});
 },

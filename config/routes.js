@@ -71,6 +71,8 @@ module.exports.routes = {
   
   'get /numbers/music/:number': 'numberController.musicNumber',
 
+  'post /update_music/:number/:id': 'numberController.musicNumber',
+
   'get /allocateTime/:id': 'UserTimeAllocController.AllocateTime',
 
   'get /numberslist': 'numberController.numberslist',
