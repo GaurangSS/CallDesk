@@ -81,7 +81,7 @@ module.exports.routes = {
 
   'get /dashboard': 'AuthController.dashboard',
 
-  // 'get /forgotPassword': 'AuthController.forgotPassword',
+  'get /forgotPassword': 'AuthController.getForgotPassword',
 
   'get /user/changePassword/:id':  'UserController.getChangePassword',
 
@@ -105,6 +105,8 @@ module.exports.routes = {
 
   'post /allocateTime/number/:id': 'numberController.AllocateTime',
 
+  'post /forgotPassword': 'AuthController.postForgotPassword',
+
   'post /user/changePassword/:id':  'UserController.postChangePassword',
 
   'post /Signup': 'LoginController.postSignup',
@@ -114,6 +116,8 @@ module.exports.routes = {
   'post /postAreaCode': 'numberController.postAreaCode',
 
   'get /logout': 'AuthController.logout',
+
+  'get /calls': 'CalllogController.call_list',
 
 };
 

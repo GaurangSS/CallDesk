@@ -1,0 +1,106 @@
+<!-- content -->
+<div class="app app-header-fixed ">
+    <div class="container w-xxl w-auto-xs">
+      <a href class="navbar-brand block">Call Desk</a>
+      <div class="m-b-lg">
+        <form name="form" method="post" class="form-validation">
+          <% if(data.error!= '' && data.error!=undefined){ %>
+	      		<div class="text-danger text-center">
+              <strong ><%= data.error %></strong>
+            </div>
+	    		<% } %>
+          <div class="list-group list-group-sm">
+          <div class="list-group-item">
+              <input placeholder="First Name" name="firstname" class="form-control no-border" value="<%= user.firstname ? user.firstname : '' %>" required>
+            </div>
+            <div class="list-group-item">
+              <input placeholder="Last Name" name="lastname" class="form-control no-border" value="<%= user.lastname ? user.lastname : '' %>" required>
+            </div>
+            <div class="list-group-item">
+              <input type="email" name="email" placeholder="Email" class="form-control no-border" value="<%= user.email ? user.email : '' %>" required>
+            </div>
+            <div class="list-group-item">
+               <input type="password" name="password" placeholder="Password" class="form-control no-border" required>
+            </div>
+            <div class="list-group-item">
+               <input type="password" name="password_password" placeholder="confirm Password" class="form-control no-border" required>
+            </div>
+          </div>
+          <div class="checkbox m-b-md m-t-none">
+            <label class="i-checks">
+              <input type="checkbox" required><i></i> Agree the <a href>terms and policy</a>
+            </label>
+          </div>
+          <button type="submit" class="btn btn-lg btn-primary btn-block">Sign up</button>
+          <div class="line line-dashed"></div>
+          <p class="text-center"><small>Already have an account?</small></p>
+          <a href="/login" class="btn btn-lg btn-default btn-block">Sign in</a>
+        </form>
+      </div>
+    </div>
+</div>
+<!-- 
+<div id="content" class="app-content" role="main">
+  <div class="app-content-body "> 
+		<div class="wrapper-md">
+			<div class="col-md-8">
+				<div class="panel panel-default">
+		    	<div class="panel-heading font-bold">                  
+		      		Sign Up
+		    	</div>
+			    <div class="panel-body">
+			    	<% if(data.error!= '' && data.error!=undefined){ %>
+		      		<div class="wrapper text-center">
+                <strong ><%= data.error %></strong>
+                </div>
+		    			<div>
+		    		<% } %>
+
+			      <form class="bs-example form-horizontal" method="post">
+							<div class="form-group">
+								<label class="col-lg-2 control-label">Firstname</label>
+								<div class="col-lg-10">
+									<input type="text" name="firstname" class="form-control" placeholder="Enter First Name" value="<%= user.firstname ? user.firstname : '' %>">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-lg-2 control-label">lastname</label>
+								<div class="col-lg-10">
+									<input type="text" name="lastname" class="form-control" placeholder="Enter Last Name" value="<%= user.lastname ? user.lastname : '' %>">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-lg-2 control-label">Email</label>
+								<div class="col-lg-10">
+									<input type="email" name="email"  class="form-control" placeholder="Enter Email" value="<%= user.email ? user.email : '' %>">
+								</div>
+							</div>
+	            <div class="form-group">
+								<label class="col-lg-2 control-label">Password</label>
+								<div class="col-lg-10">
+									<input type="password" name="password"  class="form-control" placeholder="Password">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-lg-2 control-label">Confirm Password</label>
+								<div class="col-lg-10">
+									<input type="password" name="password_confirm"  class="form-control" placeholder="Confirm Password">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-lg-offset-2 col-lg-10">
+									<button type="submit" class="btn btn-info">create User</button>
+								</div>
+							</div>
+						</form>
+		    	</div>
+		  	</div>
+		  </div>
+		</div>
+	</div>
+</div>  -->
+<!-- /content -->
+
+<!-- footer -->
+
+<!-- / footer -->
