@@ -1,27 +1,24 @@
 var twilio = require('twilio');
 module.exports = {
 
-  ShowLogin: function (req, res) {  
+  ShowLogin: function (req, res) {
     var data = {};
     data.msg = 'success';
-    return res.view('login.ejs',data);
+    return res.view('auth/login.ejs',data);
   },
 
   Authentication: function (req, res) {
 
-    //console.log(req.body);
     var email = req.body.email;
     var password = req.body.password;
 
     User.findOne({email:email,password:password}).exec(function findCallback(err, record){
         
-        console.log(record);
-        if(!record){
+        if (!record) {
           var err = "Username and Password does not match";
-          return res.view('login.ejs',err);   
+          return res.view('auth/login.ejs',err);
 
-        }else{   
-          console.log(record.id);
+        } else {
             var data = {};
 
             var identity = 'kevin';
@@ -45,30 +42,31 @@ module.exports = {
   },
 
   getSignup: function (req, res) {
-    res.locals.layout = 'layout1.ejs';
-    return res.view('signUp.ejs', {data : {}, user : {}});
+    return res.view('auth/signUp.ejs', {data : {}, user : {}});
   },
 
   postSignup: function (req, res) {
     var form_data = req.body;
-    console.log(form_data);
+
     if (form_data.password !== form_data.password_confirm) {
       var data = {};
 
       data.error = "Password doesn't match with confirm password";
       
-      res.view('signUp.ejs',{user: form_data, data: data});
+      res.view('auth/signUp.ejs',{user: form_data, data: data});
+    } else {
+
+      User.create(form_data, function (err, user) {
+        if (err) {
+          var data = {};
+          data.error = err.message;
+          res.view('auth/signUp.ejs',{user: form_data, data: data});
+
+        } else {
+          console.log('User created successfully');
+          res.redirect('/login');
+        }
+      });
     }
-
-    User.create(form_data, function (err, user) {
-      if (err){
-        console.log(err);
-      } else {
-        console.log('User created successfully');
-        res.redirect('/login');
-      }
-    });
-    
   },
-
 };

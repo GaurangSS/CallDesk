@@ -77,7 +77,7 @@ module.exports.routes = {
 
   'get /dashboard': 'AuthController.dashboard',
 
-  // 'get /forgotPassword': 'AuthController.forgotPassword',
+  'get /forgotPassword': 'AuthController.getForgotPassword',
 
   'get /user/changePassword/:id':  'UserController.getChangePassword',
 
@@ -100,6 +100,8 @@ module.exports.routes = {
   'post /allocateNumberToUSer': 'numberController.postallocateNumberToUSer',
 
   'post /allocateTime/number/:id': 'numberController.AllocateTime',
+
+  'post /forgotPassword': 'AuthController.postForgotPassword',
 
   'post /user/changePassword/:id':  'UserController.postChangePassword',
 

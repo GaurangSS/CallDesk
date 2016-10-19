@@ -6,7 +6,6 @@ var sails = require('sails');
 var accountSid = 'ACa2b4650ccddd568c2362d837f224e96a';
 var authToken = "d28d0badd4ec9d419fdc47ff14cadaf0";
 
-
 var client = require('twilio')(accountSid, authToken);
 
 var lodash = require('lodash');
@@ -20,7 +19,7 @@ module.exports = {
 		    return res.serverError(err);
 		  }
 		  res.locals.layout = 'layout1.ejs';
-		  return res.view('numbers.ejs',{countries});
+		  return res.view('Number/numbers.ejs',{countries});
 		});
   	},
   	postAreaCode: function (req, res) {
@@ -84,7 +83,7 @@ module.exports = {
 		  		var data = {};
 		  		data.error = err.message;
 		  		res.locals.layout = 'layout1.ejs';
-		  		res.view('numberslist.ejs', {numbers,data});
+		  		res.view('Number/numberslist.ejs', {numbers,data});
 		  	});
 	  	}else{
 	  	numberDetail = {};
@@ -126,7 +125,7 @@ module.exports = {
 			  res.locals.layout = 'layout1.ejs';
 			  console.log('usersss')
 			  console.log(users)
-			  return res.view('allocatenumbertouser.ejs',{number: purchasedNumber.phone_number, users: users, result: result});
+			  return res.view('Number/allocatenumbertouser.ejs',{number: purchasedNumber.phone_number, users: users, result: result});
 			});
 	  	
           }
@@ -151,7 +150,7 @@ module.exports = {
   	var number = req.param('number', null);
   	res.locals.layout = 'layout1.ejs';
 
-  	res.view('buyNumber.ejs', {number});
+  	res.view('Number/buyNumber.ejs', {number});
   },
   postallocateNumberToUSer: function (req, res) {
   	var users = req.body.users;
@@ -194,7 +193,7 @@ module.exports = {
   			var data = {};
   		res.locals.layout = 'layout1.ejs';
 
-  		res.view('numberslist.ejs', {numbers,data});
+  		res.view('Number/numberslist.ejs', {numbers,data});
 
   	});
   },
@@ -312,7 +311,7 @@ releaseNumber: function(req, res) {
 
 							console.log(response);
 							res.locals.layout = 'layout1.ejs';
-							return res.view( 'allocateTimeToNumber.ejs',{'response':response});
+							return res.view( 'Number/allocateTimeToNumber.ejs',{'response':response});
 						}
 					})
 				}
@@ -323,7 +322,7 @@ releaseNumber: function(req, res) {
 					response.model = model;
 					console.log(response);
 					res.locals.layout = 'layout1.ejs';
-					return res.view( 'allocateTimeToNumber.ejs',{'response':response});
+					return res.view( 'Number/allocateTimeToNumber.ejs',{'response':response});
 				}
 			}
 		})
