@@ -1,14 +1,6 @@
 var sails = require('sails');
-
-// var accountSid = 'ACe732ab6c48c553e824547bce75dfc861';
-// var authToken = "1ee4bc07c48d297d817016756d8008f4";
-
-var accountSid = 'ACa74fbb703841458ad00bb980209bde35';
-var authToken = "0859cc74a446c3b44d1212861eb9e2e0";
-
-
-var client = require('twilio')(accountSid, authToken);
-
+var client = require('twilio')(sails.config.myconf.twilioDetails.TWILIO_ACCOUNT_SID,
+	sails.config.myconf.twilioDetails.TWILIO_AUTH_TOKEN);
 var lodash = require('lodash');
 
 module.exports = {

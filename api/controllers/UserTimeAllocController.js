@@ -41,8 +41,7 @@ module.exports = {
 							  			console.log("not created");
 							  		} else {
 							  			console.log("created successfully");
-							  		//	res.locals.layout = 'layout1.ejs';     
-										
+							  		//	res.locals.layout = 'layout1.ejs';     	
 							  		}
 							  	})
 							});
