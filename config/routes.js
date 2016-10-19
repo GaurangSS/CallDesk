@@ -68,6 +68,8 @@ module.exports.routes = {
   'get /buyNumber/:number': 'numberController.getbuyNumber',
   
   'get /numbers/delete/:number': 'numberController.releaseNumber',
+  
+  'get /numbers/music/:number': 'numberController.musicNumber',
 
   'get /allocateTime/:id': 'UserTimeAllocController.AllocateTime',
 
@@ -76,6 +78,12 @@ module.exports.routes = {
   'get /allocateTime/number/:id': 'numberController.AllocateTime',
 
   'get /dashboard': 'AuthController.dashboard',
+
+  'get /forgotPassword': 'AuthController.getForgotPassword',
+
+  'get /user/changePassword/:id':  'UserController.getChangePassword',
+
+  'get /Signup': 'LoginController.getSignup',
 
   // Post methods
 
@@ -94,6 +102,12 @@ module.exports.routes = {
   'post /allocateNumberToUSer': 'numberController.postallocateNumberToUSer',
 
   'post /allocateTime/number/:id': 'numberController.AllocateTime',
+
+  'post /forgotPassword': 'AuthController.postForgotPassword',
+
+  'post /user/changePassword/:id':  'UserController.postChangePassword',
+
+  'post /Signup': 'LoginController.postSignup',
 
   // Ajax methos
 

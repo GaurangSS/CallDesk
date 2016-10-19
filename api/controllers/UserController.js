@@ -3,16 +3,13 @@ module.exports = {
 	List: function(req,res) {
 		console.log(req.session.userid);
 		User.findOne().where({'id':req.session.userid}).exec(function(err,result1){
-			if(err){ 
+			if(err){
 				console.log(err);
-			}else{ 
+			}else{
 				User.find().where({'parent_id':req.session.userid, 'delete_status':'0'}).exec(function(err,result){
 					var data={};
-				//	var data1={};
 					data.list = result;
 					data.list1 = result1;
-					//console.log(data);
-				//	console.log(data1);
 					res.locals.layout = 'layout1.ejs';
 			        return res.view('User/list.ejs',data);
 		    	})
@@ -27,12 +24,12 @@ module.exports = {
 		if(req.method=='POST'&&req.param('User',null)!=null)
 		{
 			var usr=req.param('User',null);
-			console.log('editloggg');
-			console.log(usr);
+
 			model.firstname=usr.firstname;
 			model.lastname=usr.lastname;
 			model.email=usr.email;
 			model.user_type_id=usr.user_type_id;
+
 
 			model.save(function(err){
 				if (err) {
@@ -73,9 +70,7 @@ module.exports = {
 	},
 
 	destroy: function (req, res) {
-		console.log(req.param);
 		var id=req.param('id',null);
-		console.log(id);
 		User.findOne().where({'id':id}).exec(function(err, usar) {
 
 			usar.delete_status = 1;
@@ -100,16 +95,14 @@ module.exports = {
 		return res.view('User/form.ejs');
 	},
 
-	createUser: function(req,res) {	
+	createUser: function(req,res) {
 		var form_data = req.body;
-		console.log(form_data);
 		form_data.parent_id = req.session.userid;
 		form_data.delete_status = 0;
 		User.create(form_data, function(err, auth) {
-          if(err) { 
-          	console.log(err); 
+          if(err) {
+          	console.log(err);
           } else {
-          	console.log(auth);
           	for(var i=1;i<=7;i++) {
 	          	var time_allocation = {};
 	          	time_allocation.user_id = auth.id;
@@ -117,7 +110,7 @@ module.exports = {
 	          	time_allocation.to_time = '23:59:59';
 	          	if(i==1)
 	          	{
-	          		time_allocation.day = "Monday";
+	          		time_allocation.day = "Mdoesn'tonday";
 	          	} else if(i==2) {
 	          		time_allocation.day = "Tuesday";
 	          	} else if(i==3) {
@@ -143,7 +136,6 @@ module.exports = {
           	var user_status = {};
           	user_status.user_id = auth.id;
           	user_status.availibility_status = 1;
-          	console.log(req.body.assign_device);
           	if(req.body.assign_device){
           		
           	   user_status.assign_device_status = 1;
@@ -167,4 +159,46 @@ module.exports = {
         });
         res.redirect('/users');
 	},
+	getChangePassword: function (req, res) {
+		var data = {};
+    res.locals.layout = 'layout1.ejs';
+    res.view('auth/changePassword.ejs',{userId: req.param('id', null), data: data});
+  },
+  postChangePassword: function (req, res) {
+		var id=req.param('id',null);
+		var form_data = req.body;
+ 
+    User.findOne().where({'id':id, 'password': form_data.old_password}).exec(function(err, user) {
+    	console.log(user)
+    	if (user === undefined) {
+    		var data = {};
+	  		data.error = "doesn't get any record with this old password";
+	  		res.locals.layout = 'layout1.ejs';
+	    	res.view('auth/changePassword.ejs',{userId: id, data: data});
+    	} else if (form_data.new_password.length <= 6) {
+	    	var data = {};
+	  		data.error = "password length must be greater than 6 character";
+	  		res.locals.layout = 'layout1.ejs';
+	    	return res.view('auth/changePassword.ejs',{userId: id, data: data});
+	    } else if (form_data.new_password !== form_data.password_confirm) {
+	    	var data = {};
+	  		data.error = "Please enter confirm password same as password";
+	  		res.locals.layout = 'layout1.ejs';
+	    	return res.view('auth/changePassword.ejs',{userId: id, data: data});
+	    }else if (err) {
+    		var data = {};
+	  		data.error = err.message;
+	  		res.locals.layout = 'layout1.ejs';
+	    	res.view('auth/changePassword.ejs',{userId: id, data: data});
+    	} else {
+				user.password = form_data.new_password;
+				user.save(function(err){
+					if (err) {
+						res.send('Error');
+					}
+				});
+				 res.redirect( '/users');
+			}
+		});
+  },
 }

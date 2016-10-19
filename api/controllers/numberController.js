@@ -1,6 +1,8 @@
 var sails = require('sails');
+
 var client = require('twilio')(sails.config.myconf.twilioDetails.TWILIO_ACCOUNT_SID,
 	sails.config.myconf.twilioDetails.TWILIO_AUTH_TOKEN);
+
 var lodash = require('lodash');
 
 module.exports = {
@@ -12,7 +14,7 @@ module.exports = {
 		    return res.serverError(err);
 		  }
 		  res.locals.layout = 'layout1.ejs';
-		  return res.view('numbers.ejs',{countries});
+		  return res.view('Number/numbers.ejs',{countries});
 		});
   	},
   	postAreaCode: function (req, res) {
@@ -76,23 +78,71 @@ module.exports = {
 		  		var data = {};
 		  		data.error = err.message;
 		  		res.locals.layout = 'layout1.ejs';
-		  		res.view('numberslist.ejs', {numbers,data});
+		  		res.view('Number/numberslist.ejs', {numbers,data});
 		  	});
 	  	}else{
 	  	numberDetail = {};
 	  	numberDetail.sid = purchasedNumber.sid;
 	  	numberDetail.account_sid = purchasedNumber.account_sid,
-		  numberDetail.friendly_name = purchasedNumber.friendly_name,
-		  numberDetail.phone_number = purchasedNumber.phone_number,
-		  numberDetail.delete_status = 0,
-		  numberDetail.contact_name = req.body.conName,
-		  numberDetail.date_created = purchasedNumber.date_created,
-		  numberDetail.date_updated = purchasedNumber.date_updated,
+		numberDetail.friendly_name = purchasedNumber.friendly_name,
+		numberDetail.phone_number = purchasedNumber.phone_number,
+		numberDetail.delete_status = 0,
+		numberDetail.contact_name = req.body.conName,
+		numberDetail.date_created = purchasedNumber.date_created,
+		numberDetail.date_updated = purchasedNumber.date_updated,
 
 	  	numberInfo.create(numberDetail, function(err, auth) {
 	      if(err) {
 	      	console.log(err);
 	      } else {
+	      	var message = {};
+	      	message.number_id = auth.id;
+	      	message.msg_type = 1;
+	      	message.music_type = 1;
+	      	message.audio_text = "Welcome, we will take your call in a few minutes, please hold.";
+	      	NumberMessage.create(message, function(error,resp) {
+	      		if(error) {
+	      			console.log(error);
+	      		} else {
+	      			console.log("message added");
+	      		}
+	      	});
+	      	var message = {};
+	      	message.number_id = auth.id;
+	      	message.msg_type = 2;
+	      	message.music_type = 1;
+	      	message.audio_text = "We can unfortunately not attend your call at the moment. Please call back later.";
+	      	NumberMessage.create(message, function(error,resp) {
+	      		if(error) {
+	      			console.log(error);
+	      		} else {
+	      			console.log("message added");
+	      		}
+	      	});
+	      	var message = {};
+	      	message.number_id = auth.id;
+	      	message.msg_type = 3;
+	      	message.music_type = 1;
+	      	message.audio_text = "Unfortunately we cannot take your call right now. So please leave us a message after the beep.";
+	      	NumberMessage.create(message, function(error,resp) {
+	      		if(error) {
+	      			console.log(error);
+	      		} else {
+	      			console.log("message added");
+	      		}
+	      	});
+	      	var message = {};
+	      	message.number_id = auth.id;
+	      	message.msg_type = 4;
+	      	message.music_type = 1;
+	      	message.audio_text = "Welcome, we are currently closed. Please leave us a message, we will contact you as soon as possible.";
+	      	NumberMessage.create(message, function(error,resp) {
+	      		if(error) {
+	      			console.log(error);
+	      		} else {
+	      			console.log("message added");
+	      		}
+	      	});
 	      	console.log('successfully inserted');
 	      }
 	    });
@@ -116,17 +166,16 @@ module.exports = {
 			  }
 			  var result = {}
 			  res.locals.layout = 'layout1.ejs';
-			  return res.view('allocatenumbertouser.ejs',{number: purchasedNumber.phone_number, users: users, result: result});
+			  console.log('usersss')
+			  console.log(users)
+			  return res.view('Number/allocatenumbertouser.ejs',{number: purchasedNumber.phone_number, users: users, result: result});
 			});
 	  	
           }
 	    // return res.json(purchasedNumber);
 	  });
 
-	 
-
-
-		// numberInfo.create(form_data, function(err, auth) {
+	// numberInfo.create(form_data, function(err, auth) {
   //     if(err) {
   //     	console.log(err);
   //     } else {
@@ -141,7 +190,7 @@ module.exports = {
   	var number = req.param('number', null);
   	res.locals.layout = 'layout1.ejs';
 
-  	res.view('buyNumber.ejs', {number});
+  	res.view('Number/buyNumber.ejs', {number});
   },
   postallocateNumberToUSer: function (req, res) {
   	var users = req.body.users;
@@ -152,10 +201,9 @@ module.exports = {
   		}
   		numberId = number.id;
 	  	// allocate number to user
-	  	_.forEach(req.body.users, function(value, key) {
-
+	  	_.forEach(req.body.users, function(value) {
 				var form_data = {};
-				form_data.userId = key;
+				form_data.userId = value;
 				form_data.numberId = numberId;
 				form_data.allocationStatus = true;
 
@@ -185,7 +233,7 @@ module.exports = {
   			var data = {};
   		res.locals.layout = 'layout1.ejs';
 
-  		res.view('numberslist.ejs', {numbers,data});
+  		res.view('Number/numberslist.ejs', {numbers,data});
 
   	});
   },
@@ -212,6 +260,19 @@ releaseNumber: function(req, res) {
 				
 			}
 		});
+	});
+},
+
+musicNumber: function(req,res) {
+	var number=req.param('number',null);
+
+	NumberMessage.find().where({'number_id':number}).exec(function(err, rec) {
+		if(err) {
+			console.log(err);
+		} else {
+			console.log(rec);
+			res.redirect( '/numberslist');
+		}
 	});
 },
 
@@ -303,7 +364,7 @@ releaseNumber: function(req, res) {
 
 							console.log(response);
 							res.locals.layout = 'layout1.ejs';
-							return res.view( 'allocateTimeToNumber.ejs',{'response':response});
+							return res.view( 'Number/allocateTimeToNumber.ejs',{'response':response});
 						}
 					})
 				}
@@ -314,7 +375,7 @@ releaseNumber: function(req, res) {
 					response.model = model;
 					console.log(response);
 					res.locals.layout = 'layout1.ejs';
-					return res.view( 'allocateTimeToNumber.ejs',{'response':response});
+					return res.view( 'Number/allocateTimeToNumber.ejs',{'response':response});
 				}
 			}
 		})

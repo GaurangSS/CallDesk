@@ -38,6 +38,7 @@
 									    <td><%= dataob.lastname %></td>
 										<td><%= dataob.email %></td>
 										<td><a href="/users/edit/<%= dataob.id %>" class="btn btn-sm btn-warning">Edit</a>
+										<a href="/user/changePassword/<%= dataob.id %>" class="btn btn-sm btn-primary">Change password</a>
 										<a href="/users/delete/<%= dataob.id %>" class="btn btn-sm btn-danger">Delete</a></td>
 										<td><a href="/allocateTime/<%= dataob.id %>" class="btn btn-sm btn-info">Time Allocation</a></td>
 									</tr>
