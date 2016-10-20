@@ -25,8 +25,12 @@ module.exports = {
     var password = req.body.password;
 
     User.findOne({email:email,password:password}).exec(function findCallback(err, record){
-        
+
+        console.log(err);
+        console.log(record);
+
         if (!record) {
+
           var err = "Username and Password does not match";
           return res.view('auth/login.ejs',err);
 

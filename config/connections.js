@@ -55,7 +55,7 @@ module.exports.connections = {
   },
 
 //Live server
-/*  MainSql: {
+  /*MainSql: {
     adapter: 'sails-mysql',
       host: '104.43.16.40',
       user: 'calluser',

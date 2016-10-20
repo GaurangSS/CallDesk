@@ -15,6 +15,10 @@ module.exports = {
 			autoIncrement: true
 		},
 
+		user_id: {
+			type: 'integer',
+		},
+
 		number_id: {
 			type: 'integer',
 		},

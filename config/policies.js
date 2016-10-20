@@ -72,11 +72,14 @@ module.exports.policies = {
     releaseNumber: 'isLoggedin',
     musicNumber: 'isLoggedin',
     AllocateTime: 'isLoggedin',
+    Update_music: 'isLoggedin',
   },
 
   UserTimeAlloController: {
     AllocateTime: 'isLoggedin',
   },
+    
+  }
 
   TwilioclientController: {
     createToken: 'isLoggedin',
