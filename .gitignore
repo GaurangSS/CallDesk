@@ -41,6 +41,8 @@
 
 config/local.js
 
+config/connection.js
+
 
 
 
