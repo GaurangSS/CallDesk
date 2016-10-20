@@ -55,6 +55,11 @@ module.exports = {
       type: 'integer'
     },
 
+    active: {
+      type:'boolean',
+      default: 'true'
+    },
+
   	created_at: {
   	  type: 'datetime',
   	  columnName: 'createdAt'

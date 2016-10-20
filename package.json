@@ -24,11 +24,14 @@
     "grunt-sync": "0.5.2",
     "include-all": "~0.1.6",
     "lodash": "^4.16.4",
+    "nodemailer": "^2.6.4",
+    "nodemailer-smtp-transport": "^2.7.2",
     "rc": "1.0.1",
     "request": "^2.74.0",
     "sails": "~0.12.4",
     "sails-disk": "~0.10.9",
     "sails-mysql": "^0.11.5",
+    "shortid": "^2.2.6",
     "twilio": "^2.9.2"
   },
   "scripts": {

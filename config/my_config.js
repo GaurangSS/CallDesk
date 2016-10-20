@@ -13,5 +13,8 @@ module.exports.myconf = {
     TWILIO_AUTH_TOKEN: '1ee4bc07c48d297d817016756d8008f4',
     TWILIO_TWIML_APP_SID: 'AP17206906c291e015b29a9fc7a64d00b0'
   },
-  
+ mailServerDetail: {
+    host:'smtp.sendgrid.net',
+    protocol:'587'
+  },
 };

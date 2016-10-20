@@ -1,4 +1,16 @@
+var nodemailer = require('nodemailer');
+var smtpTransport = require('nodemailer-smtp-transport');
 var twilio = require('twilio');
+var shortid = require('shortid');
+var transporter = nodemailer.createTransport(smtpTransport({
+    host: "smtp.sendgrid.net",
+    port: 587,
+    auth: {
+        user: 'softsuggest',
+        pass: '1800sendgrid'
+    }
+}));
+
 module.exports = {
 
   ShowLogin: function (req, res) {
@@ -31,6 +43,7 @@ module.exports = {
 
             var token = capability.generate();
 
+
              data.identity = identity;
              data.token = token;
              req.session.authenticated = true;
@@ -47,6 +60,7 @@ module.exports = {
 
   postSignup: function (req, res) {
     var form_data = req.body;
+    console.log(form_data)
 
     if (form_data.password !== form_data.password_confirm) {
       var data = {};
@@ -64,6 +78,39 @@ module.exports = {
 
         } else {
           console.log('User created successfully');
+          console.log('-=-=');
+          console.log(user);
+          var tokenData = {}
+          tokenData.userId = user.id;
+          tokenData.hash = shortid.generate() + shortid.generate();
+          tokenData.type = 'activate';
+          console.log(tokenData);
+          tokens.create(tokenData, function (err, token){
+            if(err){
+              console.log(err.message);
+            } else {
+              console.log('Token generated successfully.');
+              var url = sails.config.myconf.mailServerDetail.protocol + '://' + sails.config.myconf.mailServerDetail.host + '/activate/' + token.hash
+              var mailOptions = {
+                  from: 'gaurang@softwaresuggest.com', // sender address 
+                  to: user.email, // list of receivers 
+                  subject: 'Activatioin mail for sign up', // Subject line 
+                  text: 'Hello ' + user.firstname, // plaintext body 
+                  html: '<html><body><b>Hello world 🐴</b><a href=" + url +">Click Here for Activate</a></body></html>' // html body 
+              };
+               
+              // send mail with defined transport object 
+              transporter.sendMail(mailOptions, function(error, info){
+                  if(error){
+                    console.log(error);
+                      return console.log(error);
+                  }
+                  console.log('Message sent: ' + info.response);
+              });
+
+              //     url: ctx.protocol + '://' + ctx.host + '/activate/' + token
+            }
+          });
           res.redirect('/login');
         }
       });

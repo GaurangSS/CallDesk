@@ -56,13 +56,29 @@ module.exports.policies = {
     destroy : 'isLoggedin',
     edit : 'isLoggedin',
     allocateTime : 'isLoggedin',
+    createUser: 'isLoggedin',
+    getChangePassword: 'isLoggedin',
+    postChangePassword: 'isLoggedin',
   },
 
   numberController: {
-    postbuyNumber: 'isLoggedin',
-    postContectNumber: 'isLoggedin',
     getContectNumber: 'isLoggedin',
+    postAreaCode: 'isLoggedin',
+    postContectNumber: 'isLoggedin',
+    postbuyNumber: 'isLoggedin',
+    getbuyNumber: 'isLoggedin',
+    postallocateNumberToUSer: 'isLoggedin',
     numberslist: 'isLoggedin',
-  }
+    releaseNumber: 'isLoggedin',
+    musicNumber: 'isLoggedin',
+    AllocateTime: 'isLoggedin',
+  },
 
+  UserTimeAlloController: {
+    AllocateTime: 'isLoggedin',
+  },
+
+  TwilioclientController: {
+    createToken: 'isLoggedin',
+  },
 };

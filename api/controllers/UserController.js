@@ -11,8 +11,8 @@ module.exports = {
 					data.list = result;
 					data.list1 = result1;
 					res.locals.layout = 'layout1.ejs';
-			        return res.view('User/list.ejs',data);
-		    	})
+	        return res.view('User/list.ejs',data);
+    		})
 			}
 		})		
 	},

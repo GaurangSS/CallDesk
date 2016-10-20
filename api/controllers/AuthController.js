@@ -31,7 +31,7 @@ module.exports = {
    
   },
   logout: function(req, res) {
-    console.log('22222');getForgotPassword
+    console.log('22222');
     req.session.destroy(function(err) {
       return res.redirect('/login');
     });
