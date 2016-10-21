@@ -4,9 +4,13 @@ module.exports = {
 
 	AllocateTime: function(req,res) {
 		var id=req.param('id',null);
-		
+		console.log(id)
 		User_status_info.findOne().where({'user_id':id}).exec(function(err,result){
-		//	console.log(result);
+			console.log(result);
+			if (err){
+
+				res.redirect('/users');
+			}
 			if(req.method=='POST')
 			{
 				result.availibility_status = req.body.duration;

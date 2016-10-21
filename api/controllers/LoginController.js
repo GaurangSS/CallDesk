@@ -2,6 +2,8 @@ var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
 var twilio = require('twilio');
 var shortid = require('shortid');
+var v = require('validator');
+
 var transporter = nodemailer.createTransport(smtpTransport({
     host: "smtp.sendgrid.net",
     port: 587,
@@ -65,6 +67,13 @@ module.exports = {
   postSignup: function (req, res) {
     var form_data = req.body;
     console.log(form_data)
+    form_data.user_type_id = '1';
+    form_data.parent_id = '0';
+    form_data.firstname = v.trim(form_data.firstname);
+    form_data.lastname = v.trim(form_data.lastname);
+    form_data.email = v.trim(form_data.email);
+    form_data.password = v.trim(form_data.password);
+
 
     if (form_data.password !== form_data.password_confirm) {
       var data = {};
@@ -74,50 +83,67 @@ module.exports = {
       res.view('auth/signUp.ejs',{user: form_data, data: data});
     } else {
 
-      User.create(form_data, function (err, user) {
-        if (err) {
-          var data = {};
-          data.error = err.message;
-          res.view('auth/signUp.ejs',{user: form_data, data: data});
+      // User.create(form_data, function (err, user) {
+      //   if (err) {
+      //     var data = {};
+      //     data.error = err.message;
+      //     res.view('auth/signUp.ejs',{user: form_data, data: data});
 
-        } else {
-          console.log('User created successfully');
-          console.log('-=-=');
-          console.log(user);
-          var tokenData = {}
-          tokenData.userId = user.id;
-          tokenData.hash = shortid.generate() + shortid.generate();
-          tokenData.type = 'activate';
-          console.log(tokenData);
-          tokens.create(tokenData, function (err, token){
-            if(err){
-              console.log(err.message);
-            } else {
-              console.log('Token generated successfully.');
-              var url = sails.config.myconf.mailServerDetail.protocol + '://' + sails.config.myconf.mailServerDetail.host + '/activate/' + token.hash
-              var mailOptions = {
-                  from: 'gaurang@softwaresuggest.com', // sender address 
-                  to: user.email, // list of receivers 
-                  subject: 'Activatioin mail for sign up', // Subject line 
-                  text: 'Hello ' + user.firstname, // plaintext body 
-                  html: '<html><body><b>Hello world 🐴</b><a href=" + url +">Click Here for Activate</a></body></html>' // html body 
-              };
+      //   } else {
+      //     console.log('User created successfully');
+      //     console.log('-=-=');
+      //     console.log(user);
+      //     var user_status = {};
+      //     user_status.user_id = user.id;
+      //     user_status.availibility_status = 1;
+          
+      //     user_status.assign_device_status = 0;
+      //     user_status.assign_device_num = null;
+          
+      //       User_status_info.create(user_status, function(err2,auth2) {
+      //       if(err2) { 
+      //         console.log(err2); 
+      //       }
+      //       else {
+      //         console.log('successfully inserted2');
+      //       }
+      //     });
+      //     var tokenData = {}
+      //     tokenData.userId = user.id;
+      //     tokenData.hash = shortid.generate() + shortid.generate();
+      //     tokenData.type = 'activate';
+      //     console.log(tokenData);
+      //     tokens.create(tokenData, function (err, token){
+      //       if(err){
+      //         console.log(err.message);
+      //       } else {
+      //         console.log('Token generated successfully.');
+      //         var url = sails.config.myconf.mailServerDetail.protocol + '://' + sails.config.myconf.mailServerDetail.host + '/activate/' + token.hash
+      //         var mailOptions = {
+      //             from: 'gaurang@softwaresuggest.com', // sender address 
+      //             to: user.email, // list of receivers 
+      //             subject: 'Activatioin mail for sign up', // Subject line 
+      //             text: 'Hello ' + user.firstname, // plaintext body 
+      //             html: '<html><body><b>Hello world 🐴</b><a href=" + url +">Click Here for Activate</a></body></html>' // html body 
+      //         };
                
-              // send mail with defined transport object 
-              transporter.sendMail(mailOptions, function(error, info){
-                  if(error){
-                    console.log(error);
-                      return console.log(error);
-                  }
-                  console.log('Message sent: ' + info.response);
-              });
+      //         // send mail with defined transport object 
+      //         transporter.sendMail(mailOptions, function(error, info){
+      //             if(error){
+      //               console.log(error);
+      //                 return console.log(error);
+      //             }
+      //             console.log('Message sent: ' + info.response);
+      //         });
 
-              //     url: ctx.protocol + '://' + ctx.host + '/activate/' + token
-            }
-          });
-          res.redirect('/login');
-        }
-      });
+      //         //     url: ctx.protocol + '://' + ctx.host + '/activate/' + token
+      //       }
+      //     });
+      //     res.redirect('/login');
+      //   }
+      // });
+
+      res.redirect('/login');
     }
   },
 };

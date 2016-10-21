@@ -21,13 +21,15 @@ module.exports = {
 
   	var areacode = [];
 
-  	areaCode.find({select: ['areaCode']})
+  	areaCode.find({select: ['areaCode', 'areaName']})
 			.where({'counName': req.body.counName})
 			.exec(function (err, areaCodes){
 				sails.log.info(areaCodes);
 		  if (err) {
 		    return res.serverError(err);
 		  }
+		  console.log('-=-')
+		  console.log(areaCodes)
 		  return res.json(areaCodes);
 		});
 	},
@@ -48,13 +50,16 @@ module.exports = {
 				
 				console.log(err);
 			} else {
+				if (data.availablePhoneNumbers.length <= 0) {
+					var errors = {};
+					errors.error = 'Number not available.';
+					return res.json({errors: errors});
+				} else {
+			  	var number = data.availablePhoneNumbers[0];
+			  	contectDetails = data.availablePhoneNumbers;
 
-				console.log(data);
-
-	  	var number = data.availablePhoneNumbers[0];
-	  	contectDetails = data.availablePhoneNumbers;
-
-			return res.json(contectDetails);
+					return res.json(contectDetails);
+				}
 			}
 		
 
@@ -84,12 +89,12 @@ module.exports = {
 	  	numberDetail = {};
 	  	numberDetail.sid = purchasedNumber.sid;
 	  	numberDetail.account_sid = purchasedNumber.account_sid,
-		numberDetail.friendly_name = purchasedNumber.friendly_name,
-		numberDetail.phone_number = purchasedNumber.phone_number,
-		numberDetail.delete_status = 0,
-		numberDetail.contact_name = req.body.conName,
-		numberDetail.date_created = purchasedNumber.date_created,
-		numberDetail.date_updated = purchasedNumber.date_updated,
+			numberDetail.friendly_name = purchasedNumber.friendly_name,
+			numberDetail.phone_number = purchasedNumber.phone_number,
+			numberDetail.delete_status = 0,
+			numberDetail.contact_name = req.body.conName,
+			numberDetail.date_created = purchasedNumber.date_created,
+			numberDetail.date_updated = purchasedNumber.date_updated,
 
 	  	numberInfo.create(numberDetail, function(err, auth) {
 	      if(err) {
@@ -168,20 +173,27 @@ module.exports = {
   		numberId = number.id;
 	  	// allocate number to user
 	  	_.forEach(req.body.users, function(value) {
-				var form_data = {};
-				form_data.userId = value;
-				form_data.numberId = numberId;
-				form_data.allocationStatus = true;
+	  		allocateNumber.findOne().where({'userId': value, 'numberId': numberId}).exec(function(err, alloc) {
+	  			if (err) {
+	  				res.redirect('/numberslist');
+	  			} else if(alloc === undefined) {
+	  				var form_data = {};
+						form_data.userId = value;
+						form_data.numberId = numberId;
+						form_data.allocationStatus = true;
 
-				allocateNumber.create(form_data, function(err, auth) {
-			    if(err) {
-			    	console.log(err);
-			    } else {
-			    	console.log(auth);
+						allocateNumber.create(form_data, function(err, auth) {
+					    if(err) {
+					    	console.log(err);
+					    } else {
+					    	console.log(auth);
 
-			    	console.log('successfully inserted');
-			    }
-			  });
+					    	console.log('successfully inserted');
+					    }
+					  });
+	  			}
+	  		});
+				
 			});
   	});
 	  	
@@ -392,4 +404,45 @@ musicNumber: function(req,res) {
 			}
 		})
 	},
+	getallocateNumberToUSer :  function (req, res) {
+		var numberId=req.param('id',null);
+		console.log(numberId)
+		numberInfo.findOne().where({'id': numberId}).exec(function(err, number) {
+			if (err) {
+				res.redirect('/numberslist');
+			} else if (number != undefined) {
+
+				allocateNumber.find({select:['userId']}).where({'numberId': numberId}).exec(function(err, allocatedUser) {
+					if (err){
+						res.redirect('/numberslist');
+					}
+					var abc = _.map(allocatedUser, 'userId');
+
+					User.find({ or : [{'id':req.session.userid},{'parent_id':req.session.userid}]}).where({delete_status: { '!': '1' }}).exec(function (err, users){
+					  if (err) {
+					    return res.serverError(err);
+					  }
+					  var result = {};
+					  
+					   var userslist = [];
+
+					  _.forEach(users, function (user) {
+					    var user1 = user;
+					    user.selected = abc.indexOf(user.id) != '-1' ? 'true' : 'false';
+					    userslist.push(user);
+					  });
+					  console.log(userslist)
+					  res.locals.layout = 'layout1.ejs';
+					  return res.view('Number/allocatenumbertouser.ejs',{number: number.phone_number, users: userslist, result: result, allocatedUser: allocatedUser});
+					});
+				});
+					
+			} else {
+				res.locals.layout = 'layout1.ejs';
+				res.redirect('/numberslist');
+			}
+		});
+			
+
+	},           
 };

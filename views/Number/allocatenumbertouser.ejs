@@ -21,8 +21,9 @@
 									<select class="users form-control" name='users' multiple>
 										<% if (users.length > 0) {
                   
-                    for (var i = 0; i < users.length; i++) { %>
-                      <option value=<%= users[i].id%> > <%= users[i].firstname%> </option>
+                    for (var i = 0; i < users.length; i++) { 
+                    %>
+                      <option <% if(users[i].selected== 'true'){ %> selected <%} %> value=<%= users[i].id%> > <%= users[i].firstname%> </option>
                     <% } }%>
 									</select>
 								</div>

@@ -31,10 +31,10 @@ module.exports.routes = {
   * `assets` directory)                                                      *
   *                                                                          *
   ***************************************************************************/
-
-  '/': {
-    view: 'homepage'
-  },
+  'get /': 'LoginController.ShowLogin',
+  // '/': {
+  //   view: 'auth/signUp.ejs'
+  // },
 
   /***************************************************************************
   *                                                                          *
@@ -67,6 +67,8 @@ module.exports.routes = {
 
   'get /buyNumber/:number': 'numberController.getbuyNumber',
   
+  'get /allocateNumberToUSer/number/:id': 'numberController.getallocateNumberToUSer',
+
   'get /numbers/delete/:number': 'numberController.releaseNumber',
   
   'get /numbers/music/:number': 'numberController.musicNumber',

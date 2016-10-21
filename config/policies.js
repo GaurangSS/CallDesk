@@ -79,8 +79,6 @@ module.exports.policies = {
     AllocateTime: 'isLoggedin',
   },
     
-  }
-
   TwilioclientController: {
     createToken: 'isLoggedin',
   },

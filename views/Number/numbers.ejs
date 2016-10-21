@@ -66,11 +66,12 @@
         },
         dataType: "json",
         success: function(data) {
-          
+          console.log(data)
           var optionsAsString = "<option>select area</option>";
           if (data) {
             for(var i = 0; i < data.length; i++) {
-                optionsAsString += "<option value='" + data[i].areaCode + "'>" + data[i].areaCode + "</option>";
+              var area = data[i].areaName + '(' + data[i].areaCode + ')';
+              optionsAsString += "<option value='" + data[i].areaCode + "'>" + area + "</option>";
             }
           }
             
@@ -96,8 +97,12 @@
         },
         dataType: "json",
         success: function(data) {
-
-          if (data.length > 0) {
+          console.log(data)
+          if (data.errors) { 
+            console.log('inside')
+            var string = '<div class="wrapper text-center"><strong > ' + data.errors.error + '</strong></div>'
+            $('#numbers').html( string );
+          } else if (data.length > 0) {
 
             var optionsAsString = "<table class='table table-striped b-t b-light m-b-none' border='1'><tr><th>phone_number</th> <th> Action </th></tr><tbody>";
 
