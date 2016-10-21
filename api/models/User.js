@@ -57,7 +57,7 @@ module.exports = {
 
     active: {
       type:'boolean',
-      defaultsTo: 'true'
+      defaultsTo: 'false'
     },
 
   	created_at: {

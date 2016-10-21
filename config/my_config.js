@@ -25,4 +25,9 @@ module.exports.myconf = {
     host:'smtp.sendgrid.net',
     protocol:'587'
   },
+
+  keyword: {
+    rootpath: 'https://demo.calldesk.io',
+    localpath: 'http://localhost:1337'
+  },
 };

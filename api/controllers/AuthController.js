@@ -81,4 +81,27 @@ module.exports = {
       }
     });
   },
+  activateUser: function (req, res) {
+    var token = req.param('token', null);
+    tokens.findOne().where({'hash': token}).exec(function (err, data) {
+       if (err) {
+        console.log(err);
+       } else {
+        User.update({'id': data.userId},{active:true}).exec(function (err, updated){
+
+          if (err) {
+            console.log(err);
+          } else {
+            tokens.destroy({'hash':token}).exec(function (err){
+              if (err) {
+                console.log(err);
+              }
+              console.log('User updated');
+              res.redirect('/login');
+            });
+          }
+        });
+      }
+    });
+  }
 };
