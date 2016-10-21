@@ -89,6 +89,8 @@ module.exports.routes = {
 
   'get /Signup': 'LoginController.getSignup',
 
+  'get /activate/:token': 'AuthController.activateUser',
+
   // Post methods
 
   'post /login': 'LoginController.Authentication',
