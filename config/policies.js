@@ -49,37 +49,62 @@ module.exports.policies = {
 		// feed : ['isNiceToAnimals', 'hasRabbitFood']
 	// }
 
+/*  numberController: {
+    getContectNumber: 'isAuthenticated',
+    postAreaCode: 'isAuthenticated',
+    postContectNumber: 'isAuthenticated',
+    postbuyNumber: 'isAuthenticated',
+    getbuyNumber: 'isAuthenticated',
+    postallocateNumberToUSer: 'isAuthenticated',
+    numberslist: 'isAuthenticated',
+    releaseNumber: 'isAuthenticated',
+    musicNumber: 'isAuthenticated',
+    AllocateTime: 'isAuthenticated',
+    Update_music: 'isAuthenticated',
+  },*/
+
+/*  UserController: {
+    list : 'isAuthenticated',
+    form : 'isAuthenticated',
+    isCreatedUser : 'isAuthenticated',
+    destroy : 'isAuthenticated',
+    edit : 'isAuthenticated',
+    allocateTime : 'isAuthenticated',
+    createUser: 'isAuthenticated',
+    getChangePassword: 'isAuthenticated',
+    getChangePassword: 'isAuthenticated',
+    postChangePassword: 'isAuthenticated',
+  },*/
+
   UserController: {
-    list : 'isLoggedin',
-    form : 'isLoggedin',
-    isCreatedUser : 'isLoggedin',
-    destroy : 'isLoggedin',
-    edit : 'isLoggedin',
-    allocateTime : 'isLoggedin',
-    createUser: 'isLoggedin',
-    getChangePassword: 'isLoggedin',
-    postChangePassword: 'isLoggedin',
+    '*' : 'isAuthenticated',
   },
 
   numberController: {
-    getContectNumber: 'isLoggedin',
-    postAreaCode: 'isLoggedin',
-    postContectNumber: 'isLoggedin',
-    postbuyNumber: 'isLoggedin',
-    getbuyNumber: 'isLoggedin',
-    postallocateNumberToUSer: 'isLoggedin',
-    numberslist: 'isLoggedin',
-    releaseNumber: 'isLoggedin',
-    musicNumber: 'isLoggedin',
-    AllocateTime: 'isLoggedin',
-    Update_music: 'isLoggedin',
+    '*': 'isAuthenticated',
+  },
+
+  AvailableNumberController: {
+    '*': 'isAuthenticated',
+  },
+
+  BrowserCallController: {
+    '*': 'isAuthenticated',
+  },
+
+  AuthController: {
+    dashboard: 'isAuthenticated',
+  },
+
+  CalllogController: {
+    '*': 'isAuthenticated',
   },
 
   UserTimeAlloController: {
-    AllocateTime: 'isLoggedin',
+    '*': 'isAuthenticated',
   },
     
   TwilioclientController: {
-    createToken: 'isLoggedin',
+    '*': 'isAuthenticated',
   },
 };
