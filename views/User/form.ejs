@@ -9,22 +9,27 @@
 			    	</div>
 			    	<div class="panel-body">
 			      		<form class="bs-example form-horizontal" action="/create_user" method="post">
+						<% if(data.error!= '' && data.error!=undefined){ %>
+							<div class="text-danger text-center">
+							<strong ><%= data.error %></strong>
+							</div>
+						<% } %>
 							<div class="form-group">
 								<label class="col-lg-2 control-label">Firstname</label>
 								<div class="col-lg-10">
-									<input type="text" name="firstname" class="form-control" placeholder="John">
+									<input type="text" name="firstname" class="form-control" placeholder="John" value="<%= user.firstname ? user.firstname : '' %>" required>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-lg-2 control-label">lastname</label>
 								<div class="col-lg-10">
-									<input type="text" name="lastname" class="form-control" placeholder="Doe">
+									<input type="text" name="lastname" class="form-control" placeholder="Doe" value="<%= user.lastname ? user.lastname : '' %>" required>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-lg-2 control-label">Email</label>
 								<div class="col-lg-10">
-									<input type="email" name="email"  class="form-control" placeholder="john@gmail.com">
+									<input type="email" name="email"  class="form-control" placeholder="john@gmail.com" value="<%= user.email ? user.email : '' %>" required>
 								</div>
 							</div>
 							<div class="form-group">

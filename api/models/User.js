@@ -52,12 +52,13 @@ module.exports = {
     },
 
     delete_status: {
-      type: 'integer'
+      type: 'integer',
+      defaultsTo: '0'
     },
 
     active: {
       type:'boolean',
-      defaultsTo: '0'
+      defaultsTo: false
     },
 
   	created_at: {
