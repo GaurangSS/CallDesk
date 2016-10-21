@@ -16,8 +16,8 @@ module.exports.myconf = {
   },*/
   // Live Details
   twilioDetails: {
-    TWILIO_ACCOUNT_SID: 'ACa2b4650ccddd568c2362d837f224e96a',
-    TWILIO_AUTH_TOKEN: 'd28d0badd4ec9d419fdc47ff14cadaf0',
+    TWILIO_ACCOUNT_SID: 'ACe732ab6c48c553e824547bce75dfc861',
+    TWILIO_AUTH_TOKEN: '1ee4bc07c48d297d817016756d8008f4',
     TWILIO_TWIML_APP_SID: 'AP1d5e33d65adea5abfd11f9bf36369e61',
   },
   

@@ -134,7 +134,7 @@ module.exports = {
                    to: user.email, // list of receivers
                    subject: 'Active Your CallDesk Account', // Subject line
                    text: 'Hello ' + user.firstname, // plaintext body
-                   html: "<html><body>Welcome you in aircall.io. Before use our service You have to confirm your email address. So Plaease active your account by clicking below :  </b><a href="+url+">Click Here for Activate</a></body></html>" // html body
+                   html: "<html><body>Welcome you in CallDesk.io. Before use our service You have to confirm your email address. So Plaease active your account by clicking below :  </b><a href="+url+">Click Here for Activate</a></body></html>" // html body
                  };                    
                   // send mail with defined transport object
                   transporter.sendMail(mailOptions, function(error, info){

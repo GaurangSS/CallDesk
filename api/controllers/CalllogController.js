@@ -22,8 +22,7 @@ module.exports = {
 				data1.list = data.calls;
 			    res.locals.layout = 'layout1.ejs';
 				return res.view('Calls/call_log.ejs',{ data1: data1,moment: moment});			
-			}
-          		
+			}	
         });
   	},
 };
