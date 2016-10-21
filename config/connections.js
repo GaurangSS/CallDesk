@@ -46,7 +46,7 @@ module.exports.connections = {
     adapter: 'sails-mysql',
       host: 'localhost',
       user: 'root',
-      password: '',
+      password: 'yourSQL#300',
       database: 'calldesk',
 
       queryCaseSensitive: true,

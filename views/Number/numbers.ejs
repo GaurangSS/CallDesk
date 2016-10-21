@@ -74,7 +74,7 @@
               optionsAsString += "<option value='" + data[i].areaCode + "'>" + area + "</option>";
             }
           }
-            
+
           $('#areaCode').html( optionsAsString );
         }
       });
@@ -97,12 +97,13 @@
         },
         dataType: "json",
         success: function(data) {
-          console.log(data)
-          if (data.errors) { 
-            console.log('inside')
-            var string = '<div class="wrapper text-center"><strong > ' + data.errors.error + '</strong></div>'
-            $('#numbers').html( string );
-          } else if (data.length > 0) {
+
+         if (data.errors) {
+           console.log('inside')
+           var string = '<div class="wrapper text-center"><strong > ' + data.errors.error + '</strong></div>'
+           $('#numbers').html( string );
+         } else if (data.length > 0) {
+         
 
             var optionsAsString = "<table class='table table-striped b-t b-light m-b-none' border='1'><tr><th>phone_number</th> <th> Action </th></tr><tbody>";
 

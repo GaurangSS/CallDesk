@@ -33,7 +33,7 @@ module.exports = {
 
 			model.save(function(err){
 				if (err) {
-					res.send('Error');
+					return res.send('Error');
 				}
 			});
 

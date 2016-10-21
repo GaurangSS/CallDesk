@@ -21,7 +21,7 @@ module.exports = {
 
   	var areacode = [];
 
-  	areaCode.find({select: ['areaCode', 'areaName']})
+  	areaCode.find({select: ['areaCode','areaName']})
 			.where({'counName': req.body.counName})
 			.exec(function (err, areaCodes){
 				sails.log.info(areaCodes);
@@ -47,7 +47,7 @@ module.exports = {
 		  areaCode: areaCode
 		}, function(err, data) {
 			if(err) {
-				
+		
 				console.log(err);
 			} else {
 				if (data.availablePhoneNumbers.length <= 0) {
@@ -61,8 +61,6 @@ module.exports = {
 					return res.json(contectDetails);
 				}
 			}
-		
-
 		});
   },
 
@@ -113,23 +111,23 @@ module.exports = {
 	      			console.log("message added");
 	      		}
 	      	});
-	      	
+	      	var call_status = {};
+		  	call_status.number_id = auth.id;
+		  	call_status.availibility_status = 1;
+		  	call_status.assign_device_status = 0;
+
+		  	call_status_info.create(call_status, function(err2,auth2) {
+			  	if(err2) {
+			  		console.log(err2);
+			  	} else {
+			  		console.log('successfully inserted2');
+			  	}
+		  	});
 	      	console.log('successfully inserted');
 	      }
 	    });
 
-	    var call_status = {};
-	  	call_status.number_id = 1;
-	  	call_status.availibility_status = 1;
-	  	call_status.assign_device_status = 0;
-
-	  	call_status_info.create(call_status, function(err2,auth2) {
-		  	if(err2) {
-		  		console.log(err2);
-		  	} else {
-		  		console.log('successfully inserted2');
-		  	}
-	  	});
+	    
 
 	  	User.find({ or : [{'id':req.session.userid},{'parent_id':req.session.userid}]}).where({delete_status: { '!': '1' }}).exec(function (err, users){
 			  if (err) {

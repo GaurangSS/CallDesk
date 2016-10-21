@@ -39,7 +39,7 @@
 										<td><%= dataob.email %></td>
 										<td><a href="/users/edit/<%= dataob.id %>" class="btn btn-sm btn-warning">Edit</a>
 										<!-- <a href="/user/changePassword/<%= dataob.id %>" class="btn btn-sm btn-primary">Change password</a> -->
-										<a href="/users/delete/<%= dataob.id %>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this user?');">Delete</a></td>
+										<a href="/users/delete/<%= dataob.id %>" class="btn btn-sm btn-danger"  onclick="return confirm('Are you sure you want to delete this User?');">Delete</a></td>
 										<td><a href="/allocateTime/<%= dataob.id %>" class="btn btn-sm btn-info">Time Allocation</a></td>
 									</tr>
 									<% }); %>
