@@ -17,42 +17,33 @@ module.exports = {
 
   ShowLogin: function (req, res) {
     var data = {};
-    data.msg = 'success';
-    return res.view('auth/login.ejs',data);
+    return res.view('auth/login.ejs',{data});
   },
 
   Authentication: function (req, res) {
 
-    var email = req.body.email;
+    var email = v.trim(req.body.email).toLowerCase();
     var password = req.body.password;
 
     User.findOne({email:email,password:password}).exec(function findCallback(err, record){
 
         if (!record) {
+          var data = {};
+          data.error = "Username and Password does not match";
+          return res.view('auth/login.ejs',{data: data});
 
-          var err = "Username and Password does not match";
-          return res.view('auth/login.ejs',err);
-
-        } else {
+        } else { 
+          if (record.active != '1') {
+            var data = {};
+            data.error = "Please active your account first";
+            return res.view('auth/login.ejs',{data: data});
+          }
             var data = {};
 
-            var identity = 'kevin';
-    
-            var capability = new twilio.Capability(sails.config.myconf.twilioDetails.TWILIO_ACCOUNT_SID,
-                  sails.config.myconf.twilioDetails.TWILIO_AUTH_TOKEN);
-                capability.allowClientOutgoing(sails.config.myconf.twilioDetails.TWILIO_TWIML_APP_SID);
-
-            capability.allowClientIncoming(identity);
-
-            var token = capability.generate();
-
-
-             data.identity = identity;
-             data.token = token;
-             req.session.authenticated = true;
-             req.session.userid = record.id;
-          res.locals.layout = 'layout1.ejs';     
-          return res.redirect('/users');
+            req.session.authenticated = true;
+            req.session.userid = record.id;
+            res.locals.layout = 'layout1.ejs';     
+          return res.redirect('/dashboard');
         }
      })
   },
@@ -62,46 +53,73 @@ module.exports = {
   },
 
   postSignup: function (req, res) {
-    var form_data = req.body;
-    form_data.user_type_id = '1';
-    form_data.parent_id = '0';
-    form_data.firstname = v.trim(form_data.firstname);
-    form_data.lastname = v.trim(form_data.lastname);
-    form_data.email = v.trim(form_data.email);
-    form_data.password = v.trim(form_data.password);
 
+    var body = req.body;
 
-    if (form_data.password !== form_data.password_confirm) {
+    body.user_type_id = '1';
+    body.parent_id = '0';
+
+    // Sanitize input
+    body.email = v.trim(body.email).toLowerCase();
+    body.firstname = v.trim(body.firstname);
+    body.lastame = v.trim(body.lastname);
+    // Validate
+    var errors = [];
+    if (!v.isEmail(body.email)) {
+      var data = {};
+      data.error = "Invalid email address";      
+      return res.view('auth/signUp.ejs',{user: body, data: data});
+    }
+    if (body.password !== body.password_confirm) {
       var data = {};
       data.error = "Password doesn't match with confirm password";
       
-      res.view('auth/signUp.ejs',{user: form_data, data: data});
-    } else {
-      User.create(form_data, function (err, user) {
-        if (err) {
+      return res.view('auth/signUp.ejs',{user: body, data: data});
+    }
+    if (body.password.length <=6 ) {
+      var data = {};
+      data.error = "Password length must be greater than 6";
+      
+      return res.view('auth/signUp.ejs',{user: body, data: data});
+    }
+
+    if (body.email) {
+      User.findOne().where({'email': body.email}).exec(function (err, user) {
+        if(err) {
+          res.redirect('/signUp');
+        } else if(user){
           var data = {};
-          data.error = err.message;
-          res.view('auth/signUp.ejs',{user: form_data, data: data});
-
+          data.error = "You already have an account on CallDesk. Please login to your existing account or recover your password in case you forgot it.";
+          
+          res.view('auth/signUp.ejs',{user: body, data: data});
         } else {
+          User.create(body, function (err, user) {
+            if (err) {
+              var data = {};
+              data.error = err.message;
+              res.view('auth/signUp.ejs',{user: body, data: data});
 
-            var user_status = {};
-            user_status.user_id = user.id;
-            user_status.availibility_status = 1;
-           
-            user_status.assign_device_status = 0;
-            user_status.assign_device_num = null;
-           
-              User_status_info.create(user_status, function(err2,auth2) {
-              if(err2) {
-                console.log(err2);
-              }
-              else {
-                console.log('User status created successfully');
-              }
-            });
-          console.log('User created successfully');
-          res.redirect('/login');
+            } else {
+
+                var user_status = {};
+                user_status.user_id = user.id;
+                user_status.availibility_status = 1;
+               
+                user_status.assign_device_status = 0;
+                user_status.assign_device_num = null;
+               
+                  User_status_info.create(user_status, function(err2,auth2) {
+                  if(err2) {
+                    console.log(err2);
+                  }
+                  else {
+                    console.log('User status created successfully');
+                  }
+                });
+              console.log('User created successfully');
+              res.redirect('/login');
+            }
+          });
         }
       });
     }
