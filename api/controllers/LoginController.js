@@ -84,10 +84,10 @@ module.exports = {
     }
 
     if (body.email) {
-      User.findOne().where({'email': body.email}).exec(function (err, user) {
+      User.findOne().where({'email': body.email}).exec(function (err, data) {
         if(err) {
           res.redirect('/signUp');
-        } else if(user){
+        } else if(data){
           var data = {};
           data.error = "You already have an account on CallDesk. Please login to your existing account or recover your password in case you forgot it.";
           
@@ -100,22 +100,52 @@ module.exports = {
               res.view('auth/signUp.ejs',{user: body, data: data});
 
             } else {
+              var user_status = {};
+              user_status.user_id = user.id;
+              user_status.availibility_status = 1;
+             
+              user_status.assign_device_status = 0;
+              user_status.assign_device_num = null;
+             
+              User_status_info.create(user_status, function(err2,auth2) {
+                if(err2) {
+                  console.log(err2);
+                }
+                else {
+                  console.log('User status created successfully');
+                }
+              });
+              console.log(user);
+              var tokenData = {}
+              tokenData.userId = user.id;
+              tokenData.hash = shortid.generate() + shortid.generate();
+              tokenData.type = 'activate';
 
-                var user_status = {};
-                user_status.user_id = user.id;
-                user_status.availibility_status = 1;
-               
-                user_status.assign_device_status = 0;
-                user_status.assign_device_num = null;
-               
-                  User_status_info.create(user_status, function(err2,auth2) {
-                  if(err2) {
-                    console.log(err2);
-                  }
-                  else {
-                    console.log('User status created successfully');
-                  }
-                });
+              tokens.create(tokenData, function (err, token){
+                if(err){
+                  console.log(err.message);
+                } else {
+                  console.log('Token generated successfully.');
+                  var url = sails.config.myconf.mailServerDetail.protocol + '://' + sails.config.myconf.mailServerDetail.host + '/activate/' + token.hash
+                  var mailOptions = {
+                    from: 'isha@softwaresuggest.com', // sender address
+                    to: user.email, // list of receivers
+                    subject: 'Activatioin mail for sign up', // Subject line
+                    text: 'Hello ' + user.firstname, // plaintext body
+                    html: '<html><body><b>Hello world </b><a href=" + url +">Click Here for Activate</a></body></html>' // html body
+                  };
+                    
+                   // send mail with defined transport object
+                  transporter.sendMail(mailOptions, function(error, info){
+                    if(error){
+                      console.log(error);
+                        return console.log(error);
+                    }
+                    console.log('Message sent: ' + info.response);
+                  });
+                   //     url: ctx.protocol + '://' + ctx.host + '/activate/' + token
+                }
+              });
               console.log('User created successfully');
               res.redirect('/login');
             }
