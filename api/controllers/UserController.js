@@ -1,3 +1,5 @@
+var v = require('validator');
+
 module.exports = {
 
 	List: function(req,res) {
@@ -91,18 +93,41 @@ module.exports = {
 
 	Form: function(req,res) {
 		res.locals.layout = 'layout1.ejs';
-		return res.view('User/form.ejs');
+		return res.view('User/form.ejs',{user: {}, data: {}});
 	},
 
 	createUser: function(req,res) {
 		var form_data = req.body;
+
+		form_data.email = v.trim(form_data.email).toLowerCase();
+		form_data.firstname = v.trim(form_data.firstname);
+		form_data.lastame = v.trim(form_data.lastname);
+
+		var errors = [];
+		if (!v.isEmail(form_data.email)) {
+			var data = {};
+			data.error = "Invalid email address";
+			res.locals.layout = 'layout1.ejs';
+			return res.view('User/form.ejs',{user: form_data, data: data});
+		}
 		form_data.parent_id = req.session.userid;
-		form_data.delete_status = 0;
-		User.create(form_data, function(err, auth) {
-          if(err) {
-          	console.log(err);
-          } else {
-          	for(var i=1;i<=7;i++) {
+		if (form_data.email) {
+			console.log("test for user create");
+			User.findOne().where({'email': form_data.email}).exec(function (err, user) {
+			if(err) {
+				res.redirect('/signUp');
+			} else if(user){
+				var data = {};
+				data.error = "This email id has been used. Use another email id.";
+				console.log(data);
+				res.locals.layout = 'layout1.ejs';
+				res.view('User/form.ejs',{user: form_data, data: data});
+			} else {
+				User.create(form_data, function(err, auth) {
+				if(err) {
+					console.log(err);
+				} else {
+          	/*for(var i=1;i<=7;i++) {
 	          	var time_allocation = {};
 	          	time_allocation.user_id = auth.id;
 	          	time_allocation.from_time = '00:00:00';
@@ -131,39 +156,39 @@ module.exports = {
 	          		console.log('User time allocated successfully');
 	          	}
           		});
-	         }
-          	var user_status = {};
-          	user_status.user_id = auth.id;
-          	user_status.availibility_status = 1;
-          	if(req.body.assign_device){
-          		
-          	   user_status.assign_device_status = 1;
-          	   user_status.assign_device_num = req.body.assign_device;
-            }else{
-            	
-               user_status.assign_device_status = 0;
-          	   user_status.assign_device_num = null;
-            }
-
-	          	User_status_info.create(user_status, function(err2,auth2) {
-	          	if(err2) { 
-	          		console.log(err2); 
-	          	}
-	          	else {
-	          		console.log('User status created successfully');
-	          	}
-          	});
-          	console.log('User created successfully'); 
-          }
-        });
-        res.redirect('/users');
+			}*/
+					var user_status = {};
+					user_status.user_id = auth.id;
+					user_status.availibility_status = 1;
+					if(req.body.assign_device){
+						user_status.assign_device_status = 1;
+						user_status.assign_device_num = req.body.assign_device;
+		            }else{
+		               user_status.assign_device_status = 0;
+		          	   user_status.assign_device_num = null;
+					}
+					User_status_info.create(user_status, function(err2,auth2) {
+			          	if(err2) { 
+							console.log(err2); 
+						}
+						else {
+							console.log('User status created successfully');
+						}
+		          	});
+		          	console.log('User created successfully');
+		          	res.redirect('/users');
+				}
+				});
+			}
+		});
+		}
 	},
 	getChangePassword: function (req, res) {
 		var data = {};
-    res.locals.layout = 'layout1.ejs';
-    res.view('auth/changePassword.ejs',{userId: req.param('id', null), data: data});
-  },
-  postChangePassword: function (req, res) {
+		res.locals.layout = 'layout1.ejs';
+		res.view('auth/changePassword.ejs',{userId: req.param('id', null), data: data});
+	},
+  	postChangePassword: function (req, res) {
 		var id=req.param('id',null);
 		var form_data = req.body;
  
