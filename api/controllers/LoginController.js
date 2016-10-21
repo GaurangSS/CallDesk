@@ -28,9 +28,6 @@ module.exports = {
 
     User.findOne({email:email,password:password}).exec(function findCallback(err, record){
 
-        console.log(err);
-        console.log(record);
-
         if (!record) {
 
           var err = "Username and Password does not match";
@@ -76,7 +73,6 @@ module.exports = {
 
     if (form_data.password !== form_data.password_confirm) {
       var data = {};
-      console.log('111');
       data.error = "Password doesn't match with confirm password";
       
       res.view('auth/signUp.ejs',{user: form_data, data: data});
@@ -101,7 +97,7 @@ module.exports = {
                 console.log(err2);
               }
               else {
-                console.log('successfully inserted2');
+                console.log('User status created successfully');
               }
             });
           console.log('User created successfully');

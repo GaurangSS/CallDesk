@@ -28,8 +28,6 @@ module.exports = {
 		  if (err) {
 		    return res.serverError(err);
 		  }
-		  console.log('-=-')
-		  console.log(areaCodes)
 		  return res.json(areaCodes);
 		});
 	},
@@ -73,7 +71,6 @@ module.exports = {
 	    phoneNumber: number
 	  }, function(err, purchasedNumber) {
 	  	if (err) {
-	  	   console.log(err)
 	  		numberInfo.find().exec(function(err1, numbers) {
 		  		if (err1) {
 		  			//return res.serverError(err);
@@ -135,8 +132,7 @@ module.exports = {
 			  }
 			  var result = {}
 			  res.locals.layout = 'layout1.ejs';
-			  console.log('usersss')
-			  console.log(users)
+
 			  return res.view('Number/allocatenumbertouser.ejs',{number: purchasedNumber.phone_number, users: users, result: result});
 			});
 	  	
@@ -184,9 +180,8 @@ module.exports = {
 					    if(err) {
 					    	console.log(err);
 					    } else {
-					    	console.log(auth);
 
-					    	console.log('successfully inserted');
+					    	console.log(' successfully inserted');
 					    }
 					  });
 	  			}
@@ -205,7 +200,6 @@ module.exports = {
   		if (err) {
   			return res.serverError(err);
   		}
-  			console.log(numbers);
   			var data = {};
   		res.locals.layout = 'layout1.ejs';
 
@@ -214,89 +208,86 @@ module.exports = {
   	});
   },
 
-releaseNumber: function(req, res) {
+	releaseNumber: function(req, res) {
   	var number=req.param('number',null);
-	//	console.log(id);
-	numberInfo.findOne().where({'id':number}).exec(function(err, usar) {
+		numberInfo.findOne().where({'id':number}).exec(function(err, usar) {
 
-		usar.delete_status = 1;
-		pid = usar.sid;
-		usar.save(function(err){
-			if (err) {
-				res.send('Error');
-			}else {
-				client.incomingPhoneNumbers(pid).delete(function(err, number) {
-				    if(err) {
-				    	console.log(err)
-				    } else {
-				    	console.log(number);
-				    	res.redirect( '/numberslist');
-				    }
-				});
-				
-			}
-		});
-	});
-},
-
-/*Update_music: function(req,res) {
-	var number=req.param('number',null);
-	var user=req.param('id',null);
-
-	
-//	res.redirect( '/numberslist');
-},*/
-
-musicNumber: function(req,res) {
-	var number=req.param('number',null);
-
-	NumberMessage.findOne().where({'number_id':number}).exec(function(err, rec) {
-		if(req.method=='POST')
-		{
-			console.log("test");
-			console.log(req.body);
-			console.log("/test");
-			rec.audio_text = req.body.audio_text;
-			rec.save(function(err){
-				if(err) {
-					console.log(err);
-				}
-				else {
-					res.redirect( '/numberslist');
-					console.log("Successfully updated");
+			usar.delete_status = 1;
+			pid = usar.sid;
+			usar.save(function(err){
+				if (err) {
+					res.send('Error');
+				}else {
+					client.incomingPhoneNumbers(pid).delete(function(err, number) {
+					  if(err) {
+						 	console.log(err)
+						} else {
+						  	res.redirect( '/numberslist');
+						}
+					});						
 				}
 			});
-		} else {
-			console.log(rec);
-			/*var data1 = {};
-			var data2 = {};
-			var data3 = {};
-			var data4 = {};
-			_.forEach(rec, function(value) {
-				if(value.msg_type == 1) {
-					data1 = value;
-					console.log(data1);
-				}
-				if(value.msg_type == 2) {
-					data2 = value;
-					console.log(data2);
-				}
-				if(value.msg_type == 3) {
-					data3 = value;
-					console.log(data3);
-				}
-				if(value.msg_type == 4) {
-					data4 = value;
-					console.log(data4);
-				}
-			});*/
-			var data={};
-			data.list = rec;
-			res.locals.layout = 'layout1.ejs';
-			return res.view('Number/music.ejs',data);
-		}
-	});
-},
+		});
+	},
+
+	/*Update_music: function(req,res) {
+		var number=req.param('number',null);
+		var user=req.param('id',null);
+
+		
+	//	res.redirect( '/numberslist');
+	},*/
+
+	musicNumber: function(req,res) {
+		var number=req.param('number',null);
+
+		NumberMessage.findOne().where({'number_id':number}).exec(function(err, rec) {
+			if(req.method=='POST')
+			{
+				console.log("test");
+				console.log(req.body);
+				console.log("/test");
+				rec.audio_text = req.body.audio_text;
+				rec.save(function(err){
+					if(err) {
+						console.log(err);
+					}
+					else {
+						res.redirect( '/numberslist');
+						console.log("Successfully updated");
+					}
+				});
+			} else {
+				console.log(rec);
+				/*var data1 = {};
+				var data2 = {};
+				var data3 = {};
+				var data4 = {};
+				_.forEach(rec, function(value) {
+					if(value.msg_type == 1) {
+						data1 = value;
+						console.log(data1);
+					}
+					if(value.msg_type == 2) {
+						data2 = value;
+						console.log(data2);
+					}
+					if(value.msg_type == 3) {
+						data3 = value;
+						console.log(data3);
+					}
+					if(value.msg_type == 4) {
+						data4 = value;
+						console.log(data4);
+					}
+				});*/
+				var data={};
+				data.list = rec;
+				res.locals.layout = 'layout1.ejs';
+				return res.view('Number/music.ejs',data);
+			}
+		});
+	},
 
   AllocateTime: function(req,res) {
 		var id=req.param('id',null);
@@ -323,7 +314,6 @@ musicNumber: function(req,res) {
 								} else { 
 
 							_.forEach(req.body.w_day, function(value) {
-								console.log(value);
 								var call_status = {};
 								call_status.from_time = req.body.from_time;
 								call_status.to_time = req.body.to_time;
@@ -356,7 +346,6 @@ musicNumber: function(req,res) {
 					call_time_alloc.find().where({'number_id':id}).exec(function(err1,model){
 						if(err1) {
 						} else {
-							console.log(model);
 							var response = {};
 							
 							var mon=tue=wed=thu=fri=sat=sund=0;
@@ -384,7 +373,6 @@ musicNumber: function(req,res) {
 							response.sat = sat;
 							response.sund = sund;
 
-							console.log(response);
 							res.locals.layout = 'layout1.ejs';
 							return res.view( 'Number/allocateTimeToNumber.ejs',{'response':response});
 						}
@@ -395,7 +383,6 @@ musicNumber: function(req,res) {
 					var response = {};
 					response.result = result;
 					response.model = model;
-					console.log(response);
 					res.locals.layout = 'layout1.ejs';
 					return res.view( 'Number/allocateTimeToNumber.ejs',{'response':response});
 				}
@@ -404,7 +391,6 @@ musicNumber: function(req,res) {
 	},
 	getallocateNumberToUSer :  function (req, res) {
 		var numberId=req.param('id',null);
-		console.log(numberId)
 		numberInfo.findOne().where({'id': numberId}).exec(function(err, number) {
 			if (err) {
 				res.redirect('/numberslist');
@@ -429,18 +415,14 @@ musicNumber: function(req,res) {
 					    user.selected = abc.indexOf(user.id) != '-1' ? 'true' : 'false';
 					    userslist.push(user);
 					  });
-					  console.log(userslist)
 					  res.locals.layout = 'layout1.ejs';
 					  return res.view('Number/allocatenumbertouser.ejs',{number: number.phone_number, users: userslist, result: result, allocatedUser: allocatedUser});
 					});
 				});
-					
 			} else {
 				res.locals.layout = 'layout1.ejs';
 				res.redirect('/numberslist');
 			}
 		});
-			
-
 	},           
 };

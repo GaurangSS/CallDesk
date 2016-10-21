@@ -8,9 +8,7 @@ var twilio = require('twilio');
 module.exports = {
   
   createToken: function (req, res) {
-
-    console.log('inside twilio')
-    
+   
     var data = {};
     
     var identity = 'kevin';
@@ -31,7 +29,6 @@ module.exports = {
    
   },
   logout: function(req, res) {
-    console.log('22222');
     req.session.destroy(function(err) {
       return res.redirect('/login');
     });
@@ -61,7 +58,6 @@ module.exports = {
 
   
     User.findOne().where({'id':id}).exec(function(err, user) {
-      console.log(user)
       if (form_data.password.length <= 6) {
         var data = {};
         data.error = "password length must be greater than 6 character";

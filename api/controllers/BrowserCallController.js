@@ -13,7 +13,6 @@ module.exports = {
 
     data.client_name = req.param("client_name");
 
-    console.log(data.client_name);
     
     var identity = data.client_name;
     

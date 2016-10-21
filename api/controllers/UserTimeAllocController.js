@@ -4,7 +4,6 @@ module.exports = {
 
 	AllocateTime: function(req,res) {
 		var id=req.param('id',null);
-		console.log(id)
 		User_status_info.findOne().where({'user_id':id}).exec(function(err,result){
 			if(err){
 				res.redirect('/users')
@@ -32,7 +31,6 @@ module.exports = {
 						//	list =  req.body.w_day.size();
 
 							_.forEach(req.body.w_day, function(value) {
-								console.log(value);
 								var user_status = {};
 								user_status.from_time = req.body.from_time;
 								user_status.to_time = req.body.to_time;
@@ -42,7 +40,7 @@ module.exports = {
 							  		if(error1){
 							  			console.log("not created");
 							  		} else {
-							  			console.log("created successfully");
+							  			console.log("User time allocated successfully");
 							  		//	res.locals.layout = 'layout1.ejs';     	
 							  		}
 							  	})
@@ -51,8 +49,6 @@ module.exports = {
 							}  });
 
 					    } else {  }
-					//	var len = data.length();
-					//	console.log(len);
 
 					});
 				}
@@ -69,7 +65,6 @@ module.exports = {
 						if(err1) {
 				//			console.log("error for data");
 						} else {
-							console.log(model);
 							var response = {};
 							
 							var mon=tue=wed=thu=fri=sat=sund=0;
@@ -89,7 +84,6 @@ module.exports = {
 
 								
 							})
-						//	console.log(from_time);
 							response.result = result;
 							response.model = model;
 							response.mon = mon;
@@ -100,7 +94,6 @@ module.exports = {
 							response.sat = sat;
 							response.sund = sund;
 
-							console.log(response);
 							res.locals.layout = 'layout1.ejs';
 							return res.view( 'Usertimeallocate/index',{'response':response});
 						}
@@ -111,15 +104,9 @@ module.exports = {
 					var response = {};
 					response.result = result;
 					response.model = model;
-					console.log(response);
 					res.locals.layout = 'layout1.ejs';
 					return res.view( 'Usertimeallocate/index',{'response':response});
 				}
-				
-			/*	console.log(response);
-				console.log(model);
-			    console.log('load data');*/
-				
 			}
 		})
 	},

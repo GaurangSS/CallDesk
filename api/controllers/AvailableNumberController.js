@@ -58,7 +58,7 @@ module.exports = {
      areaCode: areaCode
     }, function(err, data) {
       
-      console.log(data);
+      console.log(err);
      
     
     });

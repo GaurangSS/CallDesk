@@ -1,7 +1,6 @@
 module.exports = {
 
 	List: function(req,res) {
-		console.log(req.session.userid);
 		User.findOne().where({'id':req.session.userid}).exec(function(err,result1){
 			if(err){
 				console.log(err);
@@ -129,7 +128,7 @@ module.exports = {
 	          		console.log(err1); 
 	          	}
 	          	else {
-	          		console.log('successfully inserted1');
+	          		console.log('User time allocated successfully');
 	          	}
           		});
 	         }
@@ -151,10 +150,10 @@ module.exports = {
 	          		console.log(err2); 
 	          	}
 	          	else {
-	          		console.log('successfully inserted2');
+	          		console.log('User status created successfully');
 	          	}
           	});
-          	console.log('successfully inserted'); 
+          	console.log('User created successfully'); 
           }
         });
         res.redirect('/users');
@@ -169,7 +168,6 @@ module.exports = {
 		var form_data = req.body;
  
     User.findOne().where({'id':id, 'password': form_data.old_password}).exec(function(err, user) {
-    	console.log(user)
     	if (user === undefined) {
     		var data = {};
 	  		data.error = "doesn't get any record with this old password";
