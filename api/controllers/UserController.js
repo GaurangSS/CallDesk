@@ -83,11 +83,6 @@ module.exports = {
 
 				}
 			});
-		/*	usar.destroy(function(err) {
-			//	req.flash('success','User deleted successfully');
-				res.redirect('/users');
-			// record has been removed
-			});*/
 		});
 	},
 

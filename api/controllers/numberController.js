@@ -1,4 +1,5 @@
 var sails = require('sails');
+var moment = require('moment-timezone');
 
 var client = require('twilio')(sails.config.myconf.twilioDetails.TWILIO_ACCOUNT_SID,
 	sails.config.myconf.twilioDetails.TWILIO_AUTH_TOKEN);
@@ -16,8 +17,8 @@ module.exports = {
 		  res.locals.layout = 'layout1.ejs';
 		  return res.view('Number/numbers.ejs',{countries});
 		});
-  	},
-  	postAreaCode: function (req, res) {
+	},
+	postAreaCode: function (req, res) {
 
   	var areacode = [];
 
@@ -80,74 +81,72 @@ module.exports = {
 		  		res.locals.layout = 'layout1.ejs';
 		  		res.view('Number/numberslist.ejs', {numbers,data});
 		  	});
-	  	}else{
-	  	numberDetail = {};
-	  	numberDetail.sid = purchasedNumber.sid;
-	  	numberDetail.account_sid = purchasedNumber.account_sid,
-			numberDetail.friendly_name = purchasedNumber.friendly_name,
-			numberDetail.phone_number = purchasedNumber.phone_number,
-			numberDetail.delete_status = 0,
-			numberDetail.contact_name = req.body.conName,
-			numberDetail.date_created = purchasedNumber.date_created,
-			numberDetail.date_updated = purchasedNumber.date_updated,
+	  	} else{
+		  	numberDetail = {};
+		  	numberDetail.sid = purchasedNumber.sid;
+		  	numberDetail.account_sid = purchasedNumber.account_sid,
+				numberDetail.friendly_name = purchasedNumber.friendly_name,
+				numberDetail.phone_number = purchasedNumber.phone_number,
+				numberDetail.delete_status = 0,
+				numberDetail.contact_name = req.body.conName,
+				numberDetail.date_created = purchasedNumber.date_created,
+				numberDetail.date_updated = purchasedNumber.date_updated,
 
-	  	numberInfo.create(numberDetail, function(err, auth) {
-	      if(err) {
-	      	console.log(err);
-	      } else {
-	      	var message = {};
-	      	message.user_id = req.session.userid;
-	      	message.number_id = auth.id;
-	      	message.msg_type = 1;
-	      	message.music_type = 1;
-	      	message.audio_text = "Welcome, we will take your call in a few minutes, please hold.";
-	      	NumberMessage.create(message, function(error,resp) {
-	      		if(error) {
-	      			console.log(error);
-	      		} else {
-	      			console.log("message added");
-	      		}
-	      	});
-	      	var call_status = {};
-		  	call_status.number_id = auth.id;
-		  	call_status.availibility_status = 1;
-		  	call_status.assign_device_status = 0;
+		  	numberInfo.create(numberDetail, function(err, auth) {
+		      if(err) {
+		      	console.log(err);
+		      } else {
+		      	var message = {};
+		      	message.user_id = req.session.userid;
+		      	message.number_id = auth.id;
+		      	message.msg_type = 1;
+		      	message.music_type = 1;
+		      	message.audio_text = "Welcome, we will take your call in a few minutes, please hold.";
+		      	NumberMessage.create(message, function(error,resp) {
+		      		if(error) {
+		      			console.log(error);
+		      		} else {
+		      			console.log("message added");
+		      		}
+		      	});
+		      	var call_status = {};
+			  	call_status.number_id = auth.id;
+			  	call_status.availibility_status = 1;
+			  	call_status.assign_device_status = 0;
 
-		  	call_status_info.create(call_status, function(err2,auth2) {
-			  	if(err2) {
-			  		console.log(err2);
-			  	} else {
-			  		console.log('successfully inserted2');
-			  	}
-		  	});
-	      	console.log('successfully inserted');
-	      }
-	    });
+			  	call_status_info.create(call_status, function(err2,auth2) {
+				  	if(err2) {
+				  		console.log(err2);
+				  	} else {
+				  		console.log('successfully inserted2');
+				  	}
+			  	});
+		      	console.log('successfully inserted');
+		      }
+		    });
 
-	    
+		    
 
-	  	User.find({ or : [{'id':req.session.userid},{'parent_id':req.session.userid}]}).where({delete_status: { '!': '1' }}).exec(function (err, users){
-			  if (err) {
-			    return res.serverError(err);
-			  }
-			  var result = {}
-			  res.locals.layout = 'layout1.ejs';
+		  	User.find({ or : [{'id':req.session.userid},{'parent_id':req.session.userid}]}).where({delete_status: { '!': '1' }}).exec(function (err, users){
+				  if (err) {
+				    return res.serverError(err);
+				  }
+				  var result = {}
+				  res.locals.layout = 'layout1.ejs';
 
-			  return res.view('Number/allocatenumbertouser.ejs',{number: purchasedNumber.phone_number, users: users, result: result});
-			});
-	  	
-          }
+				  return res.view('Number/allocatenumbertouser.ejs',{number: purchasedNumber.phone_number, users: users, result: result});
+				});
+      }
 	    // return res.json(purchasedNumber);
 	  });
 
-	// numberInfo.create(form_data, function(err, auth) {
-  //     if(err) {
-  //     	console.log(err);
-  //     } else {
-  //     	console.log('successfully inserted');
-  //     }
-  //   });
- 
+		// numberInfo.create(form_data, function(err, auth) {
+	  //     if(err) {
+	  //     	console.log(err);
+	  //     } else {
+	  //     	console.log('successfully inserted');
+	  //     }
+	  //   }); 
   },
 
   getbuyNumber: function (req, res) {
@@ -158,23 +157,39 @@ module.exports = {
   	res.view('Number/buyNumber.ejs', {number});
   },
   postallocateNumberToUSer: function (req, res) {
-  	var users = req.body.users;
   	var numberId
+
   	numberInfo.findOne().where({'phone_number': req.body.number}).exec(function(err, number) {
   		if (err) {
   			console.log(err);
   		}
   		numberId = number.id;
-	  	// allocate number to user
-	  	_.forEach(req.body.users, function(value) {
-	  		allocateNumber.findOne().where({'userId': value, 'numberId': numberId}).exec(function(err, alloc) {
-	  			if (err) {
-	  				res.redirect('/numberslist');
-	  			} else if(alloc === undefined) {
-	  				var form_data = {};
+  		// allocate number to user
+  		allocateNumber.find({select:['userId']}).where({'numberId': numberId, 'allocationStatus': true}).exec(function(err, data) {
+				if (err){
+					res.redirect('/numberslist');
+				}
+				var allocatedUser = []
+				var users = _.map(data, 'userId');
+
+				_.forEach(users, function(value) {
+					allocatedUser.push(value.toString());
+				});
+
+				var c = _.difference(allocatedUser,req.body.users)
+				_.forEach(c, function(value) {
+					allocateNumber.update({'numberId': numberId, 'userId': value},{'removeAllocatedDate': moment().format(), 'allocationStatus': false }).exec(function (err, updated){
+						console.log('updated');
+					});
+				});
+
+				var a = _.difference(req.body.users, allocatedUser)
+				_.forEach(a, function(value) {
+						var form_data = {};
 						form_data.userId = value;
 						form_data.numberId = numberId;
 						form_data.allocationStatus = true;
+						form_data.allocatedDate = moment().format();
 
 						allocateNumber.create(form_data, function(err, auth) {
 					    if(err) {
@@ -184,10 +199,8 @@ module.exports = {
 					    	console.log(' successfully inserted');
 					    }
 					  });
-	  			}
-	  		});
-				
-			});
+				});
+	  	});
   	});
 	  	
   	return res.redirect('/numberslist');
@@ -195,7 +208,7 @@ module.exports = {
   
   numberslist: function (req, res) {
 
-    	numberInfo.find({'delete_status':'0'}).exec(function(err, numbers) {
+    numberInfo.find({'delete_status':'0'}).exec(function(err, numbers) {
 
   		if (err) {
   			return res.serverError(err);
@@ -396,7 +409,7 @@ module.exports = {
 				res.redirect('/numberslist');
 			} else if (number != undefined) {
 
-				allocateNumber.find({select:['userId']}).where({'numberId': numberId}).exec(function(err, allocatedUser) {
+				allocateNumber.find({select:['userId']}).where({'numberId': numberId, 'allocationStatus': true}).exec(function(err, allocatedUser) {
 					if (err){
 						res.redirect('/numberslist');
 					}
