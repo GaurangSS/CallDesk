@@ -70,10 +70,10 @@ module.exports.routes = {
   'get /allocateNumberToUSer/number/:id': 'numberController.getallocateNumberToUSer',
 
   'get /numbers/delete/:number': 'numberController.releaseNumber',
-  
-  'get /numbers/music/:number': 'numberController.musicNumber',
+   
+  'get /numbers/setting/:number': 'numberController.settingNumber',
 
-  'post /update_music/:number/:id': 'numberController.musicNumber',
+  'post /update_setting/:number': 'numberController.settingNumber',
 
   'get /allocateTime/:id': 'UserTimeAllocController.AllocateTime',
 
@@ -122,6 +122,10 @@ module.exports.routes = {
   'get /logout': 'AuthController.logout',
 
   'get /calls': 'CalllogController.call_list',
+  
+  'get /profile': 'AuthController.userProfile',
+  
+  'post /profile': 'AuthController.userProfile',
 
 };
 

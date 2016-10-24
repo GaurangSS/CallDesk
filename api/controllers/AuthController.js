@@ -103,5 +103,63 @@ module.exports = {
         });
       }
     });
-  }
+  },
+
+  userProfile: function (req, res) {
+    User.findOne().where({'id':req.session.userid}).exec(function (err, rec) {
+      if(req.method=='POST')
+      {
+        console.log(req.body);
+        if(req.body.old_pass != "" && req.body.new_pass != "") {
+          if(req.body.old_pass != rec.password) {
+            var data = {};
+            data.error = "Your old password is wrong";
+            res.locals.layout = 'layout1.ejs';
+            return res.view('auth/userProfile.ejs',{'user': rec, 'data': data});
+          } else if (req.body.new_pass.length <= 6) {
+            var data = {};
+            data.error = "password length must be greater than 6 character";
+            res.locals.layout = 'layout1.ejs';
+            return res.view('auth/userProfile.ejs',{'user': rec, 'data': data});
+          } else if (req.body.new_pass !== req.body.conf_pass) {
+            var data = {};
+            data.error = "Please enter confirm password same as password";
+            res.locals.layout = 'layout1.ejs';
+            return res.view('auth/userProfile.ejs',{'user': rec, 'data': data});
+          } else {
+            rec.firstname = req.body.firstname;
+            rec.lastname = req.body.lastname;
+            rec.email = req.body.email;
+            rec.password = req.body.new_pass;
+            rec.save(function(err){
+              if (err) {
+                console.log(err);
+                return res.send('Error');
+              } else {
+                res.redirect( '/dashboard');
+              }
+            });
+          }
+        } else {
+          rec.firstname = req.body.firstname;
+          rec.lastname = req.body.lastname;
+          rec.email = req.body.email;
+          rec.save(function(err){
+            if (err) {
+              console.log(err);
+              return res.send('Error');
+            } else {
+              res.redirect( '/dashboard');
+            }
+          });
+        }
+        
+      } else {
+        res.locals.layout = 'layout1.ejs';
+        return res.view('auth/userProfile.ejs',{'user': rec, data: {}});
+      }
+    });
+  },
+
+
 };

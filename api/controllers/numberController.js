@@ -84,12 +84,12 @@ module.exports = {
 	  	numberDetail = {};
 	  	numberDetail.sid = purchasedNumber.sid;
 	  	numberDetail.account_sid = purchasedNumber.account_sid,
-			numberDetail.friendly_name = purchasedNumber.friendly_name,
-			numberDetail.phone_number = purchasedNumber.phone_number,
-			numberDetail.delete_status = 0,
-			numberDetail.contact_name = req.body.conName,
-			numberDetail.date_created = purchasedNumber.date_created,
-			numberDetail.date_updated = purchasedNumber.date_updated,
+		numberDetail.friendly_name = purchasedNumber.friendly_name,
+		numberDetail.phone_number = purchasedNumber.phone_number,
+		numberDetail.delete_status = 0,
+		numberDetail.contact_name = req.body.conName,
+		numberDetail.date_created = purchasedNumber.date_created,
+		numberDetail.date_updated = purchasedNumber.date_updated,
 
 	  	numberInfo.create(numberDetail, function(err, auth) {
 	      if(err) {
@@ -230,13 +230,46 @@ module.exports = {
 		});
 	},
 
-	/*Update_music: function(req,res) {
+	settingNumber: function(req,res) {
 		var number=req.param('number',null);
-		var user=req.param('id',null);
 
-		
-	//	res.redirect( '/numberslist');
-	},*/
+		NumberMessage.findOne().where({'number_id':number}).exec(function(err, rec) {
+			if(req.method=='POST')
+			{
+				console.log(req.body);
+				numberInfo.findOne().where({'id':number}).exec(function(err, rec1) {
+					rec1.recording_status = req.body.recording;
+					rec.audio_text = req.body.audio_text;
+					rec.save(function(err){
+						if(err) {
+							console.log(err);
+						}
+						else {
+							console.log("Successfully radio updated");
+							rec1.save(function(err){
+								if(err) {
+									console.log(err);
+								}
+								else {
+									res.redirect( '/numberslist');
+									console.log("Successfully updated");
+								}
+							});
+							console.log("Successfully updated");
+						}
+					});
+				});
+			} else {
+				var data={};
+				numberInfo.findOne().where({'id':number}).exec(function(err, rec1) {
+					data.list = rec;
+					data.list1 = rec1;
+					res.locals.layout = 'layout1.ejs';
+					return res.view('Number/number_setting.ejs',data);
+				});
+			}
+		});
+	},
 
 	musicNumber: function(req,res) {
 		var number=req.param('number',null);

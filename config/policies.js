@@ -94,6 +94,7 @@ module.exports.policies = {
 
   AuthController: {
     dashboard: 'isAuthenticated',
+    userProfile: 'isAuthenticated',
   },
 
   CalllogController: {
