@@ -122,8 +122,8 @@ module.exports = {
                     emailbody : "<html><body>Welcome you in aircall.io. Before use our service You have to confirm your email address. So Plaease active your account by clicking below :  </b><a href="+url+">Click Here for Activate</a></body></html>",
                     emailtext : 'Hello' + user.firstname,
                   }
-                  
                   mail.sendMail(mailOptions);
+
                 }
               });
               console.log('User created successfully');

@@ -243,13 +243,46 @@ module.exports = {
 		});
 	},
 
-	/*Update_music: function(req,res) {
+	settingNumber: function(req,res) {
 		var number=req.param('number',null);
-		var user=req.param('id',null);
 
-		
-	//	res.redirect( '/numberslist');
-	},*/
+		NumberMessage.findOne().where({'number_id':number}).exec(function(err, rec) {
+			if(req.method=='POST')
+			{
+				console.log(req.body);
+				numberInfo.findOne().where({'id':number}).exec(function(err, rec1) {
+					rec1.recording_status = req.body.recording;
+					rec.audio_text = req.body.audio_text;
+					rec.save(function(err){
+						if(err) {
+							console.log(err);
+						}
+						else {
+							console.log("Successfully radio updated");
+							rec1.save(function(err){
+								if(err) {
+									console.log(err);
+								}
+								else {
+									res.redirect( '/numberslist');
+									console.log("Successfully updated");
+								}
+							});
+							console.log("Successfully updated");
+						}
+					});
+				});
+			} else {
+				var data={};
+				numberInfo.findOne().where({'id':number}).exec(function(err, rec1) {
+					data.list = rec;
+					data.list1 = rec1;
+					res.locals.layout = 'layout1.ejs';
+					return res.view('Number/number_setting.ejs',data);
+				});
+			}
+		});
+	},
 
 	musicNumber: function(req,res) {
 		var number=req.param('number',null);

@@ -50,7 +50,7 @@ module.exports = {
 						model1.assign_device_num=null;
 					}
 					model1.save(function(err){
-				      if (err) {
+				      if(err) {
 					    res.send('Error');
 					  }
 					});
