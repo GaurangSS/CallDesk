@@ -21,6 +21,14 @@ module.exports.myconf = {
     TWILIO_TWIML_APP_SID: 'AP1d5e33d65adea5abfd11f9bf36369e61',
   },
   
+  mailDetails: {
+    host: 'smtp.sendgrid.net',
+    port: '587',
+    user: 'softsuggest',
+    pass: '1800sendgrid',
+    from: 'isha@softwaresuggest.com',
+  },
+
   mailServerDetail: {
     host:'smtp.sendgrid.net',
     protocol:'587'

@@ -85,6 +85,8 @@ module.exports.routes = {
 
   'get /forgotPassword': 'AuthController.getForgotPassword',
 
+  'get /resetPassword/:token': 'AuthController.getResetPassword',
+
   'get /user/changePassword/:id':  'UserController.getChangePassword',
 
   'get /Signup': 'LoginController.getSignup',
@@ -109,11 +111,13 @@ module.exports.routes = {
 
   'post /allocateTime/number/:id': 'numberController.AllocateTime',
 
-  'post /forgotPassword': 'AuthController.postForgotPassword',
+  'post /resetPassword/:token': 'AuthController.resetPassword',
 
   'post /user/changePassword/:id':  'UserController.postChangePassword',
 
   'post /Signup': 'LoginController.postSignup',
+
+  'post /forgotPassword': 'AuthController.postForgotPassword',
 
   // Ajax methos
 
