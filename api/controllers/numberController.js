@@ -1,4 +1,5 @@
 var sails = require('sails');
+var moment = require('moment-timezone');
 
 var client = require('twilio')(sails.config.myconf.twilioDetails.TWILIO_ACCOUNT_SID,
 	sails.config.myconf.twilioDetails.TWILIO_AUTH_TOKEN);
@@ -251,13 +252,24 @@ module.exports = {
 									console.log(err);
 								}
 								else {
-									res.redirect( '/numberslist');
-									console.log("Successfully updated");
+									var user = {};
+									user.number_id = number;
+									user.recording_status = req.body.recording;
+									user.status_changed_date = moment().format('YYYY-MM-DD HH:mm:ss')
+									Recording_log.create(user, function(err, resp) {
+										if(err) {
+											console.log(err)
+										} else {
+											res.redirect( '/numberslist');
+											console.log("Successfully updated");
+										}
+									})
 								}
 							});
 							console.log("Successfully updated");
 						}
 					});
+
 				});
 			} else {
 				var data={};
