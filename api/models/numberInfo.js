@@ -22,6 +22,10 @@
     contact_name: {
       type: 'String'
     },
+     recording_status: {
+      type: 'integer',
+      defaultsTo: 0
+    },
     delete_status: {
       type: 'integer',
       defaultsTo: 0

@@ -17,6 +17,7 @@
 										<th>From</th>
 										<th>To</th>
 										<th>CallType</th>
+										<th>Date</th>
 										<th>start_time</th>
 										<th>end_time</th>
 										<th>duration</th>
@@ -26,17 +27,18 @@
 									</tr>
 								</thead>
 								<tbody>
-									<%  var i=2; data1.list. forEach(function(dataob) { %>
+									<%  var i=1; data.forEach(function(dataob) { %>
 								 	<tr>
 										<td><%= i++ %></td>
-										<td>From</td>
-										<td>To</td>
-										<td>CallType</td>
-										<td>start_time</td>
-										<td>end_time</td>
-										<td>duration</td>
-										<td>status</td>
-										<td>Recording</td>
+										<td><%= dataob.from %></td>
+										<td><%= dataob.to %></td>
+										<td><%= dataob.callType %></td>
+										<td><%= dataob.date %></td>
+										<td><%= dataob.from_time %></td>
+										<td><%= dataob.to_time %></td>
+										<td><%= dataob.duration %></td>
+										<td><%= dataob.status %></td>
+										<td><% if(dataob.recordingURL != '') { %><audio controls><source src="<%= dataob.recordingURL %>.mp3" type="audio/mpeg"></audio><% } else {} %></td>
 									 <!--    <td><%= dataob.sid %></td>
 										<td><%= moment.tz(dataob.start_time,"Asia/Kolkata").format('DD-MM-YYYY HH:mm') %></td>
 										<td><%= moment.tz(dataob.end_time, "Asia/Kolkata").format('DD-MM-YYYY HH:mm') %></td>										 

@@ -121,7 +121,8 @@ module.exports.routes = {
 
   'get /logout': 'AuthController.logout',
 
-  'get /calls': 'CalllogController.call_list',
+
+  'get /call_log': 'CalllogController.call_log',
 
 };
 

@@ -127,7 +127,7 @@ module.exports = {
                 } else {
                   console.log('Token generated successfully.');
                   //
-                  var url = sails.config.myconf.keyword.localpath + '/activate/' + token.hash
+                  var url = sails.config.myconf.keyword.rootpath + '/activate/' + token.hash
 
                  var mailOptions = {
                    from: 'isha@softwaresuggest.com', // sender address
