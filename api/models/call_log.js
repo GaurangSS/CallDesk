@@ -1,5 +1,5 @@
 /**
- * User_status_info.js
+ * Call log.js
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
@@ -7,53 +7,50 @@
 
 module.exports = {
 
-	tableName: 'Call_callback',
+	tableName: 'Call_log',
 
 	attributes: {
 
-		callback_id_pk: {
+		call_id_pk: {
 			type: 'integer',
 			primaryKey: true,
 			unique: true,
 			autoIncrement: true
 		},
-		ApiVersion: {
+		from_call: {
 			type: 'string',
 		},
-		Called: {
+		to_call: {
 			type: 'string',
 		},
-		CallStatus: {
+		from_time: {
 			type: 'string',
 		},
-		RecordingSid: {
+		to_time: {
 			type: 'string',
 		},
-		RecordingUrl: {
-			type: 'string',
-		},
-		From: {
-			type: 'string',
-		},
-		DialCallStatus: {
-			type: 'string',
-		},
-		Direction: {
-			type: 'string',
-		},
-		AccountSid: {
-			type: 'string',
-		},
-		DialCallDuration: {
+		call_type: {
 			type: 'string',
 		},
 		ApplicationSid: {
 			type: 'string',
 		},
-		Caller: {
+		ApiVersion: {
 			type: 'string',
 		},
-		DialCallSid: {
+		called: {
+			type: 'string',
+		},
+		caller: {
+			type: 'string',
+		},
+		record: {
+			type: 'string',
+		},
+		CallStatus: {
+			type: 'string',
+		},
+		from: {
 			type: 'string',
 		},
 		CallSid: {
@@ -62,16 +59,17 @@ module.exports = {
 		To: {
 			type: 'string',
 		},
-		RecordingDuration: {
+		Direction: {
 			type: 'string',
 		},
-		Recording_type: {
+		AccountSid: {
 			type: 'string',
 		},
-		call_log_id: {
-			model:'call_log',
-			unique: true
-		},
-
+		get_log :{
+			collection:'Call_callback',
+			via:'call_log_id',
+		}
+		
+		
   	}
 };
