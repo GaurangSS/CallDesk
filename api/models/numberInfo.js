@@ -7,6 +7,10 @@
       unique: true,
       autoIncrement: true
     },
+    userId: {
+      type: 'integer',
+      index: true
+    },
     sid: {
       type: 'String',
     },

@@ -83,6 +83,8 @@ module.exports = {
 		  	});
 	  	} else{
 		  	numberDetail = {};
+		  	numberDetail.userId = req.session.userid
+		  	numberDetail.recording_status = false;
 		  	numberDetail.sid = purchasedNumber.sid;
 		  	numberDetail.account_sid = purchasedNumber.account_sid,
 				numberDetail.friendly_name = purchasedNumber.friendly_name,
@@ -158,6 +160,9 @@ module.exports = {
   },
   postallocateNumberToUSer: function (req, res) {
   	var numberId
+  	if (!Array.isArray(req.body.users)) {
+			req.body.users = [req.body.users]
+  	}
 
   	numberInfo.findOne().where({'phone_number': req.body.number}).exec(function(err, number) {
   		if (err) {
@@ -175,30 +180,31 @@ module.exports = {
 				_.forEach(users, function(value) {
 					allocatedUser.push(value.toString());
 				});
-
+				
 				var c = _.difference(allocatedUser,req.body.users)
 				_.forEach(c, function(value) {
 					allocateNumber.update({'numberId': numberId, 'userId': value},{'removeAllocatedDate': moment().format(), 'allocationStatus': false }).exec(function (err, updated){
 						console.log('updated');
 					});
 				});
-
+				
 				var a = _.difference(req.body.users, allocatedUser)
+				
 				_.forEach(a, function(value) {
-						var form_data = {};
-						form_data.userId = value;
-						form_data.numberId = numberId;
-						form_data.allocationStatus = true;
-						form_data.allocatedDate = moment().format();
+					var form_data = {};
+					form_data.userId = value;
+					form_data.numberId = numberId;
+					form_data.allocationStatus = true;
+					form_data.allocatedDate = moment().format();
 
-						allocateNumber.create(form_data, function(err, auth) {
-					    if(err) {
-					    	console.log(err);
-					    } else {
+					allocateNumber.create(form_data, function(err, auth) {
+				    if(err) {
+				    	console.log(err);
+				    } else {
 
-					    	console.log(' successfully inserted');
-					    }
-					  });
+				    	console.log(' successfully inserted');
+				    }
+				  });
 				});
 	  	});
   	});
@@ -208,7 +214,7 @@ module.exports = {
   
   numberslist: function (req, res) {
 
-    numberInfo.find({'delete_status':'0'}).exec(function(err, numbers) {
+    numberInfo.find({'delete_status':'0','userId':req.session.userid}).exec(function(err, numbers) {
 
   		if (err) {
   			return res.serverError(err);
@@ -247,8 +253,7 @@ module.exports = {
 		var number=req.param('number',null);
 
 		NumberMessage.findOne().where({'number_id':number}).exec(function(err, rec) {
-			if(req.method=='POST')
-			{
+			if(req.method=='POST') {
 				console.log(req.body);
 				numberInfo.findOne().where({'id':number}).exec(function(err, rec1) {
 					rec1.recording_status = req.body.recording;
@@ -295,58 +300,7 @@ module.exports = {
 		});
 	},
 
-	musicNumber: function(req,res) {
-		var number=req.param('number',null);
-
-		NumberMessage.findOne().where({'number_id':number}).exec(function(err, rec) {
-			if(req.method=='POST')
-			{
-				console.log("test");
-				console.log(req.body);
-				console.log("/test");
-				rec.audio_text = req.body.audio_text;
-				rec.save(function(err){
-					if(err) {
-						console.log(err);
-					}
-					else {
-						res.redirect( '/numberslist');
-						console.log("Successfully updated");
-					}
-				});
-			} else {
-				console.log(rec);
-				/*var data1 = {};
-				var data2 = {};
-				var data3 = {};
-				var data4 = {};
-				_.forEach(rec, function(value) {
-					if(value.msg_type == 1) {
-						data1 = value;
-						console.log(data1);
-					}
-					if(value.msg_type == 2) {
-						data2 = value;
-						console.log(data2);
-					}
-					if(value.msg_type == 3) {
-						data3 = value;
-						console.log(data3);
-					}
-					if(value.msg_type == 4) {
-						data4 = value;
-						console.log(data4);
-					}
-				});*/
-				var data={};
-				data.list = rec;
-				res.locals.layout = 'layout1.ejs';
-				return res.view('Number/music.ejs',data);
-			}
-		});
-	},
-
-  AllocateTime: function(req,res) {
+	AllocateTime: function(req,res) {
 		var id=req.param('id',null);
 		
 		call_status_info.findOne().where({'number_id':id}).exec(function(err,result){
