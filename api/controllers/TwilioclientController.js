@@ -24,7 +24,7 @@ module.exports = {
     data.identity = identity;
     data.token = token;
     res.locals.layout = 'layout1.ejs';
-    numberInfo.find().exec(function(err, numbers){
+    numberInfo.find({'delete_status':'0','userId':req.session.userid}).exec(function(err, numbers){
       data.numbers = numbers;
       res.view('Twilioclient/createToken.ejs',data);
 

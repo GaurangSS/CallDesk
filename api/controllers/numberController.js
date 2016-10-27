@@ -84,7 +84,7 @@ module.exports = {
 	  	} else{
 		  	numberDetail = {};
 		  	numberDetail.userId = req.session.userid
-		  	numberDetail.recording_status = false;
+		  	numberDetail.recording_status = 0;
 		  	numberDetail.sid = purchasedNumber.sid;
 		  	numberDetail.account_sid = purchasedNumber.account_sid,
 				numberDetail.friendly_name = purchasedNumber.friendly_name,
