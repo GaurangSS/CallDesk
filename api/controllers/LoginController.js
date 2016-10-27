@@ -1,17 +1,5 @@
-var nodemailer = require('nodemailer');
-var smtpTransport = require('nodemailer-smtp-transport');
-var twilio = require('twilio');
 var shortid = require('shortid');
 var v = require('validator');
-
-var transporter = nodemailer.createTransport(smtpTransport({
-    host: "smtp.sendgrid.net",
-    port: 587,
-    auth: {
-        user: 'softsuggest',
-        pass: '1800sendgrid'
-    }
-}));
 
 module.exports = {
 
@@ -127,24 +115,15 @@ module.exports = {
                 } else {
                   console.log('Token generated successfully.');
                   //
-                  var url = sails.config.myconf.keyword.rootpath + '/activate/' + token.hash
+                  var url = sails.config.myconf.keyword.localpath + '/activate/' + token.hash
+                  var mailOptions = {
+                    email : user.email,
+                    subject : "Active Your CallDesk Account",
+                    emailbody : "<html><body>Welcome you in aircall.io. Before use our service You have to confirm your email address. So Plaease active your account by clicking below :  </b><a href="+url+">Click Here for Activate</a></body></html>",
+                    emailtext : 'Hello' + user.firstname,
+                  }
+                  mail.sendMail(mailOptions);
 
-                 var mailOptions = {
-                   from: 'isha@softwaresuggest.com', // sender address
-                   to: user.email, // list of receivers
-                   subject: 'Active Your CallDesk Account', // Subject line
-                   text: 'Hello ' + user.firstname, // plaintext body
-                   html: "<html><body>Welcome you in CallDesk.io. Before use our service You have to confirm your email address. So Plaease active your account by clicking below :  </b><a href="+url+">Click Here for Activate</a></body></html>" // html body
-                 };                    
-                  // send mail with defined transport object
-                  transporter.sendMail(mailOptions, function(error, info){
-                    if(error){
-                      console.log(error);
-                        return console.log(error);
-                    }
-                    console.log('Message sent: ' + info.response);
-                  });
-                   //     url: ctx.protocol + '://' + ctx.host + '/activate/' + token
                 }
               });
               console.log('User created successfully');

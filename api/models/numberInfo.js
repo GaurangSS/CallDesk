@@ -22,7 +22,7 @@
     contact_name: {
       type: 'String'
     },
-     recording_status: {
+    recording_status: {
       type: 'integer',
       defaultsTo: 0
     },

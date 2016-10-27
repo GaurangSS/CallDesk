@@ -50,7 +50,7 @@ module.exports = {
 						model1.assign_device_num=null;
 					}
 					model1.save(function(err){
-				      if (err) {
+				      if(err) {
 					    res.send('Error');
 					  }
 					});
@@ -83,11 +83,6 @@ module.exports = {
 
 				}
 			});
-		/*	usar.destroy(function(err) {
-			//	req.flash('success','User deleted successfully');
-				res.redirect('/users');
-			// record has been removed
-			});*/
 		});
 	},
 

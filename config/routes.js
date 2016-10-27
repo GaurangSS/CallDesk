@@ -70,10 +70,10 @@ module.exports.routes = {
   'get /allocateNumberToUSer/number/:id': 'numberController.getallocateNumberToUSer',
 
   'get /numbers/delete/:number': 'numberController.releaseNumber',
-  
-  'get /numbers/music/:number': 'numberController.musicNumber',
+   
+  'get /numbers/setting/:number': 'numberController.settingNumber',
 
-  'post /update_music/:number/:id': 'numberController.musicNumber',
+  'post /update_setting/:number': 'numberController.settingNumber',
 
   'get /allocateTime/:id': 'UserTimeAllocController.AllocateTime',
 
@@ -84,6 +84,8 @@ module.exports.routes = {
   'get /dashboard': 'AuthController.dashboard',
 
   'get /forgotPassword': 'AuthController.getForgotPassword',
+
+  'get /resetPassword/:token': 'AuthController.getResetPassword',
 
   'get /user/changePassword/:id':  'UserController.getChangePassword',
 
@@ -109,11 +111,13 @@ module.exports.routes = {
 
   'post /allocateTime/number/:id': 'numberController.AllocateTime',
 
-  'post /forgotPassword': 'AuthController.postForgotPassword',
+  'post /resetPassword/:token': 'AuthController.resetPassword',
 
   'post /user/changePassword/:id':  'UserController.postChangePassword',
 
   'post /Signup': 'LoginController.postSignup',
+
+  'post /forgotPassword': 'AuthController.postForgotPassword',
 
   // Ajax methos
 
@@ -121,8 +125,13 @@ module.exports.routes = {
 
   'get /logout': 'AuthController.logout',
 
-
   'get /call_log': 'CalllogController.call_log',
+
+  'get /calls': 'CalllogController.call_list',
+  
+  'get /profile': 'AuthController.userProfile',
+  
+  'post /profile': 'AuthController.userProfile',
 
 };
 

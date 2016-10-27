@@ -1,0 +1,43 @@
+
+	<div id="content" class="app-content" role="main">
+  		<div class="app-content-body "> 
+			<div class="wrapper-md">
+				<div class="panel panel-default">
+			    	<div class="panel-heading font-bold">
+			      		Setting
+			    	</div>
+			    	<div class="panel-body">
+			    		<form class="bs-example form-horizontal" action="/update_setting/<%=list.number_id %>" method="post" enctype="multipart/form-data">
+			    			<div class="form-group">
+								<label class="col-lg-2 control-label">Call Recording</label>
+								<div class="col-lg-10">
+									<div class="col-lg-2">
+										<input type="radio" name="recording" value="1" <%if(list1.recording_status == 1) { %> checked <% } %>> On
+									</div>
+									<div class="col-lg-2">
+										<input type="radio" name="recording" value="0" <%if(list1.recording_status == 0) { %> checked <% } %>> Off
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-lg-2 control-label">Welcome message</label>
+								<div class="col-lg-10">
+									<textarea name="audio_text" class="form-control"><%=list.audio_text %></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-lg-offset-4 col-lg-8">
+									<button type="submit" class="btn btn-info">Update Music</button>
+								</div>
+							</div>
+			    		</form>
+			    	</div>
+			  	</div>
+			</div>
+		</div>
+  	</div> 
+  <!-- /content -->
+  
+  <!-- footer -->
+
+  <!-- / footer
