@@ -131,5 +131,9 @@ module.exports.routes = {
   
   'post /profile': 'AuthController.userProfile',
 
+  'get /contactus': 'AuthController.getContactUs',
+
+  'post /contactus': 'AuthController.postContactUs',
+
 };
 

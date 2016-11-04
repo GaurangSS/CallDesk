@@ -1,5 +1,6 @@
 var twilio = require('twilio');
 var shortid = require('shortid');
+var v = require('validator');
 module.exports = {
   
   createToken: function (req, res) {
@@ -217,6 +218,49 @@ module.exports = {
         return res.view('auth/userProfile.ejs',{'user': rec, data: {}});
       }
     });
+  },
+
+  getContactUs: function (req, res) {
+    return res.view('auth/contactUs.ejs', {data : {}, user : {}});
+  },
+
+  postContactUs: function (req, res) {
+
+    var body = req.body;
+
+    // Sanitize input
+    body.email = v.trim(body.email).toLowerCase();
+    body.firstname = v.trim(body.firstname);
+    body.lastame = v.trim(body.lastname);
+    // Validate
+    var errors = [];
+    
+    if (body.email) {
+      Contactus.create(body, function (err, user) {
+        if (err) {
+          var data = {};
+          data.error = err.message;
+          res.view('auth/contactUs.ejs',{user: body, data: data});
+
+        } else {
+          //
+      //    var url = sails.config.myconf.keyword.localpath + '/activate/' + token.hash
+          var mailOptions = {
+            email : 'setu@intricare.net',
+            cc : 'asish@softwaresuggest.com',
+            subject : "Contact us Data in CallDesk.io",
+            emailbody : "<html><body><table border='1'><tr><td>First Name</td><td>"+ user.firstname +"</td></tr><tr><td>Last Name</td><td>"+ user.lastname +"</td></tr><tr><td>Email</td><td>"+ user.email +"</td></tr><tr><td>Company Name</td><td>"+ user.company_name +"</td></tr><tr><td>Mobile</td><td>"+ user.mob_num +"</td></tr></table></body></html>",
+      //      emailtext : 'Hello' + user.firstname,
+          }
+          mail.sendMail(mailOptions);
+
+          console.log('User created successfully');
+          var data = {};
+           data.error = "You have been added to beta list. We will inform you shortly.";
+           res.redirect('http://calldesk.io');
+        }
+      });
+    }
   },
 
 

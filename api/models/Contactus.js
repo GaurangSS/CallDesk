@@ -1,6 +1,6 @@
 module.exports = {
 
-  tableName: 'Users',
+  tableName: 'Contactus',
 
   attributes: {
 

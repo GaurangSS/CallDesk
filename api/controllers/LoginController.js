@@ -73,7 +73,7 @@ module.exports = {
     }
 
     if (body.email) {
-      User.findOne().where({'email': body.email}).exec(function (err, data) {
+      Beta_user.findOne().where({'email': body.email}).exec(function (err, data) {
         if(err) {
           res.redirect('/signUp');
         } else if(data){
@@ -82,7 +82,7 @@ module.exports = {
           
           res.view('auth/signUp.ejs',{user: body, data: data});
         } else {
-          User.create(body, function (err, user) {
+          Beta_user.create(body, function (err, user) {
             if (err) {
               var data = {};
               data.error = err.message;
