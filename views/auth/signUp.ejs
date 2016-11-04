@@ -1,7 +1,6 @@
-<!-- content -->
 <div class="app app-header-fixed ">
-    <div class="container w-xxl w-auto-xs">
-      <a href class="navbar-brand block">Call Desk</a>
+    <div class="container w-xxl w-auto-xs" style="text-align:center">
+      <img src="img/logo2.png" alt="." width="190" height="60" >
       <div class="m-b-lg">
         <form name="form" method="post" class="form-validation">
           <% if(data.error!= '' && data.error!=undefined){ %>
@@ -17,6 +16,12 @@
               <input placeholder="Last Name" name="lastname" class="form-control no-border" value="<%= user.lastname ? user.lastname : '' %>" required>
             </div>
             <div class="list-group-item">
+              <input placeholder="Company Name" name="company_name" class="form-control no-border" value="<%= user.company_name ? user.company_name : '' %>" >
+            </div>
+            <div class="list-group-item">
+              <input placeholder="Mobile No." name="mob_num" class="form-control no-border" value="<%= user.mob_num ? user.mob_num : '' %>" >
+            </div>
+            <div class="list-group-item">
               <input type="email" name="email" placeholder="Email" class="form-control no-border" value="<%= user.email ? user.email : '' %>" required>
             </div>
             <div class="list-group-item">
@@ -26,15 +31,15 @@
                <input type="password" name="password_confirm" placeholder="confirm Password" class="form-control no-border" required>
             </div>
           </div>
-          <div class="checkbox m-b-md m-t-none">
+          <!-- <div class="checkbox m-b-md m-t-none">
             <label class="i-checks">
               <input type="checkbox" required><i></i> Agree the <a href>terms and policy</a>
             </label>
-          </div>
+          </div> -->
           <button type="submit" class="btn btn-lg btn-primary btn-block">Sign up</button>
-          <div class="line line-dashed"></div>
+          <!-- <div class="line line-dashed"></div>
           <p class="text-center"><small>Already have an account?</small></p>
-          <a href="/login" class="btn btn-lg btn-default btn-block">Sign in</a>
+          <a href="/login" class="btn btn-lg btn-default btn-block">Sign in</a> -->
         </form>
       </div>
     </div>
@@ -103,4 +108,4 @@
 
 <!-- footer -->
 
-<!-- / footer -->
+<!-- / footer

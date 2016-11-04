@@ -1,7 +1,9 @@
  <div class="app app-header-fixed ">
 
-<div class="container w-xxl w-auto-xs" ng-controller="SigninFormController" ng-init="app.settings.container = false;">
-  <a href class="navbar-brand block m-t"><h1><b>CallDesk</b></h1></a>
+<div class="container w-xxl w-auto-xs">
+  <div style="text-align:center">
+  <img src="img/logo2.png" alt="." width="190" height="60" >
+  </div>
   <div class="m-b-lg">  
      <form class="form-inline" role="form" action="/login" method="post">
       <% if(data.error!= '' && data.error!=undefined){ %>
@@ -25,6 +27,10 @@
       <p class="text-center"><small>Do not have an account?</small></p>
       <a href="/Signup" ui-sref="access.signup" class="btn btn-lg btn-default btn-block">Create an account</a>
     </form>
+    <br>
+    <div>
+    <a href="http://calldesk.io" class="btn btn-lg btn-success btn-block" style="width: 160px; margin: 0px auto">Go to Home</a>
+    </div>
   </div>
   <div class="text-center" ng-include="'tpl/blocks/page_footer.html'">
     <p>

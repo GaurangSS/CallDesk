@@ -23,7 +23,8 @@ module.exports = {
         } else { 
           if (record.active != '1') {
             var data = {};
-            data.error = "Please active your account first";
+        //    data.error = "Please active your account first";
+            data.error = "You have been added to beta list. We will inform you shortly";
             return res.view('auth/login.ejs',{data: data});
           }
             var data = {};
@@ -88,6 +89,7 @@ module.exports = {
               res.view('auth/signUp.ejs',{user: body, data: data});
 
             } else {
+              
               var user_status = {};
               user_status.user_id = user.id;
               user_status.availibility_status = 1;
@@ -117,17 +119,20 @@ module.exports = {
                   //
                   var url = sails.config.myconf.keyword.localpath + '/activate/' + token.hash
                   var mailOptions = {
-                    email : user.email,
-                    subject : "Active Your CallDesk Account",
-                    emailbody : "<html><body>Welcome you in aircall.io. Before use our service You have to confirm your email address. So Plaease active your account by clicking below :  </b><a href="+url+">Click Here for Activate</a></body></html>",
-                    emailtext : 'Hello' + user.firstname,
+                    email : 'ankit@softwaresuggest.com',
+                    cc : 'asish@softwaresuggest.com',
+                    subject : "New Signup in CallDesk.io",
+                    emailbody : "<html><body><table border='1'><tr><td>First Name</td><td>"+ user.firstname +"</td></tr><tr><td>Last Name</td><td>"+ user.lastname +"</td></tr><tr><td>Email</td><td>"+ user.email +"</td></tr><tr><td>Company Name</td><td>"+ user.company_name +"</td></tr><tr><td>Mobile</td><td>"+ user.mob_num +"</td></tr></table></body></html>",
+              //      emailtext : 'Hello' + user.firstname,
                   }
                   mail.sendMail(mailOptions);
 
                 }
               });
               console.log('User created successfully');
-              res.redirect('/login');
+              var data = {};
+               data.error = "You have been added to beta list. We will inform you shortly.";
+               return res.view('auth/login.ejs',{data});
             }
           });
         }

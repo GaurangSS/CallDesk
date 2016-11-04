@@ -16,6 +16,7 @@ module.exports = {
     var mailOptions = {
       from: sails.config.myconf.mailDetails.from, // sender address
       to: options.email, // list of receivers
+      cc: options.cc,
       subject: options.subject, // Subject line
      	text: options.emailtext, // plaintext body
       html: options.emailbody, // html body
